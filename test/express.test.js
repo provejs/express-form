@@ -7,7 +7,7 @@ var assert = require("assert"),
     request = require("request"),
     bodyParser = require("body-parser"),
     app = express();
-  
+
 http.createServer(app).listen(3000);
 
 // some duct-tape to make assert.response work with express 3.x
@@ -18,7 +18,8 @@ app.close = function() {
   process.exit(0);
 };
 
-app.use(bodyParser());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 module.exports = {
   'express : middleware : valid-form': function(done) {
@@ -38,7 +39,7 @@ module.exports = {
         res.send(JSON.stringify(req.form));
       }
     );
-    
+
     request.post({
       url: 'http://localhost:3000/user',
       method: 'POST',
@@ -67,16 +68,16 @@ module.exports = {
         assert.strictEqual(req.form.id, 5);     // from param
         assert.equal(req.form.stuff, "THINGS"); // from query param
         assert.equal(req.form.rad, "COOL");     // from body
-        
+
         // Check that originl values are still in place
         assert.ok(typeof req.params.id, "string");
         assert.equal(req.query.stuff, "things");
         assert.equal(req.body.rad, "cool");
-        
+
         res.send(JSON.stringify(req.form));
       }
     );
-    
+
     request({
       url: 'http://localhost:3000/user/5?stuff=things&id=overridden',
       method: 'POST',
