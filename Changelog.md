@@ -1,5 +1,14 @@
 # express-form changelog
 
+## v0.12.5 (2016/03/23)
+* remove upper-bound for TLD length on email validation
+
+## v0.12.4 (2014/11/27)
+* update dependencies
+
+## v0.12.3 (2014/07/29)
+* fix stack size explosion when using `autoTrim`
+
 ## v0.12.2 (2014/04/16)
 * add express 4 support
 

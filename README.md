@@ -4,8 +4,6 @@ Express Form provides data filtering and validation as route middleware to your 
 
 ## Install
 
-* **Express 2** `npm install express-form@0.11.x`
-
 * **Express 3, 4** `npm install express-form@0.12.x`
 
 ## Usage
