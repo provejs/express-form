@@ -56,7 +56,8 @@ module.exports = {
       "user@host.co.uk",
       "user+service@host.co.uk",
       "user-ok.yes+tag@host.k12.mi.us",
-      "FirstNameLastName2000@hotmail.com"
+      "FirstNameLastName2000@hotmail.com",
+      "FooBarEmail@foo.apartments"
     ];
 
     for (var i in validEmails) {
