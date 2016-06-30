@@ -1,5 +1,8 @@
 # express-form changelog
 
+## v0.12.6 (2016/06/30)
+* Guard against request body not inheriting from Object.prototype
+
 ## v0.12.5 (2016/03/23)
 * remove upper-bound for TLD length on email validation
 
