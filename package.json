@@ -2,7 +2,7 @@
   "author": "Dan Dean (http://dandean.com)",
   "name": "express-form",
   "description": "Form validation and data filtering for Express",
-  "version": "0.12.5",
+  "version": "0.12.6",
   "homepage": "http://dandean.github.com/express-form",
   "repository": {
     "type": "git",
