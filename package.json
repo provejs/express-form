@@ -20,7 +20,7 @@
     "express"
   ],
   "dependencies": {
-    "async": "^0.9.0",
+    "async": "^2.6.0",
     "object-additions": "^0.5.1",
     "validator": "^2.1.0"
   },
