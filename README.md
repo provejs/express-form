@@ -398,8 +398,6 @@ Express Form has various configuration options, but aims for sensible defaults f
 
     autoTrim (Boolean): If true, all fields will be automatically trimmed. Default: false.
 
-    passThrough (Boolean): If true, all data sources will be merged with `req.form`. Default: false.
-
 
 ### Credits
 

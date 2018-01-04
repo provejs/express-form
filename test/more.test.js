@@ -148,31 +148,7 @@ module.exports = {
     assert.strictEqual(request.form.field, "whatever");
     form.configure({ autoTrim: false });
   },
-  
-  "field : passThrough": function () {
-    // request.form gets all values from sources.
-    form.configure({ passThrough: true });
-    var request = {
-      body: {
-        field1: "fdsa",
-        field2: "asdf"
-      }
-    };
-    form(field("field1"))(request, {});
-    assert.strictEqual(request.form.field1, "fdsa");
-    assert.strictEqual(request.form.field2, "asdf");
     
-    // request.form only gets declared fields.
-    form.configure({ passThrough: false });
-    var request = { body: {
-      field1: "fdsa",
-      field2: "asdf"
-    } };
-    form(field("field1"))(request, {});
-    assert.strictEqual(request.form.field1, "fdsa");
-    assert.strictEqual(typeof request.form.field2, "undefined");
-  },
-  
   "form : getErrors() gives full map": function() {
     var request = {
       body: {
