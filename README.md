@@ -394,7 +394,7 @@ Express Form has various configuration options, but aims for sensible defaults f
 
     Note: if a field name dash-separated, the name used for the locals object will be in camelCase.
 
-    dataSources (Array): An array of Express request properties to use as data sources when filtering and validating data. Default: ["body", "query", "params"].
+    sources (Array): An array of Express request properties to use as data sources when filtering and validating data. Default: ["body", "query", "params"].
 
     autoTrim (Boolean): If true, all fields will be automatically trimmed. Default: false.
 

@@ -46,15 +46,15 @@ module.exports = {
     assert.equal(request.form.getErrors("field3").length, 3);
   },
   
-  'form : configure : dataSources': function() {
-    form.configure({ dataSources: ['other'] });
+  'form : configure : sources': function() {
+    form.configure({ sources: ['other'] });
 
     var request = { other: { field: "me@dandean.com" }};
     form(validate("field").isEmail())(request, {});
     assert.strictEqual(request.form.isValid, true);
     assert.equal(request.form.field, "me@dandean.com");
 
-    form.configure({ dataSources: ['body', "query", "params"] });
+    form.configure({ sources: ['body', "query", "params"] });
   },
   
   'form : configure : autoTrim': function() {
