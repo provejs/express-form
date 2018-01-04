@@ -47,7 +47,7 @@ module.exports = {
   },
   
   'form : configure : dataSources': function() {
-    form.configure({ dataSources: 'other' });
+    form.configure({ dataSources: ['other'] });
 
     var request = { other: { field: "me@dandean.com" }};
     form(validate("field").isEmail())(request, {});
