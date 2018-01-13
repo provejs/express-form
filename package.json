@@ -21,7 +21,9 @@
   ],
   "dependencies": {
     "async": "^2.6.0",
-    "object-additions": "^0.5.1",
+    "lodash.isnumber": "^3.0.3",
+    "lodash.isstring": "^4.0.1",
+    "lodash.isundefined": "^3.0.1",
     "validator": "^2.1.0"
   },
   "peerDependencies": {
