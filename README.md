@@ -1,15 +1,15 @@
-# express-form
+# provejs-express
 
-Express Form provides data filtering and validation as route middleware to your Express applications.
+Provides data sanitizing and validation as route middleware to your express applications.
 
 ## Install
 
-`npm install express-form --save`
+`npm install provejs-express --save`
 
 ## Usage
 
 ```js
-var express = require('express'),
+var express = require('provejs-express'),
     bodyParser = require('body-parser'),
     form = require('express-form'),
     field = form.field;
@@ -51,12 +51,12 @@ app.listen(3000);
 
 ### Module
 
-`express-form` returns an `express` [Route Middleware](http://expressjs.com/guide.html#Route-Middleware) function.
+`provejs-express` returns an `express` [Route Middleware](http://expressjs.com/guide.html#Route-Middleware) function.
 You specify filtering and validation by passing filters and validators as
 arguments to the main module function. For example:
 
 ```js
-var form = require("express-form");
+var form = require("provejs-express");
 
 app.post('/user',
 
@@ -101,7 +101,7 @@ filter("username")
   .isAlphanumeric()
 ```
 
-### Filter API:
+### Sanitize API:
 
 Type Coercion
 
@@ -114,14 +114,6 @@ Type Coercion
     toBooleanStrict()   -> Only true, "true", 1 and "1" are `true`
 
     ifNull(replacement) -> "", undefined and null get replaced by `replacement`
-
-
-HTML Encoding for `& " < >`
-
-    entityEncode() -> encodes HTML entities
-
-    entityDecode() -> decodes HTML entities
-
 
 String Transformations
 

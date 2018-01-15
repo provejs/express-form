@@ -1,18 +1,14 @@
 {
-  "author": "Dan Dean (http://dandean.com)",
-  "name": "express-form",
+  "author": "Dan Hollenbeck (dan@hollenbecks.com)",
+  "name": "provejs-express",
   "description": "Form validation and data filtering for Express",
-  "version": "0.12.6",
-  "homepage": "http://dandean.github.com/express-form",
+  "version": "0.0.2",
+  "homepage": "",
   "repository": {
     "type": "git",
-    "url": "git://github.com/freewil/express-form.git"
+    "url": "git://github.com/provejs/provejs-express.git"
   },
-  "contributors": [
-    "Marc Harter <wavded@gmail.com>",
-    "Sugarstack",
-    "Sean Lavine <lavis88@gmail.com>"
-  ],
+  "contributors": [],
   "keywords": [
     "form",
     "validator",
@@ -50,7 +46,7 @@
   "licenses": [
     {
       "type": "MIT",
-      "url": "https://github.com/freewil/express-form/raw/master/LICENSE"
+      "url": "https://github.com/provejs/provejs-express/raw/master/LICENSE"
     }
   ]
 }
