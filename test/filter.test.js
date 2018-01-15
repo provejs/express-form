@@ -183,18 +183,18 @@ module.exports = {
     });
   },
 
-  'filter : entityEncode': function() {
-    // NOTE: single quotes are not encoded
-    var request = { body: { field: "&\"<>hello!" }};
-    form(filter("field").entityEncode())(request, {});
-    assert.equal(request.form.field, "&amp;&quot;&lt;&gt;hello!");
-  },
+  // 'filter : entityEncode': function() {
+  //   // NOTE: single quotes are not encoded
+  //   var request = { body: { field: "&\"<>hello!" }};
+  //   form(filter("field").entityEncode())(request, {});
+  //   assert.equal(request.form.field, "&amp;&quot;&lt;&gt;hello!");
+  // },
 
-  'filter : entityDecode': function() {
-    var request = { body: { field: "&amp;&quot;&lt;&gt;hello!" }};
-    form(filter("field").entityDecode())(request, {});
-    assert.equal(request.form.field, "&\"<>hello!");
-  },
+  // 'filter : entityDecode': function() {
+  //   var request = { body: { field: "&amp;&quot;&lt;&gt;hello!" }};
+  //   form(filter("field").entityDecode())(request, {});
+  //   assert.equal(request.form.field, "&\"<>hello!");
+  // },
 
   'filter : toUpper': function() {
     var request = { body: { field: "hellö!" }};

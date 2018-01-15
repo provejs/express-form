@@ -161,8 +161,8 @@ module.exports = {
     form(
       field("field0").equals("win"),
       field("field1").isEmail(),
-      field("field2").isEmail().isUrl(),
-      field("field3").isEmail().isUrl().isIP()
+      field("field2").isEmail().isURL(),
+      field("field3").isEmail().isURL().isIP()
     )(request, {});
     assert.equal(request.form.isValid, false);
     assert.equal(request.form.errors.length, 6);

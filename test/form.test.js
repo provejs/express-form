@@ -33,8 +33,8 @@ module.exports = {
     form(
       validate("field0").equals("win"),
       validate("field1").isEmail(),
-      validate("field2").isEmail().isUrl(),
-      validate("field3").isEmail().isUrl().isIP()
+      validate("field2").isEmail().isURL(),
+      validate("field3").isEmail().isURL().isIP()
     )(request, {});
     
     assert.equal(request.form.isValid, false);
