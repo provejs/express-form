@@ -1,4 +1,4 @@
-# express-form [![Build Status](https://travis-ci.org/freewil/express-form.svg?branch=master)](https://travis-ci.org/freewil/express-form)
+# express-form
 
 Express Form provides data filtering and validation as route middleware to your Express applications.
 
@@ -383,22 +383,20 @@ Express Form adds a `form` object with various properties to the request.
 
 ### Configuration
 
-Express Form has various configuration options, but aims for sensible defaults for a typical Express application.
+There are two configuration options:
 
-    form.configure(options) -> self
-    - options (Object): An object with configuration options.
+```javascript
+var form = require('provejs-express');
+form.configure({
+    sources: ['body'], // defaults to ['body', 'query', 'params']
+    autoTrim: true // defaults to false;
+});
+```
 
-    flashErrors (Boolean): If validation errors should be automatically passed to Express’ flash() method. Default: true.
+sources (Array): An array of Express request properties to use as data sources when filtering and validating data. Default: ["body", "query", "params"].
 
-    autoLocals (Boolean): If field values from Express’ request.body should be passed into Express’ response.locals object. This is helpful when a form is invalid an you want to repopulate the form elements with their submitted values. Default: true.
-
-    Note: if a field name dash-separated, the name used for the locals object will be in camelCase.
-
-    sources (Array): An array of Express request properties to use as data sources when filtering and validating data. Default: ["body", "query", "params"].
-
-    autoTrim (Boolean): If true, all fields will be automatically trimmed. Default: false.
-
+autoTrim (Boolean): If true, all fields will be automatically trimmed. Default: false.
 
 ### Credits
 
-Currently, Express Form uses many of the validation and filtering functions provided by Chris O'Hara's [node-validator](https://github.com/chriso/node-validator).
+Currently, this module uses many of the validation and sanitizer functions provided by Chris O'Hara's [node-validator](https://github.com/chriso/node-validator).
