@@ -1,7 +1,7 @@
-var assert = require("assert"),
-    form = require("../index"),
-    validate = form.validate,
-    utils = require('../lib/utils');
+var assert = require("assert");
+var form = require("../index");
+var validate = form.field;
+var utils = require('../lib/utils');
 
 module.exports = {
   'form : isValid': function() {

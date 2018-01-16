@@ -1,12 +1,12 @@
-var assert = require("assert"),
-    form = require("../index"),
-    filter = form.filter,
-    validate = form.validate,
-    express = require("express"),
-    http = require("http"),
-    request = require("request"),
-    bodyParser = require("body-parser"),
-    app = express();
+var assert = require("assert");
+var form = require("../index");
+var filter = form.field;
+var validate = form.field;
+var express = require("express");
+var http = require("http");
+var request = require("request");
+var bodyParser = require("body-parser");
+var app = express();
 
 http.createServer(app).listen(3000);
 

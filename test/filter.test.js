@@ -1,6 +1,6 @@
-var assert = require("assert"),
-    form = require("../index"),
-    filter = form.filter;
+var assert = require("assert");
+var form = require("../index");
+var filter = form.field;
 
 module.exports = {
   'filter : trim': function() {

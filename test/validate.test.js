@@ -1,6 +1,6 @@
-var assert = require("assert"),
-    form = require("../index"),
-    validate = form.validate;
+var assert = require("assert");
+var form = require("../index");
+var validate = form.field;
 
 module.exports = {
   'validate : isDate': function() {
