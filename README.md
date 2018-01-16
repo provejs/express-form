@@ -1,6 +1,6 @@
 # provejs-express
 
-Provides data sanitizing and validation as route middleware to your express applications.
+Provides data sanitizing and validation as route an express middleware.
 
 ## Install
 
@@ -9,43 +9,53 @@ Provides data sanitizing and validation as route middleware to your express appl
 ## Usage
 
 ```js
-var express = require('provejs-express'),
-    bodyParser = require('body-parser'),
-    form = require('express-form'),
-    field = form.field;
+var express = require('provejs-express');
+var bodyParser = require('body-parser');
+var form = require('express-form');
+var field = form.field;
 
 var app = express();
 app.use(bodyParser());
 
-app.post(
-
-  // Route
-  '/user',
-
-  // Form filter and validation middleware
-  form(
+var validation = form(
     field("username").trim().required().is(/^[a-z]+$/),
     field("password").trim().required().is(/^[0-9]+$/),
     field("email").trim().isEmail()
-   ),
-
-   // Express request-handler now receives filtered and validated data
-   function(req, res){
-     if (!req.form.isValid) {
-       // Handle errors
-       console.log(req.form.errors);
-
-     } else {
-       // Or, use filtered form data from the form object:
-       console.log("Username:", req.form.username);
-       console.log("Password:", req.form.password);
-       console.log("Email:", req.form.email);
-     }
-  }
 );
 
+var controller = function(req, res){
+
+    // Setup: we use req.form as this contains our validated
+    // and sanitized data. We don't use req.body because that
+    // is un-sanitized and un-validated data.
+    var isValid = req.form.isValid;
+    var errors = req.form.getErrors();
+    var username = req.form.username;
+    var password = req.form.password;
+    var email = req.form.email;
+
+    if (!isValid) {
+        console.log(req.form.errors);
+    } else {
+        console.log("Username:", username);
+        console.log("Password:", password);
+        console.log("Email:", email);
+
+        // errors are automatically saved in res.locals
+        console.log('res.locals.errors', res.locals.errors);
+    }
+};
+
+app.post('/user', validation, controller);
 app.listen(3000);
 ```
+
+## Features
+
+- Automatically save errors to res.locals.errors.
+- Supports all validators from https://github.com/chriso/validator.js/
+- Supports all sanitizers from https://github.com/chriso/validator.js/
+- Supports additional validators and sanitizers.
 
 ## Documentation
 
@@ -57,23 +67,15 @@ arguments to the main module function. For example:
 
 ```js
 var form = require("provejs-express");
+var middleware = form(form.field("username").trim());
+var controller = function(req, res) {};
 
-app.post('/user',
-
-  // Express Form Route Middleware: trims whitespace off of
-  // the `username` field.
-  form(form.field("username").trim()),
-
-  // standard Express handler
-  function(req, res) {
-    // ...
-  }
-);
+app.post('/user', middleware, controller);
 ```
 
 ### Fields
 
-The `field` property of the module creates a filter/validator object tied to a specific field.
+The `field` property of the module creates a saniter/validator object tied to a specific field.
 
 ```
 field(fieldname[, label]);
@@ -90,7 +92,7 @@ field("post.super.nested.property").required()
 Simply specifying a property like this, makes sure it exists. So, even if `req.body.post` was undefined,
 `req.form.post.content` would be defined. This helps avoid any unwanted errors in your code.
 
-The API is chainable, so you can keep calling filter/validator methods one after the other:
+The API is chainable, so you can keep calling sanitizer/validator methods one after the other:
 
 ```js
 filter("username")
@@ -103,32 +105,12 @@ filter("username")
 
 ### Sanitize API:
 
-Type Coercion
+The sanitize methods are used to:
+- coerce inputs into a specific data type,
+- set a default data value,
+- string transformations.
 
-    toFloat()           -> Number
-
-    toInt()             -> Number, rounded down
-
-    toBoolean()         -> Boolean from truthy and falsy values
-
-    toBooleanStrict()   -> Only true, "true", 1 and "1" are `true`
-
-    ifNull(replacement) -> "", undefined and null get replaced by `replacement`
-
-String Transformations
-
-    trim(chars)                 -> `chars` defaults to whitespace
-
-    ltrim(chars)
-
-    rtrim(chars)
-
-    toLower() / toLowerCase()
-
-    toUpper() / toUpperCase()
-
-    truncate(length)            -> Chops value at (length - 3), appends `...`
-
+todo: list sanitize methods here.
 
 ### Validator API:
 
@@ -141,14 +123,17 @@ placeholder value from passing the `required()` check.
 
 Use "%s" in the message to have the field name or label printed in the message:
 
-    validate("username").required()
-    // -> "username is required"
+Example of the default message will being shown:
+- validate("username").required()
+- // -> "username is required"
 
-    validate("username").required("Type your desired username", "What is your %s?")
-    // -> "What is your username?"
+Example of overriding the default message and the placeholder message:
+- validate("username").required("Type your desired username", "What is your %s?")
+- // -> "What is your username?"
 
-    validate("username", "Username").required("", "What is your %s?")
-    // -> "What is your Username?"
+Example of overriding the default message:
+- validate("username", "Username").required("", "What is your %s?")
+- // -> "What is your Username?"
 
 
 **Validation Methods**
