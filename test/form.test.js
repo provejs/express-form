@@ -1,18 +1,18 @@
-var assert = require("assert");
-var form = require("../index");
+var assert = require('assert');
+var form = require('../index');
 var validate = form.field;
 var utils = require('../lib/utils');
 
 module.exports = {
   'form : isValid': function() {
     // Failure.
-    var req = { body: { field: "fail" }};
-    form(validate("field").isEmail())(req, {});
+    var req = { body: { field: 'fail' }};
+    form(validate('field').isEmail())(req, {});
     assert.strictEqual(req.form.isValid, false);
 
     // Success
-    var req = { body: { field: "me@dandean.com" }};
-    form(validate("field").isEmail())(req, {});
+    var req = { body: { field: 'me@dandean.com' }};
+    form(validate('field').isEmail())(req, {});
     assert.strictEqual(req.form.isValid, true);
     
     // form.isValid is a getter only
@@ -23,38 +23,38 @@ module.exports = {
   'form : getErrors': function() {
     var req = {
       body: {
-        field0: "win",
-        field1: "fail",
-        field2: "fail",
-        field3: "fail"
+        field0: 'win',
+        field1: 'fail',
+        field2: 'fail',
+        field3: 'fail'
       }
     };
     
     form(
-      validate("field0").equals("win"),
-      validate("field1").isEmail(),
-      validate("field2").isEmail().isURL(),
-      validate("field3").isEmail().isURL().isIP()
+      validate('field0').equals('win'),
+      validate('field1').isEmail(),
+      validate('field2').isEmail().isURL(),
+      validate('field3').isEmail().isURL().isIP()
     )(req, {});
     
     assert.equal(req.form.isValid, false);
     assert.equal(req.form.errors.length, 6);
 
-    assert.equal(req.form.getErrors("field0").length, 0);
-    assert.equal(req.form.getErrors("field1").length, 1);
-    assert.equal(req.form.getErrors("field2").length, 2);
-    assert.equal(req.form.getErrors("field3").length, 3);
+    assert.equal(req.form.getErrors('field0').length, 0);
+    assert.equal(req.form.getErrors('field1').length, 1);
+    assert.equal(req.form.getErrors('field2').length, 2);
+    assert.equal(req.form.getErrors('field3').length, 3);
   },
   
   'form : configure : sources': function() {
     form.configure({ sources: ['other'] });
 
-    var req = { other: { field: "me@dandean.com" }};
-    form(validate("field").isEmail())(req, {});
+    var req = { other: { field: 'me@dandean.com' }};
+    form(validate('field').isEmail())(req, {});
     assert.strictEqual(req.form.isValid, true);
-    assert.equal(req.form.field, "me@dandean.com");
+    assert.equal(req.form.field, 'me@dandean.com');
 
-    form.configure({ sources: ['body', "query", "params"] });
+    form.configure({ sources: ['body', 'query', 'params'] });
   },
   
   'form : configure : autoTrim': function() {
