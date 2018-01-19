@@ -18,9 +18,9 @@ var app = express();
 app.use(bodyParser());
 
 var validation = form(
-    field("username").toTrim().isRequired().is(/^[a-z]+$/),
-    field("password").toTrim().isRequired().is(/^[0-9]+$/),
-    field("email").toTrim().isEmail()
+    field('username').toTrim().isRequired().is(/^[a-z]+$/),
+    field('password').toTrim().isRequired().is(/^[0-9]+$/),
+    field('email').toTrim().isEmail()
 );
 
 var controller = function(req, res){
@@ -36,9 +36,9 @@ var controller = function(req, res){
     if (!isValid) {
         console.log(req.form.errors);
     } else {
-        console.log("Username:", username);
-        console.log("Password:", password);
-        console.log("Email:", email);
+        console.log('Username:', username);
+        console.log('Password:', password);
+        console.log('Email:', email);
 
         // errors are automatically saved in res.locals
         console.log('res.locals.errors', res.locals.errors);
@@ -84,9 +84,9 @@ field(fieldname[, label]);
 You can access nested properties with either dot or square-bracket notation.
 
 ```js
-field("post.content").isMinLength(50),
-field("post[user][id]").isInt(),
-field("post.super.nested.property").isRequired()
+field('post.content').isMinLength(50),
+field('post[user][id]').isInt(),
+field('post.super.nested.property').isRequired()
 ```
 
 Simply specifying a property like this, makes sure it exists. So, even if `req.body.post` was undefined,
@@ -127,19 +127,19 @@ router.post('/colors', middleware, controller);
 ```
 
 ```javascript
-field("project.users").toArray(),
-// undefined => [], "" => [], "q" => ["q"], ["a", "b"] => ["a", "b"]
+field('project.users').toArray(),
+// undefined => [], '' => [], 'q' => ['q'], ['a', 'b'] => ['a', 'b']
 ```
 
 ```javascript
-field("project.block"),
-// project.block: ["a", "b"] => "a". No "array()", so only first value used.
+field('project.block'),
+// project.block: ['a', 'b'] => 'a'. No 'array()', so only first value used.
 ```
 
 In addition, any other methods called with the array method, are applied to every value within the array.
 ```javascript
-field("post.users").toArray().toUpper()
-// post.users: ["one", "two", "three"] => ["ONE", "TWO", "THREE"]
+field('post.users').toArray().toUpper()
+// post.users: ['one', 'two', 'three'] => ['ONE', 'TWO', 'THREE']
 ```
 
 
@@ -193,7 +193,7 @@ Canonicalizes an email address. (This doesn't validate that the input is an emai
 See [Validator.js](https://github.com/chriso/validator.js#sanitizers).
 
 ## toEscape()
-Replace <, >, &, ', " and / with HTML entities.
+Replace <, >, &, ', ' and / with HTML entities.
 See [Validator.js](https://github.com/chriso/validator.js#sanitizers).
 
 ## toFloat()
@@ -270,7 +270,7 @@ See [Validator.js](https://github.com/chriso/validator.js#sanitizers).
 Truncate input string. Adds `...` to the end of the string.
 
 ## toUnescape()
-Replaces HTML encoded entities with <, >, &, ', " and /.
+Replaces HTML encoded entities with <, >, &, ', ' and /.
 
 See [Validator.js](https://github.com/chriso/validator.js#sanitizers).
 
@@ -310,20 +310,20 @@ the validator. `required()` allows you to set a placeholder (or default value)
 that your form contains when originally presented to the user. This prevents the
 placeholder value from passing the `required()` check.
 
-Use "%s" in the message to have the field name or label printed in the message:
+Use '%s' in the message to have the field name or label printed in the message:
 
 Example of the default message will being shown:
 ```javascript
-field('username').isRequired() // -> "username is required"
+field('username').isRequired() // -> 'username is required'
 ```
 Example of overriding the default message and the placeholder message:
 ```javascript
-field('username').isRequired("Type your desired username", "What is your %s?") // -> "What is your username?"
+field('username').isRequired('Type your desired username', 'What is your %s?') // -> 'What is your username?'
 ```
 
 Example of overriding the default message:
 ```javascript
-field('username', 'Username').isRequired('', 'What is your %s?') // -> "What is your Username?"
+field('username', 'Username').isRequired('', 'What is your %s?') // -> 'What is your Username?'
 ```
 
 
@@ -337,8 +337,8 @@ Checks that the value matches the given regular expression.
 
         
 ```javascript
-validate("username").is('[a-z]', 'i', 'Only letters are valid in %s')
-validate("username").is(/[a-z]/i, 'Only letters are valid in %s')
+validate('username').is('[a-z]', 'i', 'Only letters are valid in %s')
+validate('username').is(/[a-z]/i, 'Only letters are valid in %s')
 ```
 ## isAfter([message])
 ## isAlpha([message])
@@ -424,8 +424,8 @@ Checks that the value does NOT match the given regular expression.
 - message (String): Optional validation message.
 
 ```javascript
-validate("username").not("[a-z]", "i", "Letters are not valid in %s")
-validate("username").not(/[a-z]/i, "Letters are not valid in %s")
+validate('username').not('[a-z]', 'i', 'Letters are not valid in %s')
+validate('username').not(/[a-z]/i, 'Letters are not valid in %s')
 ```
 
 ## isNotContains(value [,message])
@@ -458,7 +458,7 @@ You can define your own custom sync and async validators.
 Example: Throws an error if `username` field does not have value 'admin'.
 ```javascript
 var isAdmin = function(value, source, locals) {
-    if (value !== "admin") throw new Error("%s must be 'admin'.");
+    if (value !== 'admin') throw new Error('%s must be 'admin'.');
 }
 field('username').custom(isAdmin);
 ```
