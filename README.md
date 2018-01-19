@@ -57,9 +57,7 @@ app.listen(3000);
 - Supports all sanitizers from https://github.com/chriso/validator.js/
 - Supports additional validators and sanitizers.
 
-## Documentation
-
-### Module
+## Module
 
 `provejs-express` returns an `express` [Route Middleware](http://expressjs.com/guide.html#Route-Middleware) function.
 You specify filtering and validation by passing filters and validators as
@@ -73,7 +71,7 @@ var controller = function(req, res) {};
 app.post('/user', middleware, controller);
 ```
 
-### Fields
+## Fields
 
 The `field` property of the module creates a saniter/validator object tied to a specific field.
 
@@ -99,18 +97,55 @@ filter("username")
   .required()
   .trim()
   .toLower()
-  .truncate(5)
+  .toTruncate(5)
   .isAlphanumeric()
 ```
 
-### Sanitize API:
+## Sanitize API:
 
 The sanitize methods are used to:
 - coerce inputs into a specific data type,
 - set a default data value,
-- string transformations.
+- perform string transformations.
 
-todo: list sanitize methods here.
+All sanitizers methods begin with the `to` prefix in the method name.
+
+### toArray
+
+Converts the input int an array if 
+```js
+var middleware = form(field('colors').toArray());
+var controller = function(req, res) {
+    console.log(typeof req.form.colors); // => 'array'
+};
+router.post('/colors', middleware, controller)
+```
+
+### toBlacklist
+### toEscape
+### toUnescape
+### toLtrim
+### toNormalizeEmail
+### toRtrim
+### toStripLow
+### toBoolean
+### toBooleanStrict
+### toDate
+### toFloat
+### toInt
+### toTrim
+### toWhitelist
+### toDefault
+### toUpper
+### toLower
+### toTruncate
+### toHtml
+### toMoment
+
+
+
+### custom
+
 
 ### Validator API:
 
@@ -135,6 +170,71 @@ Example of overriding the default message:
 - validate("username", "Username").required("", "What is your %s?")
 - // -> "What is your Username?"
 
+### isArrayLength
+### isContains
+### isEquals
+### isAfter
+### isAlpha
+### isAlphanumeric
+### isAscii
+### isBase64
+### isBefore
+### isBoolean
+### isByteLength
+### isCreditCard
+### isCurrency
+### isDataURI
+### isDate
+### isDecimal
+### isDivisibleBy
+### isEmail
+### isEmpty
+### isFQDN
+### isFloat
+### isFullWidth
+### isHalfWidth
+### isHash
+### isHexColor
+### isHexadecimal
+### isIP
+### isISBN
+### isISSN
+### isISIN
+### isISO8601
+### isISO31661Alpha2
+### isISRC
+### isIn
+### isInt
+### isJSON
+### isLatLong
+### isLength
+### isLowercase
+### isMACAddress
+### isMD5
+### isMimeType
+### isMobilePhone
+### isMongoId
+### isMultibyte
+### isNumeric
+### isPort
+### isPostalCode
+### isSurrogatePair
+### isString
+### isURL
+### isUUID
+### isUppercase
+### isVariableWidth
+### isWhitelisted
+### isMatches
+### isNotContains
+### isFinite
+### is
+### isNot
+### isRequired
+### isMinLength
+### isMaxLength
+### isNotEmpty
+### isDaterange
 
 **Validation Methods**
 
@@ -214,10 +314,10 @@ Example of overriding the default message:
         Compares the field to `value`.
 
         Example:
-        validate("username").equals("admin")
+        validate("username").isEquals("admin")
 
         validate("password").is(/^\w{6,20}$/)
-        validate("password_confirmation").equals("field::password")
+        validate("password_confirmation").isEquals("field::password")
 
 
     contains(value[, message])
@@ -255,7 +355,7 @@ Example of overriding the default message:
 
         This means that you don't have to worry about unexpected post data that might break your code. Eg/ when you call an array method on what is actually a string.
 
-        field("project.users").array(),
+        field("project.users").toArray(),
         // undefined => [], "" => [], "q" => ["q"], ["a", "b"] => ["a", "b"]
 
         field("project.block"),
@@ -263,7 +363,7 @@ Example of overriding the default message:
 
         In addition, any other methods called with the array method, are applied to every value within the array.
 
-        field("post.users").array().toUpper()
+        field("post.users").toArray().toUpper()
         // post.users: ["one", "two", "three"] => ["ONE", "TWO", "THREE"]
 
 ### Custom Methods

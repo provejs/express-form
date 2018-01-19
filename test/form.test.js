@@ -39,7 +39,7 @@ module.exports = {
 		};
 
 		form(
-			field('field0').equals('win'),
+			field('field0').isEquals('win'),
 			field('field1').isEmail(),
 			field('field2').isEmail().isURL(),
 			field('field3').isEmail().isURL().isIP()

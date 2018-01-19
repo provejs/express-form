@@ -14,10 +14,10 @@ module.exports = {
 			}
 		};
 		form(
-			field('fieldx').array(),
-			field('field1').array(),
-			field('field2').array(),
-			field('field3').array()
+			field('fieldx').toArray(),
+			field('field1').toArray(),
+			field('field2').toArray(),
+			field('field3').toArray()
 		)(req, {});
 		assert.strictEqual(Array.isArray(req.form.fieldx), true);
 		assert.strictEqual(req.form.fieldx.length, 0);
@@ -46,7 +46,7 @@ module.exports = {
 				field: ['david', 'stephen', 'greg']
 			}
 		};
-		form(field('field').array().toUpper())(req, {});
+		form(field('field').toArray().toUpper())(req, {});
 		assert.strictEqual(req.form.field[0], 'DAVID');
 		assert.strictEqual(req.form.field[1], 'STEPHEN');
 		assert.strictEqual(req.form.field[2], 'GREG');
@@ -58,7 +58,7 @@ module.exports = {
 				field: [1, 2, 'f']
 			}
 		};
-		form(field('field').array().isInt())(req, {});
+		form(field('field').toArray().isInt())(req, {});
 		assert.equal(req.form.errors.length, 1);
 		assert.equal(req.form.errors[0], 'field is not an integer');
 	},
@@ -143,8 +143,8 @@ module.exports = {
 			}
 		};
 		form(
-			field('field1').trim().toUpper().maxLength(5),
-			field('field2').minLength(12).trim()
+			field('field1').toTrim().toUpper().isMaxLength(5),
+			field('field2').isMinLength(12).toTrim()
 		)(req, {});
 		assert.strictEqual(req.form.field1, 'WHATEVER');
 		assert.strictEqual(req.form.field2, 'some thing');
@@ -179,7 +179,7 @@ module.exports = {
 			}
 		};
 		form(
-			field('field0').equals('win'),
+			field('field0').isEquals('win'),
 			field('field1').isEmail(),
 			field('field2').isEmail().isURL(),
 			field('field3').isEmail().isURL().isIP()

@@ -3,13 +3,13 @@ var form = require('../index');
 var field = form.field;
 
 module.exports = {
-	'sanitize : trim': function () {
+	'sanitize : toTrim': function () {
 		var req = {
 			body: {
 				field: '\r\n  value   \t'
 			}
 		};
-		form(field('field').trim())(req, {});
+		form(field('field').toTrim())(req, {});
 		assert.equal(req.form.field, 'value');
 	},
 
@@ -19,7 +19,7 @@ module.exports = {
 				field: '\r\n  value   \t'
 			}
 		};
-		form(field('field').ltrim())(req, {});
+		form(field('field').toLtrim())(req, {});
 		assert.equal(req.form.field, 'value   \t');
 	},
 
@@ -29,7 +29,7 @@ module.exports = {
 				field: '\r\n  value   \t'
 			}
 		};
-		form(field('field').rtrim())(req, {});
+		form(field('field').toRtrim())(req, {});
 		assert.equal(req.form.field, '\r\n  value');
 	},
 
@@ -38,7 +38,7 @@ module.exports = {
 		var req = {
 			body: {}
 		};
-		form(field('field').ifNull('value'))(req, {});
+		form(field('field').toDefault('value'))(req, {});
 		assert.equal(req.form.field, 'value');
 
 		// Replace empty string with value
@@ -47,7 +47,7 @@ module.exports = {
 				field: ''
 			}
 		};
-		form(field('field').ifNull('value'))(req, {});
+		form(field('field').toDefault('value'))(req, {});
 		assert.equal(req.form.field, 'value');
 
 		// Replace NULL with value
@@ -56,7 +56,7 @@ module.exports = {
 				field: null
 			}
 		};
-		form(field('field').ifNull('value'))(req, {});
+		form(field('field').toDefault('value'))(req, {});
 		assert.equal(req.form.field, 'value');
 
 		// Replace undefined with value
@@ -65,7 +65,7 @@ module.exports = {
 				field: undefined
 			}
 		};
-		form(field('field').ifNull('value'))(req, {});
+		form(field('field').toDefault('value'))(req, {});
 		assert.equal(req.form.field, 'value');
 
 		// DO NOT replace false
@@ -74,7 +74,7 @@ module.exports = {
 				field: false
 			}
 		};
-		form(field('field').ifNull('value'))(req, {});
+		form(field('field').toDefault('value'))(req, {});
 		assert.equal(req.form.field, false);
 
 		// DO NOT replace zero
@@ -83,7 +83,7 @@ module.exports = {
 				field: 0
 			}
 		};
-		form(field('field').ifNull('value'))(req, {});
+		form(field('field').toDefault('value'))(req, {});
 		assert.equal(req.form.field, 0);
 	},
 
@@ -329,11 +329,11 @@ module.exports = {
 			}
 		};
 		form(
-			field('field1').truncate(3), // ...
-			field('field2').truncate(3), // EMPTY
-			field('field3').truncate(3), // 123
-			field('field4').truncate(5), // 12...
-			field('field5').truncate(7) // 1234...
+			field('field1').toTruncate(3), // ...
+			field('field2').toTruncate(3), // EMPTY
+			field('field3').toTruncate(3), // 123
+			field('field4').toTruncate(5), // 12...
+			field('field5').toTruncate(7) // 1234...
 		)(req, {});
 		assert.equal(req.form.field1, '...');
 		assert.equal(req.form.field2, '');
@@ -351,7 +351,7 @@ module.exports = {
 				}
 			}
 		};
-		form(field('email').truncate(10))(req, {});
+		form(field('email').toTruncate(10))(req, {});
 		assert.strictEqual(req.form.email, '[object...');
 	},
 
@@ -361,7 +361,7 @@ module.exports = {
 				email: ['myemail1@example.com', 'myemail2@example.org']
 			}
 		};
-		form(field('email').truncate(11))(req, {});
+		form(field('email').toTruncate(11))(req, {});
 		assert.strictEqual(req.form.email, 'myemail1...');
 	},
 

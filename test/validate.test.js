@@ -415,7 +415,7 @@ module.exports = {
 				field: '  \t'
 			}
 		};
-		form(field('field').notEmpty())(req, {});
+		form(field('field').isNotEmpty())(req, {});
 		assert.equal(req.form.errors.length, 1);
 		assert.equal(req.form.errors[0], 'field has no value or is only whitespace');
 
@@ -425,7 +425,7 @@ module.exports = {
 				field: '  \t'
 			}
 		};
-		form(field('field').notEmpty('!!! %s !!!'))(req, {});
+		form(field('field').isNotEmpty('!!! %s !!!'))(req, {});
 		assert.equal(req.form.errors.length, 1);
 		assert.equal(req.form.errors[0], '!!! field !!!');
 
@@ -435,7 +435,7 @@ module.exports = {
 				field: 'win'
 			}
 		};
-		form(field('field').notEmpty())(req, {});
+		form(field('field').isNotEmpty())(req, {});
 		assert.equal(req.form.errors.length, 0);
 	},
 
@@ -446,7 +446,7 @@ module.exports = {
 				field: 'value'
 			}
 		};
-		form(field('field').equals('other'))(req, {});
+		form(field('field').isEquals('other'))(req, {});
 		assert.equal(req.form.errors.length, 1);
 		assert.equal(req.form.errors[0], 'field does not equal other');
 
@@ -456,7 +456,7 @@ module.exports = {
 				field: 'value'
 			}
 		};
-		form(field('field').equals('other', '!!! %s !!!'))(req, {});
+		form(field('field').isEquals('other', '!!! %s !!!'))(req, {});
 		assert.equal(req.form.errors.length, 1);
 		assert.equal(req.form.errors[0], '!!! field !!!');
 
@@ -466,7 +466,7 @@ module.exports = {
 				field: 'value'
 			}
 		};
-		form(field('field').equals('value'))(req, {});
+		form(field('field').isEquals('value'))(req, {});
 		assert.equal(req.form.errors.length, 0);
 
 
@@ -477,7 +477,7 @@ module.exports = {
 				field2: 'value2'
 			}
 		};
-		form(field('field1').equals('field::field2'))(req, {});
+		form(field('field1').isEquals('field::field2'))(req, {});
 		assert.equal(req.form.errors.length, 1);
 		assert.equal(req.form.errors[0], 'field1 does not equal value2');
 
@@ -488,7 +488,7 @@ module.exports = {
 				field2: 'value'
 			}
 		};
-		form(field('field1').equals('field::field2'))(req, {});
+		form(field('field1').isEquals('field::field2'))(req, {});
 		assert.equal(req.form.errors.length, 0);
 
 		// Failure with nested values
@@ -502,7 +502,7 @@ module.exports = {
 				}
 			}
 		};
-		form(field('field1.deep').equals('field::field2[deeper]'))(req, {});
+		form(field('field1.deep').isEquals('field::field2[deeper]'))(req, {});
 		assert.equal(req.form.errors.length, 1);
 		assert.equal(req.form.errors[0], 'field1.deep does not equal value2');
 
@@ -517,7 +517,7 @@ module.exports = {
 				}
 			}
 		};
-		form(field('field1[deep]').equals('field::field2.deeper'))(req, {});
+		form(field('field1[deep]').isEquals('field::field2.deeper'))(req, {});
 		assert.equal(req.form.errors.length, 0);
 	},
 
@@ -528,7 +528,7 @@ module.exports = {
 				field: 'value'
 			}
 		};
-		form(field('field').contains('other'))(req, {});
+		form(field('field').isContains('other'))(req, {});
 		assert.equal(req.form.errors.length, 1);
 		assert.equal(req.form.errors[0], 'field does not contain required characters');
 
@@ -538,7 +538,7 @@ module.exports = {
 				field: 'value'
 			}
 		};
-		form(field('field').contains('other', '!!! %s !!!'))(req, {});
+		form(field('field').isContains('other', '!!! %s !!!'))(req, {});
 		assert.equal(req.form.errors.length, 1);
 		assert.equal(req.form.errors[0], '!!! field !!!');
 
@@ -548,7 +548,7 @@ module.exports = {
 				field: 'value'
 			}
 		};
-		form(field('field').contains('alu'))(req, {});
+		form(field('field').isContains('alu'))(req, {});
 		assert.equal(req.form.errors.length, 0);
 	},
 
@@ -559,7 +559,7 @@ module.exports = {
 				field: 'value'
 			}
 		};
-		form(field('field').notContains('alu'))(req, {});
+		form(field('field').isNotContains('alu'))(req, {});
 		assert.equal(req.form.errors.length, 1);
 		assert.equal(req.form.errors[0], 'field contains invalid characters');
 
@@ -569,7 +569,7 @@ module.exports = {
 				field: 'value'
 			}
 		};
-		form(field('field').notContains('alu', '!!! %s !!!'))(req, {});
+		form(field('field').isNotContains('alu', '!!! %s !!!'))(req, {});
 		assert.equal(req.form.errors.length, 1);
 		assert.equal(req.form.errors[0], '!!! field !!!');
 
@@ -579,7 +579,7 @@ module.exports = {
 				field: 'value'
 			}
 		};
-		form(field('field').notContains('win'))(req, {});
+		form(field('field').isNotContains('win'))(req, {});
 		assert.equal(req.form.errors.length, 0);
 	},
 
@@ -597,7 +597,7 @@ module.exports = {
 				field: 'value'
 			}
 		};
-		form(field('field').regex(/^\d+$/))(req, {});
+		form(field('field').is(/^\d+$/))(req, {});
 		assert.equal(req.form.errors.length, 1);
 		assert.equal(req.form.errors[0], 'field has invalid characters');
 
@@ -607,7 +607,7 @@ module.exports = {
 				field: 'value'
 			}
 		};
-		form(field('field').regex(/^\d+$/, '!!! %s !!!'))(req, {});
+		form(field('field').is(/^\d+$/, '!!! %s !!!'))(req, {});
 		assert.equal(req.form.errors.length, 1);
 		assert.equal(req.form.errors[0], '!!! field !!!');
 
@@ -617,7 +617,7 @@ module.exports = {
 				field: 'value'
 			}
 		};
-		form(field('field').regex('^\d+$'))(req, {});
+		form(field('field').is('^\d+$'))(req, {});
 		assert.equal(req.form.errors.length, 1);
 		assert.equal(req.form.errors[0], 'field has invalid characters');
 
@@ -627,7 +627,7 @@ module.exports = {
 				field: 'value'
 			}
 		};
-		form(field('field').regex('^VALUE$', 'i'))(req, {});
+		form(field('field').is('^VALUE$', 'i'))(req, {});
 		assert.equal(req.form.errors.length, 0);
 
 		// Failure: String with custom message
@@ -636,7 +636,7 @@ module.exports = {
 				field: 'value'
 			}
 		};
-		form(field('field').regex('^\d+$', '!!! %s !!!'))(req, {});
+		form(field('field').is('^\d+$', '!!! %s !!!'))(req, {});
 		assert.equal(req.form.errors.length, 1);
 		assert.equal(req.form.errors[0], '!!! field !!!');
 
@@ -646,7 +646,7 @@ module.exports = {
 				field: 'value'
 			}
 		};
-		form(field('field').regex('^\d+$', 'i', '!!! %s !!!'))(req, {});
+		form(field('field').is('^\d+$', 'i', '!!! %s !!!'))(req, {});
 		assert.equal(req.form.errors.length, 1);
 		assert.equal(req.form.errors[0], '!!! field !!!');
 
@@ -657,7 +657,7 @@ module.exports = {
 				field: 'value'
 			}
 		};
-		form(field('field').regex(/^value$/))(req, {});
+		form(field('field').is(/^value$/))(req, {});
 		assert.equal(req.form.errors.length, 0);
 	},
 
@@ -675,7 +675,7 @@ module.exports = {
 				field: 'value'
 			}
 		};
-		form(field('field').notRegex(/^value$/))(req, {});
+		form(field('field').isNot(/^value$/))(req, {});
 		assert.equal(req.form.errors.length, 1);
 		assert.equal(req.form.errors[0], 'field has invalid characters');
 
@@ -685,7 +685,7 @@ module.exports = {
 				field: 'value'
 			}
 		};
-		form(field('field').notRegex(/^value$/, '!!! %s !!!'))(req, {});
+		form(field('field').isNot(/^value$/, '!!! %s !!!'))(req, {});
 		assert.equal(req.form.errors.length, 1);
 		assert.equal(req.form.errors[0], '!!! field !!!');
 
@@ -695,7 +695,7 @@ module.exports = {
 				field: 'value'
 			}
 		};
-		form(field('field').notRegex('^value$'))(req, {});
+		form(field('field').isNot('^value$'))(req, {});
 		assert.equal(req.form.errors.length, 1);
 		assert.equal(req.form.errors[0], 'field has invalid characters');
 
@@ -705,7 +705,7 @@ module.exports = {
 				field: 'value'
 			}
 		};
-		form(field('field').notRegex('^win$', 'i'))(req, {});
+		form(field('field').isNot('^win$', 'i'))(req, {});
 		assert.equal(req.form.errors.length, 0);
 
 		// Failure: String with custom message
@@ -714,7 +714,7 @@ module.exports = {
 				field: 'value'
 			}
 		};
-		form(field('field').notRegex('^value$', '!!! %s !!!'))(req, {});
+		form(field('field').isNot('^value$', '!!! %s !!!'))(req, {});
 		assert.equal(req.form.errors.length, 1);
 		assert.equal(req.form.errors[0], '!!! field !!!');
 
@@ -724,7 +724,7 @@ module.exports = {
 				field: 'value'
 			}
 		};
-		form(field('field').notRegex('^value$', 'i', '!!! %s !!!'))(req, {});
+		form(field('field').isNot('^value$', 'i', '!!! %s !!!'))(req, {});
 		assert.equal(req.form.errors.length, 1);
 		assert.equal(req.form.errors[0], '!!! field !!!');
 
@@ -734,7 +734,7 @@ module.exports = {
 				field: 'value'
 			}
 		};
-		form(field('field').notRegex(/^win$/))(req, {});
+		form(field('field').isNot(/^win$/))(req, {});
 		assert.equal(req.form.errors.length, 0);
 	},
 
@@ -745,7 +745,7 @@ module.exports = {
 				field: 'value'
 			}
 		};
-		form(field('field').minLength(10))(req, {});
+		form(field('field').isMinLength(10))(req, {});
 		assert.equal(req.form.errors.length, 1);
 		assert.equal(req.form.errors[0], 'field is too short');
 
@@ -755,7 +755,7 @@ module.exports = {
 				field: 'value'
 			}
 		};
-		form(field('field').minLength(10, '!!! %s !!!'))(req, {});
+		form(field('field').isMinLength(10, '!!! %s !!!'))(req, {});
 		assert.equal(req.form.errors.length, 1);
 		assert.equal(req.form.errors[0], '!!! field !!!');
 
@@ -765,7 +765,7 @@ module.exports = {
 				field: 'value'
 			}
 		};
-		form(field('field').minLength(1))(req, {});
+		form(field('field').isMinLength(1))(req, {});
 		assert.equal(req.form.errors.length, 0);
 	},
 
@@ -779,10 +779,10 @@ module.exports = {
 			}
 		};
 		form(field('password', 'Password')
-			.required()
+			.isRequired()
 			.isString()
-			.minLength(10, '%s must be a minimum of 10 characters')
-			.maxLength(256, '%s must be a maximum of 256 characters'))(req, {});
+			.isMinLength(10, '%s must be a minimum of 10 characters')
+			.isMaxLength(256, '%s must be a maximum of 256 characters'))(req, {});
 		assert.ok(!req.form.isValid);
 		assert.strictEqual(req.form.errors[0], 'Password is not a string');
 	},
@@ -794,19 +794,19 @@ module.exports = {
 				field: 'value'
 			}
 		};
-		form(field('field').maxLength(1))(req, {});
+		form(field('field').isMaxLength(1))(req, {});
 		assert.equal(req.form.errors.length, 1);
 		assert.equal(req.form.errors[0], 'field is too long');
 
 		// Failure w/ custom message.
 		// var req = { body: { field: 'value' }};
-		// form(field('field').maxLength(1, '!!! %s !!!'))(req, {});
+		// form(field('field').isMaxLength(1, '!!! %s !!!'))(req, {});
 		// assert.equal(req.form.errors.length, 1);
 		// assert.equal(req.form.errors[0], '!!! field !!!');
 
 		// Success
 		// var req = { body: { field: 'value' }};
-		// form(field('field').maxLength(5))(req, {});
+		// form(field('field').isMaxLength(5))(req, {});
 		// assert.equal(req.form.errors.length, 0);
 	},
 
@@ -815,7 +815,7 @@ module.exports = {
 		var req = {
 			body: {}
 		};
-		form(field('field').required())(req, {});
+		form(field('field').isRequired())(req, {});
 		assert.equal(req.form.errors.length, 1);
 		assert.equal(req.form.errors[0], 'field is required');
 
@@ -825,7 +825,7 @@ module.exports = {
 				field: 'value'
 			}
 		};
-		form(field('field').required('value', '!!! %s !!!'))(req, {});
+		form(field('field').isRequired('value', '!!! %s !!!'))(req, {});
 		assert.equal(req.form.errors.length, 1);
 		assert.equal(req.form.errors[0], '!!! field !!!');
 
@@ -835,7 +835,7 @@ module.exports = {
 				field: '5000.00'
 			}
 		};
-		form(field('field').required())(req, {});
+		form(field('field').isRequired())(req, {});
 		assert.equal(req.form.errors.length, 0);
 
 		// Non-required fields with no value should not trigger errors
@@ -1059,10 +1059,10 @@ module.exports = {
 			}
 		};
 		form(
-			field('field[inner]').required().equals('value'),
-			field('field[inner]').required().equals('fail'),
-			field('field[even][more][inner]').required().equals('value'),
-			field('field[even][more][inner]').required().equals('fail')
+			field('field[inner]').isRequired().isEquals('value'),
+			field('field[inner]').isRequired().isEquals('fail'),
+			field('field[even][more][inner]').isRequired().isEquals('value'),
+			field('field[even][more][inner]').isRequired().isEquals('fail')
 		)(req, {});
 		assert.equal(req.form.errors.length, 2);
 	}

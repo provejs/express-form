@@ -29,10 +29,10 @@ module.exports = {
 		app.post(
 			'/user',
 			form(
-				field('username').trim(),
-				field('username').required().is(/^[a-z]+$/),
-				field('password').trim(),
-				field('password').required().is(/^[0-9]+$/)
+				field('username').toTrim(),
+				field('username').isRequired().is(/^[a-z]+$/),
+				field('password').toTrim(),
+				field('password').isRequired().is(/^[0-9]+$/)
 			),
 			function (req, res) {
 				assert.strictEqual(req.form.username, 'dandean');
