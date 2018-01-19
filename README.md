@@ -63,10 +63,15 @@ app.listen(3000);
 You specify sanitizing and validation by passing sanitizers and validators as arguments to the main module function. For example:
 
 ```js
-var form = require("provejs-express");
-var middleware = form(form.field("username").toTrim());
+var form = require('provejs-express');
+var available = function(value, data, locals, next) {
+    // check data for unique username, and return err if not unique
+    // next(new Error('That %s is already taken'));
+    next();
+};
+var validator = form(form.field('username').toTrim().isMinLength(6).custom(avaliable));
 var controller = function(req, res) {};
-app.post('/user', middleware, controller);
+app.post('/user', validator, controller);
 ```
 
 ## Fields
