@@ -6,22 +6,22 @@ var utils = require('../lib/utils');
 module.exports = {
   'form : isValid': function() {
     // Failure.
-    var request = { body: { field: "fail" }};
-    form(validate("field").isEmail())(request, {});
-    assert.strictEqual(request.form.isValid, false);
+    var req = { body: { field: "fail" }};
+    form(validate("field").isEmail())(req, {});
+    assert.strictEqual(req.form.isValid, false);
 
     // Success
-    var request = { body: { field: "me@dandean.com" }};
-    form(validate("field").isEmail())(request, {});
-    assert.strictEqual(request.form.isValid, true);
+    var req = { body: { field: "me@dandean.com" }};
+    form(validate("field").isEmail())(req, {});
+    assert.strictEqual(req.form.isValid, true);
     
     // form.isValid is a getter only
-    request.form.isValid = false;
-    assert.strictEqual(request.form.isValid, true);
+    req.form.isValid = false;
+    assert.strictEqual(req.form.isValid, true);
   },
   
   'form : getErrors': function() {
-    var request = {
+    var req = {
       body: {
         field0: "win",
         field1: "fail",
@@ -35,52 +35,52 @@ module.exports = {
       validate("field1").isEmail(),
       validate("field2").isEmail().isURL(),
       validate("field3").isEmail().isURL().isIP()
-    )(request, {});
+    )(req, {});
     
-    assert.equal(request.form.isValid, false);
-    assert.equal(request.form.errors.length, 6);
+    assert.equal(req.form.isValid, false);
+    assert.equal(req.form.errors.length, 6);
 
-    assert.equal(request.form.getErrors("field0").length, 0);
-    assert.equal(request.form.getErrors("field1").length, 1);
-    assert.equal(request.form.getErrors("field2").length, 2);
-    assert.equal(request.form.getErrors("field3").length, 3);
+    assert.equal(req.form.getErrors("field0").length, 0);
+    assert.equal(req.form.getErrors("field1").length, 1);
+    assert.equal(req.form.getErrors("field2").length, 2);
+    assert.equal(req.form.getErrors("field3").length, 3);
   },
   
   'form : configure : sources': function() {
     form.configure({ sources: ['other'] });
 
-    var request = { other: { field: "me@dandean.com" }};
-    form(validate("field").isEmail())(request, {});
-    assert.strictEqual(request.form.isValid, true);
-    assert.equal(request.form.field, "me@dandean.com");
+    var req = { other: { field: "me@dandean.com" }};
+    form(validate("field").isEmail())(req, {});
+    assert.strictEqual(req.form.isValid, true);
+    assert.equal(req.form.field, "me@dandean.com");
 
     form.configure({ sources: ['body', "query", "params"] });
   },
   
   'form : configure : autoTrim': function() {
-    // request with username field containing a trailing space
-    var request = {
+    // req with username field containing a trailing space
+    var req = {
       body: {
         username: 'myuser1 '
       }
     };
     
-    var request2 = utils.clone(request);
+    var req2 = utils.clone(req);
     
     // alphanumeric
     var regex = /^[0-9A-Z]+$/i
     
     // autoTrim defaults to false, test results with it off
     assert.strictEqual(form._options.autoTrim, false);
-    form(validate('username').is(regex))(request, {});
-    assert.strictEqual(request.form.isValid, false);
+    form(validate('username').is(regex))(req, {});
+    assert.strictEqual(req.form.isValid, false);
     
     // test results with autoTrim turned on 
     form.configure({ autoTrim: true });
     assert.strictEqual(form._options.autoTrim, true);
-    form(validate('username').is(regex))(request2, {});
-    assert.strictEqual(request2.form.isValid, true);
-    assert.strictEqual(request2.form.username, 'myuser1');
+    form(validate('username').is(regex))(req2, {});
+    assert.strictEqual(req2.form.isValid, true);
+    assert.strictEqual(req2.form.username, 'myuser1');
     
     // turn autoTrim back off
     form.configure({ autoTrim: false });

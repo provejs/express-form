@@ -4,82 +4,82 @@ var filter = form.field;
 
 module.exports = {
   'filter : trim': function() {
-    var request = { body: { field: "\r\n  value   \t" }};
-    form(filter("field").trim())(request, {});
-    assert.equal(request.form.field, "value");
+    var req = { body: { field: "\r\n  value   \t" }};
+    form(filter("field").trim())(req, {});
+    assert.equal(req.form.field, "value");
   },
   
   'filter : ltrim': function() {
-    var request = { body: { field: "\r\n  value   \t" }};
-    form(filter("field").ltrim())(request, {});
-    assert.equal(request.form.field, "value   \t");
+    var req = { body: { field: "\r\n  value   \t" }};
+    form(filter("field").ltrim())(req, {});
+    assert.equal(req.form.field, "value   \t");
   },
 
   'filter : rtrim': function() {
-    var request = { body: { field: "\r\n  value   \t" }};
-    form(filter("field").rtrim())(request, {});
-    assert.equal(request.form.field, "\r\n  value");
+    var req = { body: { field: "\r\n  value   \t" }};
+    form(filter("field").rtrim())(req, {});
+    assert.equal(req.form.field, "\r\n  value");
   },
 
   'filter : ifNull': function() {
     // Replace missing value with "value"
-    var request = { body: {} };
-    form(filter("field").ifNull("value"))(request, {});
-    assert.equal(request.form.field, "value");
+    var req = { body: {} };
+    form(filter("field").ifNull("value"))(req, {});
+    assert.equal(req.form.field, "value");
 
     // Replace empty string with value
-    var request = { body: { field: "" }};
-    form(filter("field").ifNull("value"))(request, {});
-    assert.equal(request.form.field, "value");
+    var req = { body: { field: "" }};
+    form(filter("field").ifNull("value"))(req, {});
+    assert.equal(req.form.field, "value");
 
     // Replace NULL with value
-    var request = { body: { field: null }};
-    form(filter("field").ifNull("value"))(request, {});
-    assert.equal(request.form.field, "value");
+    var req = { body: { field: null }};
+    form(filter("field").ifNull("value"))(req, {});
+    assert.equal(req.form.field, "value");
 
     // Replace undefined with value
-    var request = { body: { field: undefined }};
-    form(filter("field").ifNull("value"))(request, {});
-    assert.equal(request.form.field, "value");
+    var req = { body: { field: undefined }};
+    form(filter("field").ifNull("value"))(req, {});
+    assert.equal(req.form.field, "value");
 
     // DO NOT replace false
-    var request = { body: { field: false }};
-    form(filter("field").ifNull("value"))(request, {});
-    assert.equal(request.form.field, false);
+    var req = { body: { field: false }};
+    form(filter("field").ifNull("value"))(req, {});
+    assert.equal(req.form.field, false);
 
     // DO NOT replace zero
-    var request = { body: { field: 0 }};
-    form(filter("field").ifNull("value"))(request, {});
-    assert.equal(request.form.field, 0);
+    var req = { body: { field: 0 }};
+    form(filter("field").ifNull("value"))(req, {});
+    assert.equal(req.form.field, 0);
   },
 
   'filter : toFloat': function() {
-    var request = { body: { field: "50.01" }};
-    form(filter("field").toFloat())(request, {});
-    assert.ok(typeof request.form.field == "number");
-    assert.equal(request.form.field, 50.01);
+    var req = { body: { field: "50.01" }};
+    form(filter("field").toFloat())(req, {});
+    assert.ok(typeof req.form.field == "number");
+    assert.equal(req.form.field, 50.01);
 
-    var request = { body: { field: "fail" }};
-    form(filter("field").toFloat())(request, {});
-    assert.ok(typeof request.form.field == "number");
-    assert.ok(isNaN(request.form.field));
+    var req = { body: { field: "fail" }};
+    form(filter("field").toFloat())(req, {});
+    assert.ok(typeof req.form.field == "number");
+    assert.ok(isNaN(req.form.field));
   },
 
   'filter : toInt': function() {
-    var request = { body: { field: "50.01" }};
-    form(filter("field").toInt())(request, {});
-    assert.ok(typeof request.form.field == "number");
-    assert.equal(request.form.field, 50);
+    var req = { body: { field: "50.01" }};
+    form(filter("field").toInt())(req, {});
+    assert.ok(typeof req.form.field == "number");
+    assert.equal(req.form.field, 50);
 
-    var request = { body: { field: "fail" }};
-    form(filter("field").toInt())(request, {});
-    assert.ok(typeof request.form.field == "number");
-    assert.ok(isNaN(request.form.field));
+    var req = { body: { field: "fail" }};
+    form(filter("field").toInt())(req, {});
+    assert.ok(typeof req.form.field == "number");
+    assert.ok(isNaN(req.form.field));
   },
 
   'filter : toBoolean': function() {
     // Truthy values
-    var request = { body: {
+    var req = { body: {
       field1: true,
       field2: "true",
       field3: "hi",
@@ -96,15 +96,15 @@ module.exports = {
       filter("field5").toBoolean(),
       filter("field6").toBoolean(),
       filter("field7").toBoolean()
-    )(request, {});
+    )(req, {});
     "1234567".split("").forEach(function(i) {
       var name = "field" + i;
-      assert.strictEqual(typeof request.form[name], "boolean");
-      assert.strictEqual(request.form[name], true);
+      assert.strictEqual(typeof req.form[name], "boolean");
+      assert.strictEqual(req.form[name], true);
     });
 
     // Falsy values
-    var request = { body: {
+    var req = { body: {
       field1: false,
       field2: "false",
       field3: null,
@@ -121,17 +121,17 @@ module.exports = {
       filter("field5").toBoolean(),
       filter("field6").toBoolean(),
       filter("field7").toBoolean()
-    )(request, {});
+    )(req, {});
     "1234567".split("").forEach(function(i) {
       var name = "field" + i;
-      assert.strictEqual(typeof request.form[name], "boolean");
-      assert.strictEqual(request.form[name], false);
+      assert.strictEqual(typeof req.form[name], "boolean");
+      assert.strictEqual(req.form[name], false);
     });
   },
 
   'filter : toBooleanStrict': function() {
     // Truthy values
-    var request = { body: {
+    var req = { body: {
       field1: true,
       field2: "true",
       field3: 1,
@@ -142,15 +142,15 @@ module.exports = {
       filter("field2").toBooleanStrict(),
       filter("field3").toBooleanStrict(),
       filter("field4").toBooleanStrict()
-    )(request, {});
+    )(req, {});
     "1234".split("").forEach(function(i) {
       var name = "field" + i;
-      assert.strictEqual(typeof request.form[name], "boolean");
-      assert.strictEqual(request.form[name], true);
+      assert.strictEqual(typeof req.form[name], "boolean");
+      assert.strictEqual(req.form[name], true);
     });
 
     // Falsy values
-    var request = { body: {
+    var req = { body: {
       field1: false,
       field2: "false",
       field3: null,
@@ -175,65 +175,65 @@ module.exports = {
       filter("field9").toBooleanStrict(),
       filter("field0").toBooleanStrict(),
       filter("fielda").toBooleanStrict()
-    )(request, {});
+    )(req, {});
     "1234567890a".split("").forEach(function(i) {
       var name = "field" + i;
-      assert.strictEqual(typeof request.form[name], "boolean");
-      assert.strictEqual(request.form[name], false);
+      assert.strictEqual(typeof req.form[name], "boolean");
+      assert.strictEqual(req.form[name], false);
     });
   },
 
   // 'filter : entityEncode': function() {
   //   // NOTE: single quotes are not encoded
-  //   var request = { body: { field: "&\"<>hello!" }};
-  //   form(filter("field").entityEncode())(request, {});
-  //   assert.equal(request.form.field, "&amp;&quot;&lt;&gt;hello!");
+  //   var req = { body: { field: "&\"<>hello!" }};
+  //   form(filter("field").entityEncode())(req, {});
+  //   assert.equal(req.form.field, "&amp;&quot;&lt;&gt;hello!");
   // },
 
   // 'filter : entityDecode': function() {
-  //   var request = { body: { field: "&amp;&quot;&lt;&gt;hello!" }};
-  //   form(filter("field").entityDecode())(request, {});
-  //   assert.equal(request.form.field, "&\"<>hello!");
+  //   var req = { body: { field: "&amp;&quot;&lt;&gt;hello!" }};
+  //   form(filter("field").entityDecode())(req, {});
+  //   assert.equal(req.form.field, "&\"<>hello!");
   // },
 
   'filter : toUpper': function() {
-    var request = { body: { field: "hellö!" }};
-    form(filter("field").toUpper())(request, {});
-    assert.equal(request.form.field, "HELLÖ!");
+    var req = { body: { field: "hellö!" }};
+    form(filter("field").toUpper())(req, {});
+    assert.equal(req.form.field, "HELLÖ!");
   },
   
   'filter : toUpper : object': function() {
-    var request = { body: { email: { key: '1' }}};
-    form(filter("email").toUpper())(request, {});
-    assert.strictEqual(request.form.email, '[OBJECT OBJECT]');
+    var req = { body: { email: { key: '1' }}};
+    form(filter("email").toUpper())(req, {});
+    assert.strictEqual(req.form.email, '[OBJECT OBJECT]');
   },
   
   'filter : toUpper : array': function() {
-    var request = { body: { email: ['MyEmaiL1@example.com', 'myemail2@example.org'] }};
-    form(filter("email").toUpper())(request, {});
-    assert.strictEqual(request.form.email, 'MYEMAIL1@EXAMPLE.COM');
+    var req = { body: { email: ['MyEmaiL1@example.com', 'myemail2@example.org'] }};
+    form(filter("email").toUpper())(req, {});
+    assert.strictEqual(req.form.email, 'MYEMAIL1@EXAMPLE.COM');
   },
 
   'filter : toLower': function() {
-    var request = { body: { field: "HELLÖ!" }};
-    form(filter("field").toLower())(request, {});
-    assert.equal(request.form.field, "hellö!");
+    var req = { body: { field: "HELLÖ!" }};
+    form(filter("field").toLower())(req, {});
+    assert.equal(req.form.field, "hellö!");
   },
   
   'filter : toLower : object': function() {
-    var request = { body: { email: { key: '1' }}};
-    form(filter("email").toLower())(request, {});
-    assert.strictEqual(request.form.email, '[object object]');
+    var req = { body: { email: { key: '1' }}};
+    form(filter("email").toLower())(req, {});
+    assert.strictEqual(req.form.email, '[object object]');
   },
   
   'filter : toLower : array': function() {
-    var request = { body: { email: ['MyEmaiL1@example.com', 'myemail2@example.org'] }};
-    form(filter("email").toLower())(request, {});
-    assert.strictEqual(request.form.email, 'myemail1@example.com');
+    var req = { body: { email: ['MyEmaiL1@example.com', 'myemail2@example.org'] }};
+    form(filter("email").toLower())(req, {});
+    assert.strictEqual(req.form.email, 'myemail1@example.com');
   },
 
   'filter : truncate': function() {
-    var request = { body: {
+    var req = { body: {
       field1: "1234567890",
       field2: "",
       field3: "123",
@@ -246,32 +246,32 @@ module.exports = {
       filter("field3").truncate(3), // 123
       filter("field4").truncate(5), // 12...
       filter("field5").truncate(7)  // 1234...
-    )(request, {});
-    assert.equal(request.form.field1, "...");
-    assert.equal(request.form.field2, "");
-    assert.equal(request.form.field3, "123");
-    assert.equal(request.form.field4, "12...");
-    assert.equal(request.form.field5, "1234...");
+    )(req, {});
+    assert.equal(req.form.field1, "...");
+    assert.equal(req.form.field2, "");
+    assert.equal(req.form.field3, "123");
+    assert.equal(req.form.field4, "12...");
+    assert.equal(req.form.field5, "1234...");
   },
   
   'filter : truncate : object': function() {
-    var request = { body: { email: { key: '1', length: 100 }}};
-    form(filter("email").truncate(10))(request, {});
-    assert.strictEqual(request.form.email, '[object...');
+    var req = { body: { email: { key: '1', length: 100 }}};
+    form(filter("email").truncate(10))(req, {});
+    assert.strictEqual(req.form.email, '[object...');
   },
   
   'filter : truncate : array': function() {
-    var request = { body: { email: ['myemail1@example.com', 'myemail2@example.org'] }};
-    form(filter("email").truncate(11))(request, {});
-    assert.strictEqual(request.form.email, 'myemail1...');
+    var req = { body: { email: ['myemail1@example.com', 'myemail2@example.org'] }};
+    form(filter("email").truncate(11))(req, {});
+    assert.strictEqual(req.form.email, 'myemail1...');
   },
 
   'filter : custom': function() {
-    var request = { body: { field: "value!" }};
+    var req = { body: { field: "value!" }};
     form(filter("field").custom(function(value) {
       return "!!!";
-    }))(request, {});
-    assert.equal(request.form.field, "!!!");
+    }))(req, {});
+    assert.equal(req.form.field, "!!!");
   }
 
 };
