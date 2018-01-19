@@ -118,19 +118,13 @@ Converts the field input into an array.
 
 By design if the input not intended to be an array (and you don't use `array()`), but the user submits an array value only the first value will be used.  This means that you don't have to worry about unexpected post data that might break your code. Eg/ when you call an array method on what is actually a string.
 
-```js
-var middleware = form(field('colors').toArray());
-var controller = function(req, res) {
-    console.log(typeof req.form.colors); // => 'array'
-};
-router.post('/colors', middleware, controller);
-```
-
+Example: we want 'project.users' to be an array.
 ```javascript
 field('project.users').toArray(),
 // undefined => [], '' => [], 'q' => ['q'], ['a', 'b'] => ['a', 'b']
 ```
 
+Example: we do not want 'project.block' to be an array.
 ```javascript
 field('project.block'),
 // project.block: ['a', 'b'] => 'a'. No 'array()', so only first value used.
