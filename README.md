@@ -196,7 +196,7 @@ Converts the input string to lower case.
 
 ## toMoment([timezoneFrom[, timezoneTo]])
 
-Convert the inpt to an Moment.js object, or null if the input is not a date. If no options is given then the from timezone will be retrived from `res.locals.timezone.name` or `UTC` otherwise. If the no options is given then the to timezone is set to `UTC`.
+Convert the input to an Moment Timezone object, or null if the input is not a date.
 
 - timezoneFrom (String|Function): The user's timezone name or a function which should return the timezone value from the res.locals. If timezoneFrom is not given then `res.locals.timezone.name` is used, or otherwise `UTC`.
 - timezoneTo (String): The server's timezone name. Defaults to 'UTC'.
