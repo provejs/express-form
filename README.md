@@ -110,7 +110,7 @@ The sanitize methods are used to:
 
 All sanitizers methods begin with the `to` prefix in the method name.
 
-### toArray()
+## toArray()
 
 Converts the field input into an array.
 ```js
@@ -120,7 +120,7 @@ var controller = function(req, res) {
 };
 router.post('/colors', middleware, controller);
 ```
-### toBlacklist(blacklist)
+## toBlacklist(blacklist)
 
 Remove characters that appear in the blacklist. 
 
@@ -134,17 +134,17 @@ router.post('/colors', middleware, controller);
 
 See [Validator.js](https://github.com/chriso/validator.js#sanitizers).
 
-### toBoolean()
+## toBoolean()
 Convert the input string to a boolean. Everything except for '0', 'false' and '' returns true.
 
 See [Validator.js](https://github.com/chriso/validator.js#sanitizers).
 
-### toBooleanStrict()
+## toBooleanStrict()
 Convert the input string to a boolean. Everything except for '0', 'false' and '' returns true. In strict mode only '1' and 'true' return true.
 
 See [Validator.js](https://github.com/chriso/validator.js#sanitizers).
 
-### toDate()
+## toDate()
 Convert the input string to a date, or null if the input is not a date.
 
 ```js
@@ -152,7 +152,7 @@ form(field('issued').toDate());
 ```
 See [Validator.js](https://github.com/chriso/validator.js#sanitizers).
 
-### toDefault(any)
+## toDefault(any)
 Convert the empty input string to the given value.
 
 - any (Any): The given value to use if the input string is empty.
@@ -162,39 +162,39 @@ form(field('issued').toDate().toDefault(new Date('2000-01-01')));
 form(field('option').toDefault(null));
 ```
 
-### toEmail(options)
+## toEmail(options)
 Canonicalizes an email address. (This doesn't validate that the input is an email, if you want to validate the email use isEmail beforehand).
 
 - options (object): is an object with the following keys and default values.
 
 See [Validator.js](https://github.com/chriso/validator.js#sanitizers).
 
-### toEscape()
+## toEscape()
 Replace <, >, &, ', " and / with HTML entities.
 See [Validator.js](https://github.com/chriso/validator.js#sanitizers).
 
-### toFloat()
+## toFloat()
 Convert the input string to a float, or NaN if the input is not a float.
 See [Validator.js](https://github.com/chriso/validator.js#sanitizers).
 
-### toHtml(options)
+## toHtml(options)
 Sanitize the input html.
 
 - options (object): is an object with the following keys and default values.
 
 See [sanitize-html](https://github.com/punkave/sanitize-html).
 
-### toInt(radix)
+## toInt(radix)
 Convert the input string to an integer, or NaN if the input is not an integer.
 
 - radix (int): radix to use to convert to integer value. Defaults to base 10.
 
 See [Validator.js](https://github.com/chriso/validator.js#sanitizers).
 
-### toLower()
+## toLower()
 Converts the input string to lower case.
 
-### toMoment([timezoneFrom[, timezoneTo]])
+## toMoment([timezoneFrom[, timezoneTo]])
 
 Convert the inpt to an Moment.js object, or null if the input is not a date. If no options is given then the from timezone will be retrived from `res.locals.timezone.name` or `UTC` otherwise. If the no options is given then the to timezone is set to `UTC`.
 
@@ -211,23 +211,23 @@ form(field('timestamp').toMoment(tzFrom, 'UTC'));
 ```
 See [Moment Timezone](http://momentjs.com/timezone/docs/).
 
-### toStripLow()
-### toTrim()
-### toTrimLeft()
-### toTrimRight()
-### toTruncate()
-### toUnescape()
-### toUpper()
+## toStripLow()
+## toTrim()
+## toTrimLeft()
+## toTrimRight()
+## toTruncate()
+## toUnescape()
+## toUpper()
 Converts the input string to upper case.
 
-### toWhitelist(whitelist)
+## toWhitelist(whitelist)
 Remove characters that do not appear in the whitelist.
 
 - whitelist (String): String of characters to allowed. The characters are used in a RegExp and so you will need to escape some chars.
 
 See [Validator.js](https://github.com/chriso/validator.js#sanitizers).
 
-### custom(function)
+## custom(function)
 
 You can define your own sanitizers. The only requirement for custom sanitizers are they must return a value.
 
@@ -238,7 +238,7 @@ form(field('silly'.custom(toFoobar));
 
 
 
-### Validator API:
+## Validator API:
 
 **Validation messages**: each validator has its own default validation message.
 These can easily be overridden at runtime by passing a custom validation message
@@ -262,7 +262,7 @@ Example of overriding the default message:
 - // -> "What is your Username?"
 
 
-### is(pattern[, modifiers[, message]])
+## is(pattern[, modifiers[, message]])
 
 Checks that the value matches the given regular expression.
 
@@ -275,71 +275,71 @@ Checks that the value matches the given regular expression.
 validate("username").is('[a-z]', 'i', 'Only letters are valid in %s')
 validate("username").is(/[a-z]/i, 'Only letters are valid in %s')
 ```
-### isAfter([message])
-### isAlpha([message])
-### isAlphanumeric([message])
-### isArrayLength([message])
-### isAscii([message])
-### isBase64([message])
-### isBefore([message])
-### isBoolean([message])
-### isByteLength([message])
-### isContains([message])
-### isCreditCard([message])
-### isCurrency([message])
-### isDataURI([message])
-### isDate([message])
-### isDaterange([message])
-### isDecimal([message])
-### isDivisibleBy([message])
-### isEmail([message])
-### isEmpty([message])
-### isEquals([message])
-### isFQDN([message])
-### isFinite([message])
-### isFloat([message])
-### isFullWidth([message])
-### isHalfWidth([message])
-### isHash([message])
-### isHexColor([message])
-### isHexadecimal([message])
-### isIP([message])
-### isISBN([message])
-### isISIN([message])
-### isISO31661Alpha2([message])
-### isISO8601([message])
-### isISRC([message])
-### isISSN([message])
-### isIn([message])
-### isInt([message])
-### isJSON([message])
-### isLatLong([message])
-### isLength([message])
-### isLowercase([message])
-### isMACAddress([message])
-### isMD5([message])
-### isMatches([message])
-### isMaxLength([message])
-### isMimeType([message])
-### isMinLength([message])
-### isMobilePhone([message])
-### isMongoId([message])
-### isMultibyte([message])
-### isNot([message])
-### isNotContains([message])
-### isNotEmpty([message])
-### isNumeric([message])
-### isPort([message])
-### isPostalCode([message])
-### isRequired([message])
-### isString([message])
-### isSurrogatePair([message])
-### isURL([message])
-### isUUID([message])
-### isUppercase([message])
-### isVariableWidth([message])
-### isWhitelisted([message])
-### custom([message])
+## isAfter([message])
+## isAlpha([message])
+## isAlphanumeric([message])
+## isArrayLength([message])
+## isAscii([message])
+## isBase64([message])
+## isBefore([message])
+## isBoolean([message])
+## isByteLength([message])
+## isContains([message])
+## isCreditCard([message])
+## isCurrency([message])
+## isDataURI([message])
+## isDate([message])
+## isDaterange([message])
+## isDecimal([message])
+## isDivisibleBy([message])
+## isEmail([message])
+## isEmpty([message])
+## isEquals([message])
+## isFQDN([message])
+## isFinite([message])
+## isFloat([message])
+## isFullWidth([message])
+## isHalfWidth([message])
+## isHash([message])
+## isHexColor([message])
+## isHexadecimal([message])
+## isIP([message])
+## isISBN([message])
+## isISIN([message])
+## isISO31661Alpha2([message])
+## isISO8601([message])
+## isISRC([message])
+## isISSN([message])
+## isIn([message])
+## isInt([message])
+## isJSON([message])
+## isLatLong([message])
+## isLength([message])
+## isLowercase([message])
+## isMACAddress([message])
+## isMD5([message])
+## isMatches([message])
+## isMaxLength([message])
+## isMimeType([message])
+## isMinLength([message])
+## isMobilePhone([message])
+## isMongoId([message])
+## isMultibyte([message])
+## isNot([message])
+## isNotContains([message])
+## isNotEmpty([message])
+## isNumeric([message])
+## isPort([message])
+## isPostalCode([message])
+## isRequired([message])
+## isString([message])
+## isSurrogatePair([message])
+## isURL([message])
+## isUUID([message])
+## isUppercase([message])
+## isVariableWidth([message])
+## isWhitelisted([message])
+## custom([message])
 
 **Validation Methods**
 
@@ -453,7 +453,7 @@ validate("username").is(/[a-z]/i, 'Only letters are valid in %s')
 
         Checks that the field is present in form data, and has a value.
 
-### Array Method
+## Array Method
 
     array()
         Using the array() flag means that field always gives an array. If the field value is an array, but there is no flag, then the first value in that array is used instead.
@@ -471,7 +471,7 @@ validate("username").is(/[a-z]/i, 'Only letters are valid in %s')
         field("post.users").toArray().toUpper()
         // post.users: ["one", "two", "three"] => ["ONE", "TWO", "THREE"]
 
-### Custom Methods
+## Custom Methods
 
     custom(function[, message])
     - function (Function): A custom filter or validation function.
@@ -534,7 +534,7 @@ validate("username").is(/[a-z]/i, 'Only letters are valid in %s')
         });
 
 
-### http.ServerRequest.prototype.form
+## http.ServerRequest.prototype.form
 
 Express Form adds a `form` object with various properties to the request.
 
@@ -563,7 +563,7 @@ Express Form adds a `form` object with various properties to the request.
       }
     }
 
-### Configuration
+## Configuration
 
 There are two configuration options:
 
@@ -579,6 +579,6 @@ sources (Array): An array of Express request properties to use as data sources w
 
 autoTrim (Boolean): If true, all fields will be automatically trimmed. Default: false.
 
-### Credits
+## Credits
 
 Currently, this module uses many of the validation and sanitizer functions provided by Chris O'Hara's [node-validator](https://github.com/chriso/node-validator).
