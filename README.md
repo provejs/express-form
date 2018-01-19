@@ -136,12 +136,13 @@ See [Validator.js](https://github.com/chriso/validator.js#sanitizers).
 Convert the input string to a boolean. Everything except for '0', 'false' and '' returns true.
 
 See [Validator.js](https://github.com/chriso/validator.js#sanitizers).
-### toBooleanStrict
+
+### toBooleanStrict()
 Convert the input string to a boolean. Everything except for '0', 'false' and '' returns true. In strict mode only '1' and 'true' return true.
 
 See [Validator.js](https://github.com/chriso/validator.js#sanitizers).
 
-### toDate
+### toDate()
 Convert the input string to a date.
 
 ### toDefault(any)
@@ -151,89 +152,35 @@ Convert the empty input string to the specified value and type.
 form(field('optionally').toDefault('foobar'));
 ```
 
-### toEmail
-### toEscape
-### toFloat
-### toHtml
-### toInt
-### toLower
-### toMoment
-### toStripLow
-### toTrim
-### toTrimLeft
-### toTrimRight
-### toTruncate
-### toUnescape
-### toUpper
-### toWhitelist
-### custom
+### toEmail()
+### toEscape()
+### toFloat()
+### toHtml()
+### toInt()
+### toLower()
+### toMoment()
+### toStripLow()
+### toTrim()
+### toTrimLeft()
+### toTrimRight()
+### toTruncate()
+### toUnescape()
+### toUpper()
+### toWhitelist()
+### custom(function)
 
-### is
-### isAfter
-### isAlpha
-### isAlphanumeric
-### isArrayLength
-### isAscii
-### isBase64
-### isBefore
-### isBoolean
-### isByteLength
-### isContains
-### isCreditCard
-### isCurrency
-### isDataURI
-### isDate
-### isDaterange
-### isDecimal
-### isDivisibleBy
-### isEmail
-### isEmpty
-### isEquals
-### isFQDN
-### isFinite
-### isFloat
-### isFullWidth
-### isHalfWidth
-### isHash
-### isHexColor
-### isHexadecimal
-### isIP
-### isISBN
-### isISIN
-### isISO31661Alpha2
-### isISO8601
-### isISRC
-### isISSN
-### isIn
-### isInt
-### isJSON
-### isLatLong
-### isLength
-### isLowercase
-### isMACAddress
-### isMD5
-### isMatches
-### isMaxLength
-### isMimeType
-### isMinLength
-### isMobilePhone
-### isMongoId
-### isMultibyte
-### isNot
-### isNotContains
-### isNotEmpty
-### isNumeric
-### isPort
-### isPostalCode
-### isRequired
-### isString
-### isSurrogatePair
-### isURL
-### isUUID
-### isUppercase
-### isVariableWidth
-### isWhitelisted
-### custom
+You can define your own sanitizers. The only requirement for custom sanitizers are they must return a value.
+
+```js
+var toFoobar = function(value, source, locals) { return 'foobar';};
+var middleware = form(field('silly'.custom(toFoobar));
+var controller = function(req, res) {
+    console.log(req.form.silly); // => 'foobar'
+};
+router.post('/colors', middleware, controller);
+```
+
+
 
 
 
@@ -260,71 +207,85 @@ Example of overriding the default message:
 - validate("username", "Username").required("", "What is your %s?")
 - // -> "What is your Username?"
 
-### isArrayLength
-### isContains
-### isEquals
-### isAfter
-### isAlpha
-### isAlphanumeric
-### isAscii
-### isBase64
-### isBefore
-### isBoolean
-### isByteLength
-### isCreditCard
-### isCurrency
-### isDataURI
-### isDate
-### isDecimal
-### isDivisibleBy
-### isEmail
-### isEmpty
-### isFQDN
-### isFloat
-### isFullWidth
-### isHalfWidth
-### isHash
-### isHexColor
-### isHexadecimal
-### isIP
-### isISBN
-### isISSN
-### isISIN
-### isISO8601
-### isISO31661Alpha2
-### isISRC
-### isIn
-### isInt
-### isJSON
-### isLatLong
-### isLength
-### isLowercase
-### isMACAddress
-### isMD5
-### isMimeType
-### isMobilePhone
-### isMongoId
-### isMultibyte
-### isNumeric
-### isPort
-### isPostalCode
-### isSurrogatePair
-### isString
-### isURL
-### isUUID
-### isUppercase
-### isVariableWidth
-### isWhitelisted
-### isMatches
-### isNotContains
-### isFinite
-### is
-### isNot
-### isRequired
-### isMinLength
-### isMaxLength
-### isNotEmpty
-### isDaterange
+
+### is(pattern[, modifiers[, message]])
+
+Checks that the value matches the given regular expression.
+
+- pattern (RegExp|String): RegExp (with flags) or String pattern.
+- modifiers (String): Optional, and only if `pattern` is a String.
+- message (String): Optional validation message.
+
+        
+```javascript
+validate("username").is('[a-z]', 'i', 'Only letters are valid in %s')
+validate("username").is(/[a-z]/i, 'Only letters are valid in %s')
+```
+### isAfter([message])
+### isAlpha([message])
+### isAlphanumeric([message])
+### isArrayLength([message])
+### isAscii([message])
+### isBase64([message])
+### isBefore([message])
+### isBoolean([message])
+### isByteLength([message])
+### isContains([message])
+### isCreditCard([message])
+### isCurrency([message])
+### isDataURI([message])
+### isDate([message])
+### isDaterange([message])
+### isDecimal([message])
+### isDivisibleBy([message])
+### isEmail([message])
+### isEmpty([message])
+### isEquals([message])
+### isFQDN([message])
+### isFinite([message])
+### isFloat([message])
+### isFullWidth([message])
+### isHalfWidth([message])
+### isHash([message])
+### isHexColor([message])
+### isHexadecimal([message])
+### isIP([message])
+### isISBN([message])
+### isISIN([message])
+### isISO31661Alpha2([message])
+### isISO8601([message])
+### isISRC([message])
+### isISSN([message])
+### isIn([message])
+### isInt([message])
+### isJSON([message])
+### isLatLong([message])
+### isLength([message])
+### isLowercase([message])
+### isMACAddress([message])
+### isMD5([message])
+### isMatches([message])
+### isMaxLength([message])
+### isMimeType([message])
+### isMinLength([message])
+### isMobilePhone([message])
+### isMongoId([message])
+### isMultibyte([message])
+### isNot([message])
+### isNotContains([message])
+### isNotEmpty([message])
+### isNumeric([message])
+### isPort([message])
+### isPostalCode([message])
+### isRequired([message])
+### isString([message])
+### isSurrogatePair([message])
+### isURL([message])
+### isUUID([message])
+### isUppercase([message])
+### isVariableWidth([message])
+### isWhitelisted([message])
+### custom([message])
 
 **Validation Methods**
 
