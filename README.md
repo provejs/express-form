@@ -207,6 +207,10 @@ form(field('timestamp').toMoment());
 ```
 
 ```javascript
+form(field('timestamp').toMoment('US/Central', 'UTC'));
+```
+
+```javascript
 // define your own timezones
 var tzFrom = function(locals){ 
     return locals.user.timezone || 'US/Central'; 
