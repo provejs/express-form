@@ -120,11 +120,11 @@ var controller = function(req, res) {
 };
 router.post('/colors', middleware, controller);
 ```
-### toBlacklist(list)
+### toBlacklist(blacklist)
 
 Remove characters that appear in the blacklist. 
 
-- list (String): String of characters to remove. The characters are used in a RegExp and so you will need to escape some chars.
+- blacklist (String): String of characters to remove. The characters are used in a RegExp and so you will need to escape some chars.
 
 ```js
 var middleware = form(field('foobar').toBlackList('\\[\\]'));
@@ -145,7 +145,12 @@ Convert the input string to a boolean. Everything except for '0', 'false' and ''
 See [Validator.js](https://github.com/chriso/validator.js#sanitizers).
 
 ### toDate()
-Convert the input string to a date.
+Convert the input string to a date, or null if the input is not a date.
+
+```js
+form(field('issued').toDate());
+```
+See [Validator.js](https://github.com/chriso/validator.js#sanitizers).
 
 ### toDefault(any)
 Convert the empty input string to the given value.
@@ -153,7 +158,7 @@ Convert the empty input string to the given value.
 - any (Any): The given value to use if the input string is empty.
 
 ```js
-form(field('issued').toDate().toDefault(new Date()));
+form(field('issued').toDate().toDefault(new Date('2000-01-01')));
 form(field('option').toDefault(null));
 ```
 
@@ -189,7 +194,23 @@ See [Validator.js](https://github.com/chriso/validator.js#sanitizers).
 ### toLower()
 Converts the input string to lower case.
 
-### toMoment()
+### toMoment([timezoneFrom[, timezoneTo]])
+
+Convert the inpt to an Moment.js object, or null if the input is not a date. If no options is given then the from timezone will be retrived from `res.locals.timezone.name` or `UTC` otherwise. If the no options is given then the to timezone is set to `UTC`.
+
+- timezoneFrom (String|Function): The user's timezone name or a function which should return the timezone value from the res.locals. If timezoneFrom is not given then `res.locals.timezone.name` is used, or otherwise `UTC`.
+- timezoneTo (String): The server's timezone name. Defaults to 'UTC'.
+
+```javascript
+
+// timezoneFrom = res.locals.timezone.name, timezoneTo = UTC
+form(field('timestamp').toMoment());
+
+var tzFrom = function(locals){ return locals.user.timezone || 'US/Central'; };
+form(field('timestamp').toMoment(tzFrom, 'UTC'));
+```
+See [Moment Timezone](http://momentjs.com/timezone/docs/).
+
 ### toStripLow()
 ### toTrim()
 ### toTrimLeft()
@@ -212,14 +233,8 @@ You can define your own sanitizers. The only requirement for custom sanitizers a
 
 ```js
 var toFoobar = function(value, source, locals) { return 'foobar';};
-var middleware = form(field('silly'.custom(toFoobar));
-var controller = function(req, res) {
-    console.log(req.form.silly); // => 'foobar'
-};
-router.post('/colors', middleware, controller);
+form(field('silly'.custom(toFoobar));
 ```
-
-
 
 
 

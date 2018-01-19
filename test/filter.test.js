@@ -428,8 +428,7 @@ module.exports = {
 		};
 		var res = {};
 		form(field('field').toMoment())(req, res);
-		assert.equal(typeof req.form.field, 'object');
-		assert.equal(req.form.field.isValid(), false);
+		assert.equal(req.form.field, null);
 	}
 
 };
