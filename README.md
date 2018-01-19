@@ -93,7 +93,7 @@ Simply specifying a property like this, makes sure it exists. So, even if `req.b
 The API is chainable, so you can keep calling sanitizer/validator methods one after the other:
 
 ```js
-filter("username")
+field('username')
   .isRequired()
   .toTrim()
   .toLower()
@@ -201,22 +201,24 @@ Convert the input to an Moment Timezone object, or null if the input is not a da
 - timezoneFrom (String|Function): The user's timezone name or a function which should return the timezone value from the res.locals. If timezoneFrom is not given then `res.locals.timezone.name` is used, or otherwise `UTC`.
 - timezoneTo (String): The server's timezone name. Defaults to 'UTC'.
 
-```javascript
-// timezoneFrom = res.locals.timezone.name, timezoneTo = UTC
-form(field('timestamp').toMoment());
-```
-
+Example of hardcoded timezones:
 ```javascript
 form(field('timestamp').toMoment('US/Central', 'UTC'));
 ```
 
+Example of using `res.locals.timezone.name` to contain the user's timezone, and the server's timezone being `UTC`.
 ```javascript
-// define your own timezones
+form(field('timestamp').toMoment());
+```
+
+Example of defining the user and server timezones:
+```javascript
 var tzFrom = function(locals){ 
     return locals.user.timezone || 'US/Central'; 
 };
 form(field('timestamp').toMoment(tzFrom, 'UTC'));
 ```
+
 See [Moment Timezone](http://momentjs.com/timezone/docs/).
 
 ## toStripLow([keep_new_lines])
@@ -286,16 +288,18 @@ placeholder value from passing the `required()` check.
 Use "%s" in the message to have the field name or label printed in the message:
 
 Example of the default message will being shown:
-- validate("username").required()
-- // -> "username is required"
-
+```javascript
+field('username').isRequired() // -> "username is required"
+```
 Example of overriding the default message and the placeholder message:
-- validate("username").required("Type your desired username", "What is your %s?")
-- // -> "What is your username?"
+```javascript
+field('username').isRequired("Type your desired username", "What is your %s?") // -> "What is your username?"
+```
 
 Example of overriding the default message:
-- validate("username", "Username").required("", "What is your %s?")
-- // -> "What is your Username?"
+```javascript
+field('username', 'Username').isRequired('', 'What is your %s?') // -> "What is your Username?"
+```
 
 
 ## is(pattern[, modifiers[, message]])
