@@ -112,7 +112,10 @@ All sanitizers methods begin with the `to` prefix in the method name.
 
 ## toArray()
 
-Converts the field input into an array.
+Converts the field input into an array. 
+
+By design if the input not intended to be an array (and you don't use `array()`), but the user submits an array value only the first value will be used.  This means that you don't have to worry about unexpected post data that might break your code. Eg/ when you call an array method on what is actually a string.
+
 ```js
 var middleware = form(field('colors').toArray());
 var controller = function(req, res) {
@@ -120,6 +123,24 @@ var controller = function(req, res) {
 };
 router.post('/colors', middleware, controller);
 ```
+
+```javascript
+field("project.users").toArray(),
+// undefined => [], "" => [], "q" => ["q"], ["a", "b"] => ["a", "b"]
+```
+
+```javascript
+field("project.block"),
+// project.block: ["a", "b"] => "a". No "array()", so only first value used.
+```
+
+In addition, any other methods called with the array method, are applied to every value within the array.
+```javascript
+field("post.users").toArray().toUpper()
+// post.users: ["one", "two", "three"] => ["ONE", "TWO", "THREE"]
+```
+
+
 ## toBlacklist(blacklist)
 
 Remove characters that appear in the blacklist. 
@@ -265,7 +286,7 @@ See [Validator.js](https://github.com/chriso/validator.js#sanitizers).
 
 You can define your own sanitizers.
 
-- func (Function): Your custom sanitizer method. Your sanitizer method should return a value. The function parameters are `value`, `source`, and `locals`.
+- func (Function): Your custom sanitizer method. Your sanitizer method should return a value. The function parameters are `value`, `source`, and `locals`. If your custom sanitizer returns undefined, then the method has no effect on the field.
 
 ```js
 var toFoobar = function(value, source, locals) { 
@@ -324,7 +345,11 @@ validate("username").is(/[a-z]/i, 'Only letters are valid in %s')
 ## isBefore([message])
 ## isBoolean([message])
 ## isByteLength([message])
-## isContains([message])
+## isContains(value [,message])
+Checks if the field contains `value`.
+
+- value (String): The value to test for.     
+
 ## isCreditCard([message])
 ## isCurrency([message])
 ## isDataURI([message])
@@ -334,7 +359,19 @@ validate("username").is(/[a-z]/i, 'Only letters are valid in %s')
 ## isDivisibleBy([message])
 ## isEmail([message])
 ## isEmpty([message])
-## isEquals([message])
+## isEquals(value [,message])
+
+Compares the field to `value`.
+
+- value (String): A value that should match the field value OR a fieldname token to match another field, ie, `field::password`.
+
+```javascript
+Example:
+validate('username').isEquals('admin')
+validate('password').is(/^\w{6,20}$/)
+validate('password_confirmation').isEquals('field::password')
+```
+
 ## isFQDN([message])
 ## isFinite([message])
 ## isFloat([message])
@@ -359,19 +396,48 @@ validate("username").is(/[a-z]/i, 'Only letters are valid in %s')
 ## isMACAddress([message])
 ## isMD5([message])
 ## isMatches([message])
-## isMaxLength([message])
+## isMaxLength(length [,message])
+Checks the field value max length.
+
+- length (integer): The max character to test for.
+
 ## isMimeType([message])
-## isMinLength([message])
+## isMinLength(length [,message])
+Checks the field value min length.
+    
+- length (integer): The min character to test for.
+        
+
 ## isMobilePhone([message])
 ## isMongoId([message])
 ## isMultibyte([message])
-## isNot([message])
-## isNotContains([message])
+## isNot(pattern[, modifiers[, message]])
+
+Checks that the value does NOT match the given regular expression.
+
+- pattern (RegExp|String): RegExp (with flags) or String pattern.
+- modifiers (String): Optional, and only if `pattern` is a String.
+- message (String): Optional validation message.
+
+```javascript
+validate("username").not("[a-z]", "i", "Letters are not valid in %s")
+validate("username").not(/[a-z]/i, "Letters are not valid in %s")
+```
+
+## isNotContains(value [,message])
+Checks if the field does NOT contain `value`.
+
+- value (String): A value that should not exist in the field.
+
 ## isNotEmpty([message])
+Checks if the value is not just whitespace.
+
 ## isNumeric([message])
 ## isPort([message])
 ## isPostalCode([message])
 ## isRequired([message])
+Checks that the field is present in form data, and has a value.
+
 ## isString([message])
 ## isSurrogatePair([message])
 ## isURL([message])
@@ -379,229 +445,71 @@ validate("username").is(/[a-z]/i, 'Only letters are valid in %s')
 ## isUppercase([message])
 ## isVariableWidth([message])
 ## isWhitelisted([message])
-## custom([message])
-
-**Validation Methods**
-
-*By Regular Expressions*
-
-    regex(pattern[, modifiers[, message]])
-    - pattern (RegExp|String): RegExp (with flags) or String pattern.
-    - modifiers (String): Optional, and only if `pattern` is a String.
-    - message (String): Optional validation message.
-
-        alias: is
-
-        Checks that the value matches the given regular expression.
-
-        Example:
-
-        validate("username").is("[a-z]", "i", "Only letters are valid in %s")
-        validate("username").is(/[a-z]/i, "Only letters are valid in %s")
-
-
-    notRegex(pattern[, modifiers[, message]])
-    - pattern (RegExp|String): RegExp (with flags) or String pattern.
-    - modifiers (String): Optional, and only if `pattern` is a String.
-    - message (String): Optional validation message.
-
-        alias: not
-
-        Checks that the value does NOT match the given regular expression.
-
-        Example:
-
-        validate("username").not("[a-z]", "i", "Letters are not valid in %s")
-        validate("username").not(/[a-z]/i, "Letters are not valid in %s")
-
-
-*By Type*
-
-    isNumeric([message])
-
-    isInt([message])
-
-    isDecimal([message])
-
-    isFloat([message])
-
-
-*By Format*
-
-    isDate([message])
-
-    isEmail([message])
-
-    isUrl([message])
-
-    isIP([message])
-
-    isAlpha([message])
-
-    isAlphanumeric([message])
-
-    isLowercase([message])
-
-    isUppercase([message])
-
-
-*By Content*
-
-    notEmpty([message])
-
-        Checks if the value is not just whitespace.
-
-
-    equals( value [, message] )
-    - value (String): A value that should match the field value OR a fieldname
-                      token to match another field, ie, `field::password`.
-
-        Compares the field to `value`.
-
-        Example:
-        validate("username").isEquals("admin")
-
-        validate("password").is(/^\w{6,20}$/)
-        validate("password_confirmation").isEquals("field::password")
-
-
-    contains(value[, message])
-    - value (String): The value to test for.
-
-        Checks if the field contains `value`.
-
-
-    notContains(string[, message])
-    - value (String): A value that should not exist in the field.
-
-        Checks if the field does NOT contain `value`.
-
-    minLength(length[, message])
-    - length (integer): The min character to test for.
-
-        Checks the field value min length.
-
-    maxLength(length[, message])
-    - length (integer): The max character to test for.
-
-        Checks the field value max length.
-
-
-*Other*
-
-    required([message])
-
-        Checks that the field is present in form data, and has a value.
-
-## Array Method
-
-    array()
-        Using the array() flag means that field always gives an array. If the field value is an array, but there is no flag, then the first value in that array is used instead.
-
-        This means that you don't have to worry about unexpected post data that might break your code. Eg/ when you call an array method on what is actually a string.
-
-        field("project.users").toArray(),
-        // undefined => [], "" => [], "q" => ["q"], ["a", "b"] => ["a", "b"]
-
-        field("project.block"),
-        // project.block: ["a", "b"] => "a". No "array()", so only first value used.
-
-        In addition, any other methods called with the array method, are applied to every value within the array.
-
-        field("post.users").toArray().toUpper()
-        // post.users: ["one", "two", "three"] => ["ONE", "TWO", "THREE"]
-
-## Custom Methods
-
-    custom(function[, message])
-    - function (Function): A custom filter or validation function.
-
-        This method can be utilised as either a filter or validator method.
-
-        If the function throws an error, then an error is added to the form. (If `message` is not provided, the thrown error message is used.)
-
-        If the function returns a value, then it is considered a filter method, with the field then becoming the returned value.
-
-        If the function returns undefined, then the method has no effect on the field.
-
-        Examples:
-
-        If the `name` field has a value of "hello there", this would
-        transform it to "hello-there".
-
-        field("name").custom(function(value) {
-          return value.replace(/\s+/g, "-");
-        });
-
-        Throws an error if `username` field does not have value "admin".
-
-        field("username").custom(function(value) {
-            if (value !== "admin") {
-                throw new Error("%s must be 'admin'.");
-            }
-        });
-
-        Validator based value on another field of the incoming source being validated
-
-        field("sport", "favorite sport").custom(function(value, source) {
-          if (!source.country) {
-            throw new Error('unable to validate %s');
-          }
-
-          switch (source.country) {
-            case 'US':
-              if (value !=== 'baseball') {
-                throw new Error('America likes baseball');
-              }
-              break;
-
-            case 'UK':
-              if (value !=== 'football') {
-                throw new Error('UK likes football');
-              }
-              break;
-          }
-
-        });
-
-        Asynchronous custom validator (3 argument function signature)
-
-        form.field('username').custom(function(value, source, callback) {
-          username.check(value, function(err) {
-            if (err) return callback(new Error('Invalid %s'));
-            callback(null);
-          });
-        });
-
-
-## http.ServerRequest.prototype.form
-
-Express Form adds a `form` object with various properties to the request.
-
-    isValid -> Boolean
-
-    errors  -> Array
-
-    flashErrors(name) -> undefined
-
-        Flashes all errors. Configurable, enabled by default.
-
-    getErrors(name) -> Array or Object if no name given
-    - fieldname (String): The name of the field
-
-        Gets all errors for the field with the given name.
-
-        You can also call this method with no parameters to get a map of errors for all of the fields.
-
-    Example request handler:
-
-    function(req, res) {
-      if (!req.form.isValid) {
-        console.log(req.form.errors);
-        console.log(req.form.getErrors("username"));
-        console.log(req.form.getErrors());
-      }
+## custom(func [,message])
+
+You can define your own custom sync and async validators.
+
+- func (Function): Your custom validator. If the function throws an error, then an error is added to the form. (If `message` is not provided, the thrown error message is used.)
+
+Example: Throws an error if `username` field does not have value 'admin'.
+```javascript
+var isAdmin = function(value, source, locals) {
+    if (value !== "admin") throw new Error("%s must be 'admin'.");
+}
+field('username').custom(isAdmin);
+```
+
+Example: Validate based value on another field of the incoming source being validated.
+```javascript
+field('sport', 'favorite sport').custom(function(value, data, locals) {
+    if (!data.country) throw new Error('unable to validate %s');
+
+    switch (data.country) {
+        case 'US':
+            if (value !=== 'baseball')  throw new Error('America likes baseball');
+            break;
+        case 'UK':
+            if (value !=== 'football') throw new Error('UK likes football');
+            break;
+        }
     }
+);
+```
+Example: Asynchronous custom validator (4 argument function signature):
+```javascript
+var Users = require('../models/users');
+form.field('username').custom(function(value, data, locals, next) {
+    Users.findByUsername(value, function(err, user) {
+        if (err) return next(err);
+        if (user) return next(new Error('That %s is already taken.'));
+        next();
+    });
+});
+```
+
+## Express Reqeust
+
+The Express Request is modified by the addition of a `form` object with various properties to the request.
+
+- req.form.isValid -> Boolean
+- req.form.errors  -> Array
+- req.form.getErrors() -> Object
+- req.form.getErrors(name) Array
+
+Example request handler:
+
+```javascript
+function(req, res) {
+    if (!req.form.isValid) {
+    console.log(req.form.errors);
+    console.log(req.form.getErrors('username'));
+    console.log(req.form.getErrors());
+    }
+}
+```
+## Express Response
+The Express Response is modified by the addition of `res.locals.errors` object.
+
 
 ## Configuration
 
@@ -615,9 +523,8 @@ form.configure({
 });
 ```
 
-sources (Array): An array of Express request properties to use as data sources when filtering and validating data. Default: ["body", "query", "params"].
-
-autoTrim (Boolean): If true, all fields will be automatically trimmed. Default: false.
+- sources (Array): An array of Express request properties to use as data sources when filtering and validating data. Default: ['body', 'query', 'params'].
+- autoTrim (Boolean): If true, all fields will be automatically trimmed. Default: false.
 
 ## Credits
 
