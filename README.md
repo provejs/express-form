@@ -489,7 +489,7 @@ form.field('username').custom(function(value, data, locals, next) {
 
 ## Express Reqeust
 
-The Express Request is modified by the addition of a `form` object with various properties to the request.
+The Express Request is modified by the addition of `req.form` object with various properties to the request.
 
 - req.form.isValid -> Boolean
 - req.form.errors  -> Array
@@ -499,7 +499,7 @@ The Express Request is modified by the addition of a `form` object with various 
 Example request handler:
 
 ```javascript
-function(req, res) {
+var controller = function(req, res, next) {
     if (!req.form.isValid) {
     console.log(req.form.errors);
     console.log(req.form.getErrors('username'));
@@ -507,6 +507,17 @@ function(req, res) {
     }
 }
 ```
+
+Your code should get the validated and sanitized data from `req.form`.
+```javascript
+var controller = function(req, res, next) {
+
+    var isValid = req.form.isValid
+    var username = req.form.username;
+    var password = req.form.password;
+};
+```
+
 ## Express Response
 The Express Response is modified by the addition of `res.locals.errors` object.
 
