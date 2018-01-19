@@ -60,20 +60,18 @@ app.listen(3000);
 ## Module
 
 `provejs-express` returns an `express` [Route Middleware](http://expressjs.com/guide.html#Route-Middleware) function.
-You specify filtering and validation by passing filters and validators as
-arguments to the main module function. For example:
+You specify sanitizing and validation by passing sanitizers and validators as arguments to the main module function. For example:
 
 ```js
 var form = require("provejs-express");
 var middleware = form(form.field("username").toTrim());
 var controller = function(req, res) {};
-
 app.post('/user', middleware, controller);
 ```
 
 ## Fields
 
-The `field` property of the module creates a saniter/validator object tied to a specific field.
+The `field` property of the module creates a saniter/validator object tied to a specific field. All sanitizers method names begin with `to` and all validator method names with `is`.
 
 ```
 field(fieldname[, label]);
@@ -298,6 +296,8 @@ form(field('silly'.custom(toFoobar));
 
 
 ## Validator API:
+
+All validator methods begin with the `is` prefix in the method name.
 
 **Validation messages**: each validator has its own default validation message.
 These can easily be overridden at runtime by passing a custom validation message
@@ -534,7 +534,7 @@ form.configure({
 });
 ```
 
-- sources (Array): An array of Express request properties to use as data sources when filtering and validating data. Default: ['body', 'query', 'params'].
+- sources (Array): An array of Express request properties to use as data sources when sanitizing and validating data. Default: ['body', 'query', 'params'].
 - autoTrim (Boolean): If true, all fields will be automatically trimmed. Default: false.
 
 ## Credits
