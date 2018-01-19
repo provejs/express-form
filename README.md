@@ -231,9 +231,11 @@ Remove characters that do not appear in the whitelist.
 
 See [Validator.js](https://github.com/chriso/validator.js#sanitizers).
 
-## custom(function)
+## custom(func)
 
-You can define your own sanitizers. The only requirement for custom sanitizers are they must return a value.
+You can define your own sanitizers.
+
+- func (Function): Your custom sanitizer method. Your sanitizer method should return a value. The function parameters are `value`, `source`, and `locals`.
 
 ```js
 var toFoobar = function(value, source, locals) { 
