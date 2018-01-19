@@ -28,7 +28,6 @@ module.exports = {
 			}
 		};
 		form(field('field').isDate('!!! %s !!!'))(req, {});
-		console.log('errors', req.form.errors);
 		assert.equal(req.form.errors.length, 1);
 		assert.equal(req.form.errors[0], '!!! field !!!');
 

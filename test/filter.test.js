@@ -375,6 +375,17 @@ module.exports = {
 			return '!!!';
 		}))(req, {});
 		assert.equal(req.form.field, '!!!');
+	},
+	
+	'filter : toDate': function () {
+		var req = {
+			body: {
+				field: '1900-01-01'
+			}
+		};
+		form(field('field').toDate())(req, {});
+		assert.equal(typeof req.form.field, 'object');
+		assert.equal(typeof req.form.field.toISOString, 'function');
 	}
 
 };
