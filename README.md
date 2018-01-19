@@ -202,11 +202,15 @@ Convert the input to an Moment Timezone object, or null if the input is not a da
 - timezoneTo (String): The server's timezone name. Defaults to 'UTC'.
 
 ```javascript
-
 // timezoneFrom = res.locals.timezone.name, timezoneTo = UTC
 form(field('timestamp').toMoment());
+```
 
-var tzFrom = function(locals){ return locals.user.timezone || 'US/Central'; };
+```javascript
+// define your own timezones
+var tzFrom = function(locals){ 
+    return locals.user.timezone || 'US/Central'; 
+};
 form(field('timestamp').toMoment(tzFrom, 'UTC'));
 ```
 See [Moment Timezone](http://momentjs.com/timezone/docs/).
