@@ -236,7 +236,9 @@ See [Validator.js](https://github.com/chriso/validator.js#sanitizers).
 You can define your own sanitizers. The only requirement for custom sanitizers are they must return a value.
 
 ```js
-var toFoobar = function(value, source, locals) { return 'foobar';};
+var toFoobar = function(value, source, locals) { 
+    return new Foobar(value);
+};
 form(field('silly'.custom(toFoobar));
 ```
 
