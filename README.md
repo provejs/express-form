@@ -110,8 +110,7 @@ The sanitize methods are used to:
 
 All sanitizers methods begin with the `to` prefix in the method name.
 
-toArray()
----------
+### toArray()
 
 Converts the field input into an array.
 ```js
