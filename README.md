@@ -65,7 +65,7 @@ You specify sanitizing and validation by passing sanitizers and validators as ar
 ```js
 var form = require('provejs-express');
 var available = function(value, data, locals, next) {
-    // check data for unique username, and return err if not unique
+    // check username available
     // next(new Error('That %s is already taken'));
     next();
 };
