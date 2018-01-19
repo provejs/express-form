@@ -19,7 +19,7 @@ module.exports = {
 				field: '\r\n  value   \t'
 			}
 		};
-		form(field('field').toLtrim())(req, {});
+		form(field('field').toTrimLeft())(req, {});
 		assert.equal(req.form.field, 'value   \t');
 	},
 
@@ -29,7 +29,7 @@ module.exports = {
 				field: '\r\n  value   \t'
 			}
 		};
-		form(field('field').toRtrim())(req, {});
+		form(field('field').toTrimRight())(req, {});
 		assert.equal(req.form.field, '\r\n  value');
 	},
 

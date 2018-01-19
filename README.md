@@ -18,9 +18,9 @@ var app = express();
 app.use(bodyParser());
 
 var validation = form(
-    field("username").trim().required().is(/^[a-z]+$/),
-    field("password").trim().required().is(/^[0-9]+$/),
-    field("email").trim().isEmail()
+    field("username").toTrim().isRequired().is(/^[a-z]+$/),
+    field("password").toTrim().isRequired().is(/^[0-9]+$/),
+    field("email").toTrim().isEmail()
 );
 
 var controller = function(req, res){
@@ -65,7 +65,7 @@ arguments to the main module function. For example:
 
 ```js
 var form = require("provejs-express");
-var middleware = form(form.field("username").trim());
+var middleware = form(form.field("username").toTrim());
 var controller = function(req, res) {};
 
 app.post('/user', middleware, controller);
@@ -82,9 +82,9 @@ field(fieldname[, label]);
 You can access nested properties with either dot or square-bracket notation.
 
 ```js
-field("post.content").minLength(50),
+field("post.content").isMinLength(50),
 field("post[user][id]").isInt(),
-field("post.super.nested.property").required()
+field("post.super.nested.property").isRequired()
 ```
 
 Simply specifying a property like this, makes sure it exists. So, even if `req.body.post` was undefined,
@@ -94,8 +94,8 @@ The API is chainable, so you can keep calling sanitizer/validator methods one af
 
 ```js
 filter("username")
-  .required()
-  .trim()
+  .isRequired()
+  .toTrim()
   .toLower()
   .toTruncate(5)
   .isAlphanumeric()
@@ -105,46 +105,136 @@ filter("username")
 
 The sanitize methods are used to:
 - coerce inputs into a specific data type,
-- set a default data value,
-- perform string transformations.
+- perform string transformations,
+- set a default data value.
 
 All sanitizers methods begin with the `to` prefix in the method name.
 
-### toArray
+### toArray()
 
-Converts the input int an array if 
+Converts the field input into an array.
 ```js
 var middleware = form(field('colors').toArray());
 var controller = function(req, res) {
     console.log(typeof req.form.colors); // => 'array'
 };
-router.post('/colors', middleware, controller)
+router.post('/colors', middleware, controller);
+```
+### toBlacklist(string)
+
+Remove characters that appear in the blacklist. The characters are used in a RegExp and so you will need to escape some chars.
+
+```js
+var middleware = form(field('foobar').toBlackList('\\[\\]'));
+var controller = function(req, res) {};
+router.post('/colors', middleware, controller);
 ```
 
-### toBlacklist
-### toEscape
-### toUnescape
-### toLtrim
-### toNormalizeEmail
-### toRtrim
-### toStripLow
-### toBoolean
+See [Validator.js](https://github.com/chriso/validator.js#sanitizers).
+
+### toBoolean()
+Convert the input string to a boolean. Everything except for '0', 'false' and '' returns true.
+
+See [Validator.js](https://github.com/chriso/validator.js#sanitizers).
 ### toBooleanStrict
+Convert the input string to a boolean. Everything except for '0', 'false' and '' returns true. In strict mode only '1' and 'true' return true.
+
+See [Validator.js](https://github.com/chriso/validator.js#sanitizers).
+
 ### toDate
+Convert the input string to a date.
+
+### toDefault(any)
+Convert the empty input string to the specified value and type.
+
+```js
+form(field('optionally').toDefault('foobar'));
+```
+
+### toEmail
+### toEscape
 ### toFloat
-### toInt
-### toTrim
-### toWhitelist
-### toDefault
-### toUpper
-### toLower
-### toTruncate
 ### toHtml
+### toInt
+### toLower
 ### toMoment
-
-
-
+### toStripLow
+### toTrim
+### toTrimLeft
+### toTrimRight
+### toTruncate
+### toUnescape
+### toUpper
+### toWhitelist
 ### custom
+
+### is
+### isAfter
+### isAlpha
+### isAlphanumeric
+### isArrayLength
+### isAscii
+### isBase64
+### isBefore
+### isBoolean
+### isByteLength
+### isContains
+### isCreditCard
+### isCurrency
+### isDataURI
+### isDate
+### isDaterange
+### isDecimal
+### isDivisibleBy
+### isEmail
+### isEmpty
+### isEquals
+### isFQDN
+### isFinite
+### isFloat
+### isFullWidth
+### isHalfWidth
+### isHash
+### isHexColor
+### isHexadecimal
+### isIP
+### isISBN
+### isISIN
+### isISO31661Alpha2
+### isISO8601
+### isISRC
+### isISSN
+### isIn
+### isInt
+### isJSON
+### isLatLong
+### isLength
+### isLowercase
+### isMACAddress
+### isMD5
+### isMatches
+### isMaxLength
+### isMimeType
+### isMinLength
+### isMobilePhone
+### isMongoId
+### isMultibyte
+### isNot
+### isNotContains
+### isNotEmpty
+### isNumeric
+### isPort
+### isPostalCode
+### isRequired
+### isString
+### isSurrogatePair
+### isURL
+### isUUID
+### isUppercase
+### isVariableWidth
+### isWhitelisted
+### custom
+
 
 
 ### Validator API:
