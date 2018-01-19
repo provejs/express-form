@@ -215,12 +215,36 @@ form(field('timestamp').toMoment(tzFrom, 'UTC'));
 ```
 See [Moment Timezone](http://momentjs.com/timezone/docs/).
 
-## toStripLow()
-## toTrim()
-## toTrimLeft()
-## toTrimRight()
-## toTruncate()
+## toStripLow([keep_new_lines])
+
+Remove characters with a numerical value < 32 and 127, mostly control characters. If keep_new_lines is true, newline characters are preserved (\n and \r, hex 0xA and 0xD). Unicode-safe in JavaScript.
+
+See [Validator.js](https://github.com/chriso/validator.js#sanitizers).
+
+## toTrim([chars])
+
+Trim characters (whitespace by default) from both sides of the input.
+
+See [Validator.js](https://github.com/chriso/validator.js#sanitizers).
+
+## toTrimLeft([chars])
+Trim characters from the left-side of the input.
+
+See [Validator.js](https://github.com/chriso/validator.js#sanitizers).
+
+## toTrimRight([chars])
+Trim characters from the right-side of the input.
+
+See [Validator.js](https://github.com/chriso/validator.js#sanitizers).
+
+## toTruncate(length)
+Truncate input string. Adds `...` to the end of the string.
+
 ## toUnescape()
+Replaces HTML encoded entities with <, >, &, ', " and /.
+
+See [Validator.js](https://github.com/chriso/validator.js#sanitizers).
+
 ## toUpper()
 Converts the input string to upper case.
 
