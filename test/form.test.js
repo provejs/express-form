@@ -1,18 +1,18 @@
 var assert = require('assert');
 var form = require('../index');
-var validate = form.field;
+var field = form.field;
 var utils = require('../lib/utils');
 
 module.exports = {
   'form : isValid': function() {
     // Failure.
     var req = { body: { field: 'fail' }};
-    form(validate('field').isEmail())(req, {});
+    form(field('field').isEmail())(req, {});
     assert.strictEqual(req.form.isValid, false);
 
     // Success
     var req = { body: { field: 'me@dandean.com' }};
-    form(validate('field').isEmail())(req, {});
+    form(field('field').isEmail())(req, {});
     assert.strictEqual(req.form.isValid, true);
     
     // form.isValid is a getter only
@@ -31,10 +31,10 @@ module.exports = {
     };
     
     form(
-      validate('field0').equals('win'),
-      validate('field1').isEmail(),
-      validate('field2').isEmail().isURL(),
-      validate('field3').isEmail().isURL().isIP()
+      field('field0').equals('win'),
+      field('field1').isEmail(),
+      field('field2').isEmail().isURL(),
+      field('field3').isEmail().isURL().isIP()
     )(req, {});
     
     assert.equal(req.form.isValid, false);
@@ -50,7 +50,7 @@ module.exports = {
     form.configure({ sources: ['other'] });
 
     var req = { other: { field: 'me@dandean.com' }};
-    form(validate('field').isEmail())(req, {});
+    form(field('field').isEmail())(req, {});
     assert.strictEqual(req.form.isValid, true);
     assert.equal(req.form.field, 'me@dandean.com');
 
@@ -72,13 +72,13 @@ module.exports = {
     
     // autoTrim defaults to false, test results with it off
     assert.strictEqual(form._options.autoTrim, false);
-    form(validate('username').is(regex))(req, {});
+    form(field('username').is(regex))(req, {});
     assert.strictEqual(req.form.isValid, false);
     
     // test results with autoTrim turned on 
     form.configure({ autoTrim: true });
     assert.strictEqual(form._options.autoTrim, true);
-    form(validate('username').is(regex))(req2, {});
+    form(field('username').is(regex))(req2, {});
     assert.strictEqual(req2.form.isValid, true);
     assert.strictEqual(req2.form.username, 'myuser1');
     

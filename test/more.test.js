@@ -1,6 +1,6 @@
-var assert = require('assert')
-  , form = require('../index')
-  , field = form.field;
+var assert = require('assert');
+var form = require('../index');
+var field = form.field;
 
 module.exports = {
   

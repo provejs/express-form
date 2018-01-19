@@ -1,7 +1,6 @@
 var assert = require('assert');
 var form = require('../index');
-var filter = form.field;
-var validate = form.field;
+var field = form.field;
 var express = require('express');
 var http = require('http');
 var request = require('request');
@@ -26,10 +25,10 @@ module.exports = {
     app.post(
       '/user',
       form(
-        filter('username').trim(),
-        validate('username').required().is(/^[a-z]+$/),
-        filter('password').trim(),
-        validate('password').required().is(/^[0-9]+$/)
+        field('username').trim(),
+        field('username').required().is(/^[a-z]+$/),
+        field('password').trim(),
+        field('password').required().is(/^[0-9]+$/)
       ),
       function(req, res){
         assert.strictEqual(req.form.username, 'dandean');
@@ -59,9 +58,9 @@ module.exports = {
     app.post(
       '/user/:id',
       form(
-        filter('id').toInt(),
-        filter('stuff').toUpper(),
-        filter('rad').toUpper()
+        field('id').toInt(),
+        field('stuff').toUpper(),
+        field('rad').toUpper()
       ),
       function(req, res){
         // Validate filtered form data
