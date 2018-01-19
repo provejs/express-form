@@ -105,6 +105,32 @@ module.exports = {
 			autoTrim: false
 		});
 		assert.strictEqual(form._options.autoTrim, false);
-	}
+	},
+	
+	// 'form : configure : methods': function () {
+	// 	form.configure({
+	// 		methods: {
+	// 			toFoobarSync: function(value, source){
+	// 				return 'foobar1';
+	// 			},
+	// 			isFoobarAsync: function(value, data, locals, next) {
+	// 				next(null, 'foobar2');
+	// 			}
+	// 		}
+	// 	});
+
+	// 	var req = { 
+	// 		body: { 
+	// 			field1: 'me@dandean.com',
+	// 			field2: 'me@dandean.com' 
+	// 		}
+	// 	};
+	// 	form(
+	// 		field('field1').toFoobarSync(),
+	// 		field('field2').toFoobarAsync()
+	// 	)(req, {});
+	// 	assert.equal(req.form.field1, 'foobar1');
+	// 	assert.equal(req.form.field2, 'foobar2');
+	// },
 
 };
