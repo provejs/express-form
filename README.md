@@ -1,6 +1,6 @@
 # provejs-express
 
-Provides data sanitizing and validation as route an express middleware.
+Provides data sanitizing and validation as express middleware.
 
 ## Install
 
@@ -25,9 +25,8 @@ var validation = form(
 
 var controller = function(req, res){
 
-    // Setup: we use req.form as this contains our validated
-    // and sanitized data. We don't use req.body because that
-    // is un-sanitized and un-validated data.
+    // Use req.form as this contains your validated and sanitized data. 
+    // Don't use req.body because that is unsanitized and unvalidated data.
     var isValid = req.form.isValid;
     var errors = req.form.getErrors();
     var username = req.form.username;
