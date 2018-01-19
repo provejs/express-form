@@ -3,7 +3,7 @@ var form = require('../index');
 var field = form.field;
 
 module.exports = {
-	'filter : trim': function () {
+	'sanitize : trim': function () {
 		var req = {
 			body: {
 				field: '\r\n  value   \t'
@@ -13,7 +13,7 @@ module.exports = {
 		assert.equal(req.form.field, 'value');
 	},
 
-	'filter : ltrim': function () {
+	'sanitize : ltrim': function () {
 		var req = {
 			body: {
 				field: '\r\n  value   \t'
@@ -23,7 +23,7 @@ module.exports = {
 		assert.equal(req.form.field, 'value   \t');
 	},
 
-	'filter : rtrim': function () {
+	'sanitize : rtrim': function () {
 		var req = {
 			body: {
 				field: '\r\n  value   \t'
@@ -33,7 +33,7 @@ module.exports = {
 		assert.equal(req.form.field, '\r\n  value');
 	},
 
-	'filter : ifNull': function () {
+	'sanitize : ifNull': function () {
 		// Replace missing value with 'value'
 		var req = {
 			body: {}
@@ -87,7 +87,7 @@ module.exports = {
 		assert.equal(req.form.field, 0);
 	},
 
-	'filter : toFloat': function () {
+	'sanitize : toFloat': function () {
 		var req = {
 			body: {
 				field: '50.01'
@@ -107,7 +107,7 @@ module.exports = {
 		assert.ok(isNaN(req.form.field));
 	},
 
-	'filter : toInt': function () {
+	'sanitize : toInt': function () {
 		var req = {
 			body: {
 				field: '50.01'
@@ -127,7 +127,7 @@ module.exports = {
 		assert.ok(isNaN(req.form.field));
 	},
 
-	'filter : toBoolean': function () {
+	'sanitize : toBoolean': function () {
 		// Truthy values
 		var req = {
 			body: {
@@ -183,7 +183,7 @@ module.exports = {
 		});
 	},
 
-	'filter : toBooleanStrict': function () {
+	'sanitize : toBooleanStrict': function () {
 		// Truthy values
 		var req = {
 			body: {
@@ -241,20 +241,20 @@ module.exports = {
 		});
 	},
 
-	// 'filter : entityEncode': function() {
+	// 'sanitize : entityEncode': function() {
 	//   // NOTE: single quotes are not encoded
 	//   var req = { body: { field: '&\'<>hello!' }};
 	//   form(field('field').entityEncode())(req, {});
 	//   assert.equal(req.form.field, '&amp;&quot;&lt;&gt;hello!');
 	// },
 
-	// 'filter : entityDecode': function() {
+	// 'sanitize : entityDecode': function() {
 	//   var req = { body: { field: '&amp;&quot;&lt;&gt;hello!' }};
 	//   form(field('field').entityDecode())(req, {});
 	//   assert.equal(req.form.field, '&\'<>hello!');
 	// },
 
-	'filter : toUpper': function () {
+	'sanitize : toUpper': function () {
 		var req = {
 			body: {
 				field: 'hellö!'
@@ -264,7 +264,7 @@ module.exports = {
 		assert.equal(req.form.field, 'HELLÖ!');
 	},
 
-	'filter : toUpper : object': function () {
+	'sanitize : toUpper : object': function () {
 		var req = {
 			body: {
 				email: {
@@ -276,7 +276,7 @@ module.exports = {
 		assert.strictEqual(req.form.email, '[OBJECT OBJECT]');
 	},
 
-	'filter : toUpper : array': function () {
+	'sanitize : toUpper : array': function () {
 		var req = {
 			body: {
 				email: ['MyEmaiL1@example.com', 'myemail2@example.org']
@@ -286,7 +286,7 @@ module.exports = {
 		assert.strictEqual(req.form.email, 'MYEMAIL1@EXAMPLE.COM');
 	},
 
-	'filter : toLower': function () {
+	'sanitize : toLower': function () {
 		var req = {
 			body: {
 				field: 'HELLÖ!'
@@ -296,7 +296,7 @@ module.exports = {
 		assert.equal(req.form.field, 'hellö!');
 	},
 
-	'filter : toLower : object': function () {
+	'sanitize : toLower : object': function () {
 		var req = {
 			body: {
 				email: {
@@ -308,7 +308,7 @@ module.exports = {
 		assert.strictEqual(req.form.email, '[object object]');
 	},
 
-	'filter : toLower : array': function () {
+	'sanitize : toLower : array': function () {
 		var req = {
 			body: {
 				email: ['MyEmaiL1@example.com', 'myemail2@example.org']
@@ -318,7 +318,7 @@ module.exports = {
 		assert.strictEqual(req.form.email, 'myemail1@example.com');
 	},
 
-	'filter : truncate': function () {
+	'sanitize : truncate': function () {
 		var req = {
 			body: {
 				field1: '1234567890',
@@ -342,7 +342,7 @@ module.exports = {
 		assert.equal(req.form.field5, '1234...');
 	},
 
-	'filter : truncate : object': function () {
+	'sanitize : truncate : object': function () {
 		var req = {
 			body: {
 				email: {
@@ -355,7 +355,7 @@ module.exports = {
 		assert.strictEqual(req.form.email, '[object...');
 	},
 
-	'filter : truncate : array': function () {
+	'sanitize : truncate : array': function () {
 		var req = {
 			body: {
 				email: ['myemail1@example.com', 'myemail2@example.org']
@@ -365,7 +365,7 @@ module.exports = {
 		assert.strictEqual(req.form.email, 'myemail1...');
 	},
 
-	'filter : custom': function () {
+	'sanitize : custom': function () {
 		var req = {
 			body: {
 				field: 'value!'
@@ -377,7 +377,7 @@ module.exports = {
 		assert.equal(req.form.field, '!!!');
 	},
 	
-	'filter : toDate': function () {
+	'sanitize : toDate': function () {
 		var req = {
 			body: {
 				field: '1900-01-01'
@@ -386,6 +386,50 @@ module.exports = {
 		form(field('field').toDate())(req, {});
 		assert.equal(typeof req.form.field, 'object');
 		assert.equal(typeof req.form.field.toISOString, 'function');
+	},
+
+	'sanitize : toMoment': function () {
+		var req = {
+			body: {
+				field: '1900-01-01T00:00:00'
+			}
+		};
+		var res = {};
+		form(field('field').toMoment())(req, res);
+		assert.equal(typeof req.form.field, 'object');
+		assert.equal(typeof req.form.field.format, 'function');
+		assert.equal(req.form.field.format(), '1900-01-01T00:00:00Z');
+	},
+	
+	'sanitize : toMoment : timezone': function () {
+		var req = {
+			body: {
+				field: '1900-01-01T00:00:00'
+			}
+		};
+		var res = {
+			locals: {
+				timezone: {
+					name: 'US/Central'
+				}
+			}
+		};
+		form(field('field').toMoment())(req, res);
+		assert.equal(typeof req.form.field, 'object');
+		assert.equal(typeof req.form.field.format, 'function');
+		assert.equal(req.form.field.format(), '1900-01-01T06:00:00Z');
+	},
+	
+	'sanitize : toMoment : timezone : invalid': function () {
+		var req = {
+			body: {
+				field: 'foobar'
+			}
+		};
+		var res = {};
+		form(field('field').toMoment())(req, res);
+		assert.equal(typeof req.form.field, 'object');
+		assert.equal(req.form.field.isValid(), false);
 	}
 
 };

@@ -19,10 +19,12 @@
     "async": "^2.6.0",
     "lodash.assign": "^4.2.0",
     "lodash.isboolean": "^3.0.3",
+    "lodash.isfunction": "^3.0.8",
     "lodash.isnumber": "^3.0.3",
     "lodash.isobject": "^3.0.2",
     "lodash.isstring": "^4.0.1",
     "lodash.isundefined": "^3.0.1",
+    "moment-timezone": "^0.5.14",
     "sanitize-html": "^1.17.0",
     "validator": "^9.2.0"
   },
