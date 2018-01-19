@@ -120,9 +120,11 @@ var controller = function(req, res) {
 };
 router.post('/colors', middleware, controller);
 ```
-### toBlacklist(string)
+### toBlacklist(list)
 
-Remove characters that appear in the blacklist. The characters are used in a RegExp and so you will need to escape some chars.
+Remove characters that appear in the blacklist. 
+
+- list (String): String of characters to remove. The characters are used in a RegExp and so you will need to escape some chars.
 
 ```js
 var middleware = form(field('foobar').toBlackList('\\[\\]'));
@@ -146,18 +148,47 @@ See [Validator.js](https://github.com/chriso/validator.js#sanitizers).
 Convert the input string to a date.
 
 ### toDefault(any)
-Convert the empty input string to the specified value and type.
+Convert the empty input string to the given value.
+
+- any (Any): The given value to use if the input string is empty.
 
 ```js
-form(field('optionally').toDefault('foobar'));
+form(field('issued').toDate().toDefault(new Date()));
+form(field('option').toDefault(null));
 ```
 
-### toEmail()
+### toEmail(options)
+Canonicalizes an email address. (This doesn't validate that the input is an email, if you want to validate the email use isEmail beforehand).
+
+- options (object): is an object with the following keys and default values.
+
+See [Validator.js](https://github.com/chriso/validator.js#sanitizers).
+
 ### toEscape()
+Replace <, >, &, ', " and / with HTML entities.
+See [Validator.js](https://github.com/chriso/validator.js#sanitizers).
+
 ### toFloat()
-### toHtml()
-### toInt()
+Convert the input string to a float, or NaN if the input is not a float.
+See [Validator.js](https://github.com/chriso/validator.js#sanitizers).
+
+### toHtml(options)
+Sanitize the input html.
+
+- options (object): is an object with the following keys and default values.
+
+See [sanitize-html](https://github.com/punkave/sanitize-html).
+
+### toInt(radix)
+Convert the input string to an integer, or NaN if the input is not an integer.
+
+- radix (int): radix to use to convert to integer value. Defaults to base 10.
+
+See [Validator.js](https://github.com/chriso/validator.js#sanitizers).
+
 ### toLower()
+Converts the input string to lower case.
+
 ### toMoment()
 ### toStripLow()
 ### toTrim()
@@ -166,7 +197,15 @@ form(field('optionally').toDefault('foobar'));
 ### toTruncate()
 ### toUnescape()
 ### toUpper()
-### toWhitelist()
+Converts the input string to upper case.
+
+### toWhitelist(whitelist)
+Remove characters that do not appear in the whitelist.
+
+- whitelist (String): String of characters to allowed. The characters are used in a RegExp and so you will need to escape some chars.
+
+See [Validator.js](https://github.com/chriso/validator.js#sanitizers).
+
 ### custom(function)
 
 You can define your own sanitizers. The only requirement for custom sanitizers are they must return a value.
