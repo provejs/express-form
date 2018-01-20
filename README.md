@@ -334,19 +334,86 @@ Checks that the value matches the given regular expression.
 validate('username').is('[a-z]', 'i', 'Only letters are valid in %s')
 validate('username').is(/[a-z]/i, 'Only letters are valid in %s')
 ```
-## isAfter([message])
-## isAlpha([message])
-## isAlphanumeric([message])
-## isArrayLength([message])
+## isAfter([str[,message]])
+
+Check if the string is a date that's after the specified date (defaults to now).
+
+- str (String): Optional, date string to compare against.
+- message (String): Optional validation message.
+
+See [Validator.js](https://github.com/chriso/validator.js#validators).
+
+## isAlpha([locale [,message]])
+
+Check if the string contains only letters (a-zA-Z).
+
+- locale (String): Locale is one of ['ar', 'ar-AE', 'ar-BH', 'ar-DZ', 'ar-EG', 'ar-IQ', 'ar-JO', 'ar-KW', 'ar-LB', 'ar-LY', 'ar-MA', 'ar-QA', 'ar-QM', 'ar-SA', 'ar-SD', 'ar-SY', 'ar-TN', 'ar-YE', 'cs-CZ', 'da-DK', 'de-DE', 'el-GR', 'en-AU', 'en-GB', 'en-HK', 'en-IN', 'en-NZ', 'en-US', 'en-ZA', 'en-ZM', 'es-ES', 'fr-FR', 'hu-HU', 'it-IT', 'nb-NO', 'nl-NL', 'nn-NO', 'pl-PL', 'pt-BR', 'pt-PT', 'ru-RU', 'sk-SK', 'sr-RS', 'sr-RS@latin', 'sv-SE', 'tr-TR', 'uk-UA']) and defaults to en-US.
+- message (String): Optional validation message.
+
+See [Validator.js](https://github.com/chriso/validator.js#validators).
+
+## isAlphanumeric([locale [,message]])
+Check if the string contains only letters and numbers.
+
+- locale (String): Locale is one of ['ar', 'ar-AE', 'ar-BH', 'ar-DZ', 'ar-EG', 'ar-IQ', 'ar-JO', 'ar-KW', 'ar-LB', 'ar-LY', 'ar-MA', 'ar-QA', 'ar-QM', 'ar-SA', 'ar-SD', 'ar-SY', 'ar-TN', 'ar-YE', 'cs-CZ', 'da-DK', 'de-DE', 'el-GR', 'en-AU', 'en-GB', 'en-HK', 'en-IN', 'en-NZ', 'en-US', 'en-ZA', 'en-ZM', 'es-ES', 'fr-FR', 'hu-HU', 'it-IT', 'nb-NO', 'nl-NL', 'nn-NO', 'pl-PL', 'pt-BR', 'pt-PT', 'ru-RU', 'sk-SK', 'sr-RS', 'sr-RS@latin', 'sv-SE', 'tr-TR', 'uk-UA']) and defaults to en-US.
+- message (String): Optional validation message.
+
+See [Validator.js](https://github.com/chriso/validator.js#validators).
+
+## isArrayLength(min, max [,message])
+
+Check array length.
+
+- min (Integer): Min array length.
+- max (Integer): Max array length.
+- message (String): Optional validation message.
+
 ## isAscii([message])
+
+Check if the string contains ASCII chars only.
+
+- message (String): Optional validation message.
+
+See [Validator.js](https://github.com/chriso/validator.js#validators).
+
 ## isBase64([message])
-## isBefore([message])
+
+Check if a string is base64 encoded.
+
+See [Validator.js](https://github.com/chriso/validator.js#validators).
+
+## isBefore([date [,message]])
+
+Check if the string is a date that's before the specified date.
+
+- date (String): Date string to compare against.
+- message (String): Optional validation message.
+
+See [Validator.js](https://github.com/chriso/validator.js#validators).
+
 ## isBoolean([message])
-## isByteLength([message])
+
+Check if a string is a boolean.
+
+- message (String): Optional validation message.
+
+See [Validator.js](https://github.com/chriso/validator.js#validators).
+
+## isByteLength([options [,message]])
+Check if the string's length (in UTF-8 bytes) falls in a range.
+
+- options (object): defaults to {min:0, max: undefined}.
+- message (String): Optional validation message.
+
+See [Validator.js](https://github.com/chriso/validator.js#validators).
+
 ## isContains(value [,message])
 Checks if the field contains `value`.
 
 - value (String): The value to test for.     
+- message (String): Optional validation message.
+
+See [Validator.js](https://github.com/chriso/validator.js#validators).
 
 ## isCreditCard([message])
 ## isCurrency([message])
