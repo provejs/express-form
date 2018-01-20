@@ -585,7 +585,7 @@ form.field('username').custom(function(value, data, locals, next) {
 Example: Sync validator where either a phone or email is required:
 ```javascript
 var xor = function(value, data, locals) {
-    if (data.phone === '' && data.email) throw new Error('Either your phone or email is required.');
+    if (!data.phone && !data.email) throw new Error('Either your phone or email is required.');
 };
 
 form(
