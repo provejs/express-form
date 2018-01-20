@@ -416,13 +416,13 @@ Checks if the field contains `value`.
 See [Validator.js](https://github.com/chriso/validator.js#validators).
 
 ## isCreditCard([message])
-## isCurrency([message])
+## isCurrency([options[, message]])
 ## isDataURI([message])
 ## isDate([message])
 ## isDateRange([message])
-## isDecimal([message])
-## isDivisibleBy([message])
-## isEmail([message])
+## isDecimal([options[, message]])
+## isDivisibleBy([number[, message]])
+## isEmail([options[, message]])
 ## isEmpty([message])
 ## isEquals(value [,message])
 
@@ -437,9 +437,9 @@ validate('password').is(/^\w{6,20}$/)
 validate('password_confirmation').isEquals('field::password')
 ```
 
-## isFQDN([message])
+## isFQDN([options[, message]])
 ## isFinite([message])
-## isFloat([message])
+## isFloat([options[, message]])
 ## isFullWidth([message])
 ## isHalfWidth([message])
 ## isHash([message])
