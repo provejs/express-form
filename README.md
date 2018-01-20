@@ -179,6 +179,8 @@ form(field('issued').toDate().toDefault(new Date('2000-01-01')));
 form(field('option').toDefault(null));
 ```
 
+See `isRequired(default)`.
+
 ## toEmail(options)
 Canonicalizes an email address. (This doesn't validate that the input is an email, if you want to validate the email use isEmail beforehand).
 
@@ -282,7 +284,13 @@ See [Validator.js](https://github.com/chriso/validator.js#sanitizers).
 
 You can define your own sanitizers.
 
-- func (Function): Your custom sanitizer method. Your sanitizer method should return a value. The function parameters are `value`, `source`, and `locals`. If your custom sanitizer returns undefined, then the method has no effect on the field.
+- func (Function): Your custom sanitizer method. 
+    - When sanitizing the input your sanitizer should return the new value.
+    - If your sanitizer returns undefined the input is not changed.
+
+Your validator can be either sync or async.
+- Sync sanitizers have 4 function parameters (`value`, `source`, and `locals`).
+- Async sanitizers have 3 (or less) function parameters (`value`, `source`, `locals`, and `next`).
 
 ```js
 var toFoobar = function(value, source, locals) { 
@@ -291,8 +299,6 @@ var toFoobar = function(value, source, locals) {
 form(field('silly'.custom(toFoobar));
 ```
 
-
-
 ## Validator API:
 
 All validator methods begin with the `is` prefix in the method name.
@@ -300,9 +306,9 @@ All validator methods begin with the `is` prefix in the method name.
 **Validation messages**: each validator has its own default validation message.
 These can easily be overridden at runtime by passing a custom validation message
 to the validator. The custom message is always the **last** argument passed to
-the validator. `required()` allows you to set a placeholder (or default value)
+the validator. `isRequired()` allows you to set a placeholder (or default value)
 that your form contains when originally presented to the user. This prevents the
-placeholder value from passing the `required()` check.
+placeholder value from passing the `isRequired()` check.
 
 Use '%s' in the message to have the field name or label printed in the message:
 
@@ -514,7 +520,26 @@ Checks that the field is present in form data, and has a value.
 
 You can define your own custom sync and async validators.
 
-- func (Function): Your custom validator. If the function throws an error, then an error is added to the form. (If `message` is not provided, the thrown error message is used.)
+- func (Function): Your custom validator.
+- message (String): Optional validation message.
+
+Your validator can be either sync or async.
+- Sync validators have 4 function parameters (`value`, `source`, and `locals`).
+- Async validators have 3 (or less) function parameters (`value`, `source`, `locals`, and `next`).
+
+Your validators should handle validation **errors** by:
+- Sync validators should throw error if the input is not valid.
+- Async validators should return `callback(new Error('Your %s is invalid'))`.
+
+Your validators should handle validation **success** by:
+- Sync validators should
+    - return `null` on success
+    - Any non-null value returned will change the input.
+- Async validators should 
+    - return `callback(null, null)` on success
+    - return `callback(null, newValue)` if you want to change the input.
+
+If the input is optional then your validator should return success.
 
 Example: Throws an error if `username` field does not have value 'admin'.
 ```javascript
