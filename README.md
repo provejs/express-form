@@ -541,8 +541,8 @@ Sync validators should:
 Async validators should:
 - Have 4 function parameters (`value`, `source`, `locals`, and `next`).
 - When validating the input for
-    - On validation **error** your validator should return an error (eg `callback(new Error('Your %s is invalid'))`).
-    - On validation **success** your validator should return undefined (eg `callback()`).
+    - On validation **error** your validator should return an error (eg `next(new Error('Your %s is invalid'))`).
+    - On validation **success** your validator should return undefined (eg `next()`).
 - If the input is optional then your validator should return success.
 - Validators can also sanitize so you can return a new value to change the input (eg `next(null, newValue)`).
 
