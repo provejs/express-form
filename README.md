@@ -289,8 +289,8 @@ You can define your own sanitizers.
     - If your sanitizer returns undefined the input is not changed.
 
 Your validator can be either sync or async.
-- Sync sanitizers have 4 function parameters (`value`, `source`, and `locals`).
-- Async sanitizers have 3 (or less) function parameters (`value`, `source`, `locals`, and `next`).
+- Sync sanitizers have 3 (or less) function parameters (`value`, `source`, and `locals`).
+- Async sanitizers have 4 function parameters (`value`, `source`, `locals`, and `next`).
 
 ```js
 var toFoobar = function(value, source, locals) { 
@@ -524,8 +524,8 @@ You can define your own custom sync and async validators.
 - message (String): Optional validation message.
 
 Your validator can be either sync or async.
-- Sync validators have 4 function parameters (`value`, `source`, and `locals`).
-- Async validators have 3 (or less) function parameters (`value`, `source`, `locals`, and `next`).
+- Sync validators have 3 (or less) function parameters (`value`, `source`, and `locals`).
+- Async validators have 4 function parameters (`value`, `source`, `locals`, and `next`).
 
 Your validators should handle validation **errors** by:
 - Sync validators should throw error if the input is not valid.
