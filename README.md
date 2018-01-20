@@ -284,13 +284,17 @@ See [Validator.js](https://github.com/chriso/validator.js#sanitizers).
 
 You can define your own sanitizers.
 
-- func (Function): Your custom sanitizer method. 
-    - When sanitizing the input your sanitizer should return the new value.
-    - If your sanitizer returns undefined the input is not changed.
+- func (Function): Your custom sync or async sanitizer method.
 
-Your validator can be either sync or async.
-- Sync sanitizers have 3 (or less) function parameters (`value`, `source`, and `locals`).
-- Async sanitizers have 4 function parameters (`value`, `source`, `locals`, and `next`).
+Sync sanitizers should:
+- Have 3 (or less) function parameters (`value`, `source`, and `locals`).
+- When sanitizing the input your sanitizer should return a new value other then undefined.
+- If your sanitizer returns undefined the input is not changed.
+
+Async sanitizers should:
+- Have 4 function parameters (`value`, `source`, `locals`, and `next`).
+- When sanitizing the input your sanitizer should return a new value (eg `next(null, newValue)`).
+- If your sanitizer returns undefined (eg `next()`) then the in put is not changed.
 
 ```js
 var toFoobar = function(value, source, locals) { 
@@ -298,6 +302,8 @@ var toFoobar = function(value, source, locals) {
 };
 form(field('silly'.custom(toFoobar));
 ```
+
+Custom sanitizers can also be custom validators.
 
 ## Validator API:
 
@@ -520,26 +526,25 @@ Checks that the field is present in form data, and has a value.
 
 You can define your own custom sync and async validators.
 
-- func (Function): Your custom validator.
+- func (Function): Your custom async or sync validator.
 - message (String): Optional validation message.
 
-Your validator can be either sync or async.
-- Sync validators have 3 (or less) function parameters (`value`, `source`, and `locals`).
-- Async validators have 4 function parameters (`value`, `source`, `locals`, and `next`).
+Sync validators should:
+- Have 3 (or less) function parameters (`value`, `source`, and `locals`).
+- When validating the input for
+    - On validation **error** your validator should throw an error (eg `throw new Error('Your %s is invalid.')`).
+    - On validation **success** your validator should return undefined.
+- If the input is optional then your validator should return success.
+- Validators can also sanitize so you can return a new value to change the input.
 
-Your validators should handle validation **errors** by:
-- Sync validators should throw error if the input is not valid.
-- Async validators should return `callback(new Error('Your %s is invalid'))`.
 
-Your validators should handle validation **success** by:
-- Sync validators should
-    - return `null` on success
-    - Any non-null value returned will change the input.
-- Async validators should 
-    - return `callback(null, null)` on success
-    - return `callback(null, newValue)` if you want to change the input.
-
-If the input is optional then your validator should return success.
+Async validators should:
+- Have 4 function parameters (`value`, `source`, `locals`, and `next`).
+- When validating the input for
+    - On validation **error** your validator should return an error (eg `callback(new Error('Your %s is invalid'))`).
+    - On validation **success** your validator should return undefined (eg `callback()`).
+- If the input is optional then your validator should return success.
+- Validators can also sanitize so you can return a new value to change the input (eg `next(null, newValue)`).
 
 Example: Throws an error if `username` field does not have value 'admin'.
 ```javascript
