@@ -418,6 +418,21 @@ module.exports = {
 		form(field('field').toMoment())(req, res);
 		assert.equal(req.form.field, null);
 	},
+
+	'sanitize : daterange: toMoment': function () {
+		var req = {
+			body: {
+				field: '1900-01-01 to 2000-01-01'
+			}
+		};
+		var res = {};
+		form(field('field').isDateRange().toMoment())(req, res);
+		assert.equal(typeof req.form.field, 'object');
+		assert.equal(typeof req.form.field.min.format, 'function');
+		assert.equal(typeof req.form.field.max.format, 'function');
+		assert.equal(req.form.field.min.format(), '1900-01-01T00:00:00Z');
+		assert.equal(req.form.field.max.format(), '2000-01-01T23:59:59Z');
+	},
 	
 	'sanitize : custom': function () {
 		var req = {
