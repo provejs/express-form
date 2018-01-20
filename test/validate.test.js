@@ -408,7 +408,7 @@ module.exports = {
 		assert.equal(req.form.errors.length, 0);
 	},
 
-	'validate : notEmpty': function () {
+	'validate : isNotEmpty': function () {
 		// Failure.
 		var req = {
 			body: {
@@ -439,7 +439,7 @@ module.exports = {
 		assert.equal(req.form.errors.length, 0);
 	},
 
-	'validate : equals': function () {
+	'validate : isEquals': function () {
 		// Failure.
 		var req = {
 			body: {
@@ -521,7 +521,7 @@ module.exports = {
 		assert.equal(req.form.errors.length, 0);
 	},
 
-	'validate : contains': function () {
+	'validate : isContains': function () {
 		// Failure.
 		var req = {
 			body: {
@@ -552,7 +552,7 @@ module.exports = {
 		assert.equal(req.form.errors.length, 0);
 	},
 
-	'validate : notContains': function () {
+	'validate : isNotContains': function () {
 		// Failure.
 		var req = {
 			body: {
@@ -583,13 +583,13 @@ module.exports = {
 		assert.equal(req.form.errors.length, 0);
 	},
 
-	'validate : regex/is': function () {
-		// regex(/pattern/)
-		// regex(/pattern/, 'message')
-		// regex('pattern')
-		// regex('pattern', 'modifiers')
-		// regex('pattern', 'message')
-		// regex('pattern', 'modifiers', 'message')
+	'validate : is': function () {
+		// is(/pattern/)
+		// is(/pattern/, 'message')
+		// is('pattern')
+		// is('pattern', 'modifiers')
+		// is('pattern', 'message')
+		// is('pattern', 'modifiers', 'message')
 
 		// Failure: RegExp with default args
 		var req = {
@@ -661,7 +661,7 @@ module.exports = {
 		assert.equal(req.form.errors.length, 0);
 	},
 
-	'validate : notRegex/not': function () {
+	'validate : isNot': function () {
 		// notRegex(/pattern/)
 		// notRegex(/pattern/, 'message')
 		// notRegex('pattern')
@@ -738,7 +738,7 @@ module.exports = {
 		assert.equal(req.form.errors.length, 0);
 	},
 
-	'validation : minLength': function () {
+	'validation : isMinLength': function () {
 		// Failure.
 		var req = {
 			body: {
@@ -787,7 +787,7 @@ module.exports = {
 		assert.strictEqual(req.form.errors[0], 'Password is not a string');
 	},
 
-	'validation : maxLength': function () {
+	'validation : isMaxLength': function () {
 		// Failure.
 		var req = {
 			body: {
@@ -810,7 +810,7 @@ module.exports = {
 		// assert.equal(req.form.errors.length, 0);
 	},
 
-	'validation : required': function () {
+	'validation : isRequired': function () {
 		// Failure.
 		var req = {
 			body: {}

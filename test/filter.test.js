@@ -318,7 +318,7 @@ module.exports = {
 		assert.strictEqual(req.form.email, 'myemail1@example.com');
 	},
 
-	'sanitize : truncate': function () {
+	'sanitize : toTruncate': function () {
 		var req = {
 			body: {
 				field1: '1234567890',
@@ -342,7 +342,7 @@ module.exports = {
 		assert.equal(req.form.field5, '1234...');
 	},
 
-	'sanitize : truncate : object': function () {
+	'sanitize : toTruncate : object': function () {
 		var req = {
 			body: {
 				email: {
@@ -355,7 +355,7 @@ module.exports = {
 		assert.strictEqual(req.form.email, '[object...');
 	},
 
-	'sanitize : truncate : array': function () {
+	'sanitize : toTruncate : array': function () {
 		var req = {
 			body: {
 				email: ['myemail1@example.com', 'myemail2@example.org']
@@ -365,18 +365,6 @@ module.exports = {
 		assert.strictEqual(req.form.email, 'myemail1...');
 	},
 
-	'sanitize : custom': function () {
-		var req = {
-			body: {
-				field: 'value!'
-			}
-		};
-		form(field('field').custom(function (value) {
-			return '!!!';
-		}))(req, {});
-		assert.equal(req.form.field, '!!!');
-	},
-	
 	'sanitize : toDate': function () {
 		var req = {
 			body: {
@@ -429,6 +417,17 @@ module.exports = {
 		var res = {};
 		form(field('field').toMoment())(req, res);
 		assert.equal(req.form.field, null);
+	},
+	
+	'sanitize : custom': function () {
+		var req = {
+			body: {
+				field: 'value!'
+			}
+		};
+		form(field('field').custom(function (value) {
+			return '!!!';
+		}))(req, {});
+		assert.equal(req.form.field, '!!!');
 	}
-
 };
