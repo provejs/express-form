@@ -352,7 +352,7 @@ Checks if the field contains `value`.
 ## isCurrency([message])
 ## isDataURI([message])
 ## isDate([message])
-## isDaterange([message])
+## isDateRange([message])
 ## isDecimal([message])
 ## isDivisibleBy([message])
 ## isEmail([message])
