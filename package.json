@@ -2,7 +2,7 @@
   "author": "Dan Hollenbeck (dan@hollenbecks.com)",
   "name": "provejs-express",
   "description": "Form validation and data filtering for Express",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "homepage": "",
   "repository": {
     "type": "git",
