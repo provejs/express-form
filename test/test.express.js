@@ -7,22 +7,10 @@ var request = require('request');
 var bodyParser = require('body-parser');
 var app = express();
 
-http.createServer(app).listen(3000);
-
-// some duct-tape to make assert.response work with express 3.x
-app.address = function () {
-	return {
-		port: 3000
-	};
-};
-app.close = function () {
-	process.exit(0);
-};
-
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({
-	extended: true
-}));
+app.use(bodyParser.urlencoded({ extended: true }));
+
+http.createServer(app).listen(3000);
 
 module.exports = {
 	'express : middleware : valid-form': function (done) {
@@ -100,6 +88,4 @@ module.exports = {
 			done();
 		});
 	}
-
-
 };

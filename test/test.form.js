@@ -3,8 +3,8 @@ var form = require('../index');
 var field = form.field;
 var utils = require('../lib/utils');
 
-module.exports = {
-	'form : isValid': function () {
+describe('form : isValid', function () {
+	it('should should fail', function () {
 		// Failure.
 		var req = {
 			body: {
@@ -13,7 +13,8 @@ module.exports = {
 		};
 		form(field('field').isEmail())(req, {});
 		assert.strictEqual(req.form.isValid, false);
-
+	});
+	it('should should success', function () {
 		// Success
 		var req = {
 			body: {
@@ -26,9 +27,11 @@ module.exports = {
 		// form.isValid is a getter only
 		req.form.isValid = false;
 		assert.strictEqual(req.form.isValid, true);
-	},
+	});
+});
 
-	'form : getErrors': function () {
+describe('form : getErrors', function () {
+	it('should should return errors', function () {
 		var req = {
 			body: {
 				field0: 'win',
@@ -52,28 +55,37 @@ module.exports = {
 		assert.equal(req.form.getErrors('field1').length, 1);
 		assert.equal(req.form.getErrors('field2').length, 2);
 		assert.equal(req.form.getErrors('field3').length, 3);
-	},
+	});
+});
 
-	'form : configure : sources': function () {
-		form.configure({
-			sources: ['other']
-		});
-
+describe('form : res.locals.errors', function () {
+	it('should should populate res.locals.errors on error', function () {
+		// Failure.
 		var req = {
-			other: {
+			body: {
+				field: 'fail'
+			}
+		};
+		var res = {};
+		form(field('field').isEmail())(req, res);
+		assert.deepEqual(res.locals.errors, { field: 'field is not an email address' } );
+		
+	});
+	it('should should not populate res.locals.errors on success', function () {
+		// Success
+		var req = {
+			body: {
 				field: 'me@dandean.com'
 			}
 		};
-		form(field('field').isEmail())(req, {});
-		assert.strictEqual(req.form.isValid, true);
-		assert.equal(req.form.field, 'me@dandean.com');
+		var res = {};
+		form(field('field').isEmail())(req, res);
+		assert.deepEqual(res.locals.errors, {});
+	});
+});
 
-		form.configure({
-			sources: ['body', 'query', 'params']
-		});
-	},
-
-	'form : configure : autoTrim': function () {
+describe('form : configure : autoTrim', function () {
+	it('should should work', function () {
 		// req with username field containing a trailing space
 		var req = {
 			body: {
@@ -105,32 +117,5 @@ module.exports = {
 			autoTrim: false
 		});
 		assert.strictEqual(form._options.autoTrim, false);
-	},
-	
-	// 'form : configure : methods': function () {
-	// 	form.configure({
-	// 		methods: {
-	// 			toFoobarSync: function(value, source){
-	// 				return 'foobar1';
-	// 			},
-	// 			isFoobarAsync: function(value, data, locals, next) {
-	// 				next(null, 'foobar2');
-	// 			}
-	// 		}
-	// 	});
-
-	// 	var req = { 
-	// 		body: { 
-	// 			field1: 'me@dandean.com',
-	// 			field2: 'me@dandean.com' 
-	// 		}
-	// 	};
-	// 	form(
-	// 		field('field1').toFoobarSync(),
-	// 		field('field2').toFoobarAsync()
-	// 	)(req, {});
-	// 	assert.equal(req.form.field1, 'foobar1');
-	// 	assert.equal(req.form.field2, 'foobar2');
-	// },
-
-};
+	});
+});
