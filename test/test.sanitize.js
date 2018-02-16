@@ -33,7 +33,7 @@ module.exports = {
 		assert.equal(req.form.field, '\r\n  value');
 	},
 
-	'sanitize : ifNull': function () {
+	'sanitize : toDefault': function () {
 		// Replace missing value with 'value'
 		var req = {
 			body: {}
@@ -63,6 +63,15 @@ module.exports = {
 		var req = {
 			body: {
 				field: undefined
+			}
+		};
+		form(field('field').toDefault('value'))(req, {});
+		assert.equal(req.form.field, 'value');
+
+		// Replace NaN with value
+		var req = {
+			body: {
+				field: NaN
 			}
 		};
 		form(field('field').toDefault('value'))(req, {});
