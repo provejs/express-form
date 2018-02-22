@@ -1,3 +1,5 @@
+'use strict';
+
 var assert = require('assert');
 var form = require('../index');
 var field = form.field;
@@ -275,7 +277,7 @@ module.exports = {
 			}
 		};
 		form(
-			field('integer').isNumeric(),
+			field('integer').isNumeric()
 			//field('floating').isNumeric(),
 			//field('negative').isNumeric(),
 			//field('positive').isNumeric(),
