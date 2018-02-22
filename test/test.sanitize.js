@@ -4,8 +4,8 @@ var assert = require('assert');
 var form = require('../index');
 var field = form.field;
 
-module.exports = {
-	'sanitize : toTrim': function () {
+describe('sanitize', function () {
+	it('toTrim', function () {
 		var req = {
 			body: {
 				field: '\r\n  value   \t'
@@ -13,9 +13,8 @@ module.exports = {
 		};
 		form(field('field').toTrim())(req, {});
 		assert.equal(req.form.field, 'value');
-	},
-
-	'sanitize : ltrim': function () {
+	});
+	it('ltrim', function () {
 		var req = {
 			body: {
 				field: '\r\n  value   \t'
@@ -23,9 +22,8 @@ module.exports = {
 		};
 		form(field('field').toTrimLeft())(req, {});
 		assert.equal(req.form.field, 'value   \t');
-	},
-
-	'sanitize : rtrim': function () {
+	});
+	it('rtrim', function () {
 		var req = {
 			body: {
 				field: '\r\n  value   \t'
@@ -33,9 +31,8 @@ module.exports = {
 		};
 		form(field('field').toTrimRight())(req, {});
 		assert.equal(req.form.field, '\r\n  value');
-	},
-
-	'sanitize : toDefault': function () {
+	});
+	it('toDefault', function () {
 		// Replace missing value with 'value'
 		var req = {
 			body: {}
@@ -96,9 +93,8 @@ module.exports = {
 		};
 		form(field('field').toDefault('value'))(req, {});
 		assert.equal(req.form.field, 0);
-	},
-
-	'sanitize : toFloat': function () {
+	});
+	it('toFloat', function () {
 		var req = {
 			body: {
 				field: '50.01'
@@ -116,9 +112,8 @@ module.exports = {
 		form(field('field').toFloat())(req, {});
 		assert.ok(typeof req.form.field == 'number');
 		assert.ok(isNaN(req.form.field));
-	},
-
-	'sanitize : toInt': function () {
+	});
+	it('toInt', function () {
 		var req = {
 			body: {
 				field: '50.01'
@@ -136,9 +131,8 @@ module.exports = {
 		form(field('field').toInt())(req, {});
 		assert.ok(typeof req.form.field == 'number');
 		assert.ok(isNaN(req.form.field));
-	},
-
-	'sanitize : toBoolean': function () {
+	});
+	it('toBoolean', function () {
 		// Truthy values
 		var req = {
 			body: {
@@ -192,9 +186,8 @@ module.exports = {
 			assert.strictEqual(typeof req.form[name], 'boolean');
 			assert.strictEqual(req.form[name], false);
 		});
-	},
-
-	'sanitize : toBooleanStrict': function () {
+	});
+	it('toBooleanStrict', function () {
 		// Truthy values
 		var req = {
 			body: {
@@ -250,22 +243,8 @@ module.exports = {
 			assert.strictEqual(typeof req.form[name], 'boolean');
 			assert.strictEqual(req.form[name], false);
 		});
-	},
-
-	// 'sanitize : entityEncode': function() {
-	//   // NOTE: single quotes are not encoded
-	//   var req = { body: { field: '&\'<>hello!' }};
-	//   form(field('field').entityEncode())(req, {});
-	//   assert.equal(req.form.field, '&amp;&quot;&lt;&gt;hello!');
-	// },
-
-	// 'sanitize : entityDecode': function() {
-	//   var req = { body: { field: '&amp;&quot;&lt;&gt;hello!' }};
-	//   form(field('field').entityDecode())(req, {});
-	//   assert.equal(req.form.field, '&\'<>hello!');
-	// },
-
-	'sanitize : toUpper': function () {
+	});
+	it('toUpper', function () {
 		var req = {
 			body: {
 				field: 'hellö!'
@@ -273,9 +252,8 @@ module.exports = {
 		};
 		form(field('field').toUpper())(req, {});
 		assert.equal(req.form.field, 'HELLÖ!');
-	},
-
-	'sanitize : toUpper : object': function () {
+	});
+	it('toUpper : object', function () {
 		var req = {
 			body: {
 				email: {
@@ -285,9 +263,8 @@ module.exports = {
 		};
 		form(field('email').toUpper())(req, {});
 		assert.strictEqual(req.form.email, '[OBJECT OBJECT]');
-	},
-
-	'sanitize : toUpper : array': function () {
+	});
+	it('toUpper : array', function () {
 		var req = {
 			body: {
 				email: ['MyEmaiL1@example.com', 'myemail2@example.org']
@@ -295,9 +272,8 @@ module.exports = {
 		};
 		form(field('email').toUpper())(req, {});
 		assert.strictEqual(req.form.email, 'MYEMAIL1@EXAMPLE.COM');
-	},
-
-	'sanitize : toLower': function () {
+	});
+	it('toLower', function () {
 		var req = {
 			body: {
 				field: 'HELLÖ!'
@@ -305,9 +281,8 @@ module.exports = {
 		};
 		form(field('field').toLower())(req, {});
 		assert.equal(req.form.field, 'hellö!');
-	},
-
-	'sanitize : toLower : object': function () {
+	});
+	it('toLower : object', function () {
 		var req = {
 			body: {
 				email: {
@@ -317,9 +292,8 @@ module.exports = {
 		};
 		form(field('email').toLower())(req, {});
 		assert.strictEqual(req.form.email, '[object object]');
-	},
-
-	'sanitize : toLower : array': function () {
+	});
+	it('toLower : array', function () {
 		var req = {
 			body: {
 				email: ['MyEmaiL1@example.com', 'myemail2@example.org']
@@ -327,9 +301,8 @@ module.exports = {
 		};
 		form(field('email').toLower())(req, {});
 		assert.strictEqual(req.form.email, 'myemail1@example.com');
-	},
-
-	'sanitize : toTruncate': function () {
+	});
+	it('toTruncate', function () {
 		var req = {
 			body: {
 				field1: '1234567890',
@@ -351,9 +324,8 @@ module.exports = {
 		assert.equal(req.form.field3, '123');
 		assert.equal(req.form.field4, '12...');
 		assert.equal(req.form.field5, '1234...');
-	},
-
-	'sanitize : toTruncate : object': function () {
+	});
+	it('toTruncate : object', function () {
 		var req = {
 			body: {
 				email: {
@@ -364,9 +336,8 @@ module.exports = {
 		};
 		form(field('email').toTruncate(10))(req, {});
 		assert.strictEqual(req.form.email, '[object...');
-	},
-
-	'sanitize : toTruncate : array': function () {
+	});
+	it('toTruncate : array', function () {
 		var req = {
 			body: {
 				email: ['myemail1@example.com', 'myemail2@example.org']
@@ -374,9 +345,8 @@ module.exports = {
 		};
 		form(field('email').toTruncate(11))(req, {});
 		assert.strictEqual(req.form.email, 'myemail1...');
-	},
-
-	'sanitize : toDate': function () {
+	});
+	it('toDate', function () {
 		var req = {
 			body: {
 				field: '1900-01-01'
@@ -385,9 +355,8 @@ module.exports = {
 		form(field('field').toDate())(req, {});
 		assert.equal(typeof req.form.field, 'object');
 		assert.equal(typeof req.form.field.toISOString, 'function');
-	},
-
-	'sanitize : toMoment': function () {
+	});
+	it('toMoment', function () {
 		var req = {
 			body: {
 				field: '1900-01-01T00:00:00'
@@ -398,9 +367,8 @@ module.exports = {
 		assert.equal(typeof req.form.field, 'object');
 		assert.equal(typeof req.form.field.format, 'function');
 		assert.equal(req.form.field.format(), '1900-01-01T00:00:00Z');
-	},
-
-	'sanitize : toMoment : timezone': function () {
+	});
+	it('toMoment : timezone', function () {
 		var req = {
 			body: {
 				field: '1900-01-01T00:00:00'
@@ -417,8 +385,8 @@ module.exports = {
 		assert.equal(typeof req.form.field, 'object');
 		assert.equal(typeof req.form.field.format, 'function');
 		assert.equal(req.form.field.format(), '1900-01-01T06:00:00Z');
-	},
-	'sanitize : toMoment : timezone : invalid': function () {
+	});
+	it('toMoment : timezone : invalid', function () {
 		var req = {
 			body: {
 				field: 'foobar'
@@ -427,9 +395,8 @@ module.exports = {
 		var res = {};
 		form(field('field').toMoment())(req, res);
 		assert.equal(req.form.field, null);
-	},
-
-	'sanitize : daterange: toMoment': function () {
+	});
+	it('daterange: toMoment', function () {
 		var req = {
 			body: {
 				field: '1900-01-01 to 2000-01-01'
@@ -442,9 +409,8 @@ module.exports = {
 		assert.equal(typeof req.form.field.max.format, 'function');
 		assert.equal(req.form.field.min.format(), '1900-01-01T00:00:00Z');
 		assert.equal(req.form.field.max.format(), '2000-01-01T23:59:59Z');
-	},
-
-	'sanitize : custom': function () {
+	});
+	it('custom', function () {
 		var req = {
 			body: {
 				field: 'value!'
@@ -454,5 +420,5 @@ module.exports = {
 			return '!!!';
 		}))(req, {});
 		assert.equal(req.form.field, '!!!');
-	}
-};
+	});
+});
