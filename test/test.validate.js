@@ -275,7 +275,7 @@ module.exports = {
 			}
 		};
 		form(
-			field('integer').isNumeric(),
+			field('integer').isNumeric()
 			//field('floating').isNumeric(),
 			//field('negative').isNumeric(),
 			//field('positive').isNumeric(),
