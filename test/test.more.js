@@ -4,10 +4,8 @@ var assert = require('assert');
 var form = require('../index');
 var field = form.field;
 
-module.exports = {
-
-	'field : arrays': function () {
-		// Array transformations.
+describe('field: array', function () {
+	it('array transformations', function () {
 		var req = {
 			body: {
 				field1: '',
@@ -63,8 +61,9 @@ module.exports = {
 		form(field('field').toArray().isInt())(req, {});
 		assert.equal(req.form.errors.length, 1);
 		assert.equal(req.form.errors[0], 'field is not an integer');
-	},
-	'field : nesting': function () {
+	});
+
+	it('field : nesting', function () {
 		// Nesting with dot notation
 		var req = {
 			body: {
@@ -134,9 +133,9 @@ module.exports = {
 		assert.strictEqual(req.form.field.gb.b, 'AAAA');
 		assert.strictEqual(req.form.field.gb.c.fruit, 'DEEPER');
 		assert.strictEqual(req.form.field.gb.c.must.go, 'DEEPERRRR');
-	},
+	});
 
-	'field : filter/validate combo ordering': function () {
+	it('field : filter/validate combo ordering', function() {
 		// Can arrange filter and validate procs in any order.
 		var req = {
 			body: {
@@ -152,9 +151,9 @@ module.exports = {
 		assert.strictEqual(req.form.field2, 'some thing');
 		assert.equal(req.form.errors.length, 1);
 		assert.equal(req.form.errors[0], 'field1 is too long');
-	},
+	});
 
-	'field : autoTrim': function () {
+	it('field : autoTrim', function() {
 		// Auto-trim declared fields.
 		form.configure({
 			autoTrim: true
@@ -169,9 +168,9 @@ module.exports = {
 		form.configure({
 			autoTrim: false
 		});
-	},
+	});
 
-	'form : getErrors() gives full map': function () {
+	it('form : getErrors() gives full map', function() {
 		var req = {
 			body: {
 				field0: 'win',
@@ -192,6 +191,5 @@ module.exports = {
 		assert.equal(req.form.getErrors().field1.length, 1);
 		assert.equal(req.form.getErrors().field2.length, 2);
 		assert.equal(req.form.getErrors().field3.length, 3);
-	}
-
-};
+	});
+});
