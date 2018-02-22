@@ -1,3 +1,5 @@
+'use strict';
+
 var assert = require('assert');
 var form = require('../index');
 var field = form.field;
@@ -68,8 +70,8 @@ describe('form : res.locals.errors', function () {
 		};
 		var res = {};
 		form(field('field').isEmail())(req, res);
-		assert.deepEqual(res.locals.errors, { field: 'field is not an email address' } );
-		
+		assert.deepEqual(res.locals.errors, {field: 'field is not an email address'});
+
 	});
 	it('should should not populate res.locals.errors on success', function () {
 		// Success
@@ -96,14 +98,14 @@ describe('form : configure : autoTrim', function () {
 		var req2 = utils.clone(req);
 
 		// alphanumeric
-		var regex = /^[0-9A-Z]+$/i
+		var regex = /^[0-9A-Z]+$/i;
 
 		// autoTrim defaults to false, test results with it off
 		assert.strictEqual(form._options.autoTrim, false);
 		form(field('username').is(regex))(req, {});
 		assert.strictEqual(req.form.isValid, false);
 
-		// test results with autoTrim turned on 
+		// test results with autoTrim turned on
 		form.configure({
 			autoTrim: true
 		});

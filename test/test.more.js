@@ -1,3 +1,5 @@
+'use strict';
+
 var assert = require('assert');
 var form = require('../index');
 var field = form.field;
@@ -32,7 +34,7 @@ module.exports = {
 		assert.strictEqual(req.form.field3.length, 4);
 
 		// No array flag!
-		var req = {
+		req = {
 			body: {
 				field: ['red', 'blue']
 			}
@@ -41,7 +43,7 @@ module.exports = {
 		assert.strictEqual(req.form.field, 'red');
 
 		// Iterate and filter array.
-		var req = {
+		req = {
 			body: {
 				field: ['david', 'stephen', 'greg']
 			}
@@ -53,7 +55,7 @@ module.exports = {
 		assert.strictEqual(req.form.field.length, 3);
 
 		// Iterate and validate array
-		var req = {
+		req = {
 			body: {
 				field: [1, 2, 'f']
 			}
@@ -99,7 +101,7 @@ module.exports = {
 		assert.strictEqual(req.form.field.gb.c.must.go, 'DEEPERRRR');
 
 		// Nesting with square-bracket notation
-		var req = {
+		req = {
 			body: {
 				field: {
 					nest: 'wow',
@@ -192,4 +194,4 @@ module.exports = {
 		assert.equal(req.form.getErrors().field3.length, 3);
 	}
 
-}
+};

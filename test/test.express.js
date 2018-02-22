@@ -1,3 +1,5 @@
+'use strict';
+
 var assert = require('assert');
 var form = require('../index');
 var field = form.field;
@@ -9,7 +11,7 @@ var app = express();
 var server;
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({extended: true}));
 
 describe('express', function () {
 	before(function() {
@@ -19,7 +21,7 @@ describe('express', function () {
 	after(function() {
 		server.close();
 	});
-  
+
 	describe('middleware : valid-form', function () {
 		it('should should work', function (done) {
 			app.post(
@@ -49,7 +51,7 @@ describe('express', function () {
 				headers: {
 					'Content-Type': 'application/json'
 				}
-			}, function (err, res, body) {
+			}, function (err, res) {
 				assert.ifError(err);
 				assert.strictEqual(res.statusCode, 200);
 				done();
@@ -92,7 +94,7 @@ describe('express', function () {
 				headers: {
 					'Content-Type': 'application/json'
 				}
-			}, function (err, res, body) {
+			}, function (err, res) {
 				assert.ifError(err);
 				assert.strictEqual(res.statusCode, 200);
 				done();

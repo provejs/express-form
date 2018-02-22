@@ -44,7 +44,7 @@ module.exports = {
 		assert.equal(req.form.field, 'value');
 
 		// Replace empty string with value
-		var req = {
+		req = {
 			body: {
 				field: ''
 			}
@@ -53,7 +53,7 @@ module.exports = {
 		assert.equal(req.form.field, 'value');
 
 		// Replace NULL with value
-		var req = {
+		req = {
 			body: {
 				field: null
 			}
@@ -62,7 +62,7 @@ module.exports = {
 		assert.equal(req.form.field, 'value');
 
 		// Replace undefined with value
-		var req = {
+		req = {
 			body: {
 				field: undefined
 			}
@@ -71,7 +71,7 @@ module.exports = {
 		assert.equal(req.form.field, 'value');
 
 		// Replace NaN with value
-		var req = {
+		req = {
 			body: {
 				field: NaN
 			}
@@ -80,7 +80,7 @@ module.exports = {
 		assert.equal(req.form.field, 'value');
 
 		// DO NOT replace false
-		var req = {
+		req = {
 			body: {
 				field: false
 			}
@@ -89,7 +89,7 @@ module.exports = {
 		assert.equal(req.form.field, false);
 
 		// DO NOT replace zero
-		var req = {
+		req = {
 			body: {
 				field: 0
 			}
@@ -108,7 +108,7 @@ module.exports = {
 		assert.ok(typeof req.form.field == 'number');
 		assert.equal(req.form.field, 50.01);
 
-		var req = {
+		req = {
 			body: {
 				field: 'fail'
 			}
@@ -128,7 +128,7 @@ module.exports = {
 		assert.ok(typeof req.form.field == 'number');
 		assert.equal(req.form.field, 50);
 
-		var req = {
+		req = {
 			body: {
 				field: 'fail'
 			}
@@ -167,7 +167,7 @@ module.exports = {
 		});
 
 		// Falsy values
-		var req = {
+		req = {
 			body: {
 				field1: false,
 				field2: 'false',
@@ -217,7 +217,7 @@ module.exports = {
 		});
 
 		// Falsy values
-		var req = {
+		req = {
 			body: {
 				field1: false,
 				field2: 'false',
@@ -399,7 +399,7 @@ module.exports = {
 		assert.equal(typeof req.form.field.format, 'function');
 		assert.equal(req.form.field.format(), '1900-01-01T00:00:00Z');
 	},
-	
+
 	'sanitize : toMoment : timezone': function () {
 		var req = {
 			body: {
@@ -418,7 +418,6 @@ module.exports = {
 		assert.equal(typeof req.form.field.format, 'function');
 		assert.equal(req.form.field.format(), '1900-01-01T06:00:00Z');
 	},
-	
 	'sanitize : toMoment : timezone : invalid': function () {
 		var req = {
 			body: {
@@ -444,14 +443,14 @@ module.exports = {
 		assert.equal(req.form.field.min.format(), '1900-01-01T00:00:00Z');
 		assert.equal(req.form.field.max.format(), '2000-01-01T23:59:59Z');
 	},
-	
+
 	'sanitize : custom': function () {
 		var req = {
 			body: {
 				field: 'value!'
 			}
 		};
-		form(field('field').custom(function (value) {
+		form(field('field').custom(function () {
 			return '!!!';
 		}))(req, {});
 		assert.equal(req.form.field, '!!!');

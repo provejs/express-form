@@ -14,8 +14,8 @@ module.exports = function(grunt) {
 			nonull: true,
 			src: [
 				'grunts/**/*.js',
-				'lib/**/*.js'
-				//'test/**/*.js'
+				'lib/**/*.js',
+				'test/**/*.js'
 			]
 		}
 	});

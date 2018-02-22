@@ -14,7 +14,7 @@ module.exports = {
 		assert.equal(req.form.errors.length, 0);
 
 		// Failure.
-		var req = {
+		req = {
 			body: {
 				field: 'fail'
 			}
@@ -24,7 +24,7 @@ module.exports = {
 		assert.equal(req.form.errors[0], 'field is not a date');
 
 		// Failure w/ custom message.
-		var req = {
+		req = {
 			body: {
 				field: 'fail'
 			}
@@ -34,7 +34,7 @@ module.exports = {
 		assert.equal(req.form.errors[0], '!!! field !!!');
 
 		// Success
-		var req = {
+		req = {
 			body: {
 				field: '01/29/2012'
 			}
@@ -52,7 +52,7 @@ module.exports = {
 		assert.equal(req.form.errors.length, 0);
 
 		// Failure.
-		var req = {
+		req = {
 			body: {
 				field: 'fail'
 			}
@@ -62,7 +62,7 @@ module.exports = {
 		assert.equal(req.form.errors[0], 'field is not an email address');
 
 		// Failure w/ custom message.
-		var req = {
+		req = {
 			body: {
 				field: 'fail'
 			}
@@ -72,7 +72,7 @@ module.exports = {
 		assert.equal(req.form.errors[0], '!!! field !!!');
 
 		// Success
-		var req = {
+		req = {
 			body: {
 				field: 'me@dandean.com'
 			}
@@ -91,7 +91,7 @@ module.exports = {
 		];
 
 		for (var i in validEmails) {
-			var req = {
+			req = {
 				body: {
 					field: validEmails[i]
 				}
@@ -109,14 +109,14 @@ module.exports = {
 			'userawesom@ok.com?&vl=1'
 		];
 
-		for (var i in badEmails) {
-			var req = {
+		for (var i1 in badEmails) {
+			req = {
 				body: {
-					field: badEmails[i]
+					field: badEmails[i1]
 				}
 			};
 			form(field('field').isEmail())(req, {});
-			assert.equal(req.form.errors.length, 1, 'should not validate email: ' + badEmails[i]);
+			assert.equal(req.form.errors.length, 1, 'should not validate email: ' + badEmails[i1]);
 		}
 
 	},
@@ -133,7 +133,7 @@ module.exports = {
 		assert.equal(req.form.errors[0], 'field is not a URL');
 
 		// Failure w/ custom message.
-		var req = {
+		req = {
 			body: {
 				field: 'fail'
 			}
@@ -143,7 +143,7 @@ module.exports = {
 		assert.equal(req.form.errors[0], '!!! field !!!');
 
 		// Success
-		var req = {
+		req = {
 			body: {
 				field: 'http://www.google.com'
 			}
@@ -164,7 +164,7 @@ module.exports = {
 		assert.equal(req.form.errors[0], 'field is not an IP address');
 
 		// Failure w/ custom message.
-		var req = {
+		req = {
 			body: {
 				field: 'fail'
 			}
@@ -174,7 +174,7 @@ module.exports = {
 		assert.equal(req.form.errors[0], '!!! field !!!');
 
 		// Success
-		var req = {
+		req = {
 			body: {
 				field: '0.0.0.0'
 			}
@@ -195,7 +195,7 @@ module.exports = {
 		assert.equal(req.form.errors[0], 'field contains non-letter characters');
 
 		// Failure w/ custom message.
-		var req = {
+		req = {
 			body: {
 				field: '123456'
 			}
@@ -205,7 +205,7 @@ module.exports = {
 		assert.equal(req.form.errors[0], '!!! field !!!');
 
 		// Success
-		var req = {
+		req = {
 			body: {
 				field: 'abcde'
 			}
@@ -226,7 +226,7 @@ module.exports = {
 		assert.equal(req.form.errors[0], 'field contains non alpha-numeric characters');
 
 		// Failure w/ custom message.
-		var req = {
+		req = {
 			body: {
 				field: '------'
 			}
@@ -236,7 +236,7 @@ module.exports = {
 		assert.equal(req.form.errors[0], '!!! field !!!');
 
 		// Success
-		var req = {
+		req = {
 			body: {
 				field: 'abc123'
 			}
@@ -257,7 +257,7 @@ module.exports = {
 		assert.equal(req.form.errors[0], 'field is not a number');
 
 		// Failure w/ custom message.
-		var req = {
+		req = {
 			body: {
 				field: '------'
 			}
@@ -267,7 +267,7 @@ module.exports = {
 		assert.equal(req.form.errors[0], '!!! field !!!');
 
 		// Success Int
-		var req = {
+		req = {
 			body: {
 				integer: '123456'
 				//floating: '123456.45',
@@ -298,7 +298,7 @@ module.exports = {
 		assert.equal(req.form.errors[0], 'field is not an integer');
 
 		// Failure w/ custom message.
-		var req = {
+		req = {
 			body: {
 				field: '------'
 			}
@@ -308,7 +308,7 @@ module.exports = {
 		assert.equal(req.form.errors[0], '!!! field !!!');
 
 		// Success
-		var req = {
+		req = {
 			body: {
 				field: '50'
 			}
@@ -329,7 +329,7 @@ module.exports = {
 		assert.equal(req.form.errors[0], 'field contains uppercase letters');
 
 		// Failure w/ custom message.
-		var req = {
+		req = {
 			body: {
 				field: 'FAIL'
 			}
@@ -339,7 +339,7 @@ module.exports = {
 		assert.equal(req.form.errors[0], '!!! field !!!');
 
 		// Success
-		var req = {
+		req = {
 			body: {
 				field: 'win'
 			}
@@ -360,7 +360,7 @@ module.exports = {
 		assert.equal(req.form.errors[0], 'field contains lowercase letters');
 
 		// Failure w/ custom message.
-		var req = {
+		req = {
 			body: {
 				field: 'fail'
 			}
@@ -370,7 +370,7 @@ module.exports = {
 		assert.equal(req.form.errors[0], '!!! field !!!');
 
 		// Success
-		var req = {
+		req = {
 			body: {
 				field: 'WIN'
 			}
@@ -391,7 +391,7 @@ module.exports = {
 		assert.equal(req.form.errors[0], 'field is not a decimal');
 
 		// Failure w/ custom message.
-		var req = {
+		req = {
 			body: {
 				field: '5000'
 			}
@@ -401,7 +401,7 @@ module.exports = {
 		assert.equal(req.form.errors[0], '!!! field !!!');
 
 		// Success
-		var req = {
+		req = {
 			body: {
 				field: '5000.00'
 			}
@@ -422,7 +422,7 @@ module.exports = {
 		assert.equal(req.form.errors[0], 'field has no value or is only whitespace');
 
 		// Failure w/ custom message.
-		var req = {
+		req = {
 			body: {
 				field: '  \t'
 			}
@@ -432,7 +432,7 @@ module.exports = {
 		assert.equal(req.form.errors[0], '!!! field !!!');
 
 		// Success
-		var req = {
+		req = {
 			body: {
 				field: 'win'
 			}
@@ -453,7 +453,7 @@ module.exports = {
 		assert.equal(req.form.errors[0], 'field does not equal other');
 
 		// Failure w/ custom message.
-		var req = {
+		req = {
 			body: {
 				field: 'value'
 			}
@@ -463,7 +463,7 @@ module.exports = {
 		assert.equal(req.form.errors[0], '!!! field !!!');
 
 		// Success
-		var req = {
+		req = {
 			body: {
 				field: 'value'
 			}
@@ -473,7 +473,7 @@ module.exports = {
 
 
 		// Failure
-		var req = {
+		req = {
 			body: {
 				field1: 'value1',
 				field2: 'value2'
@@ -484,7 +484,7 @@ module.exports = {
 		assert.equal(req.form.errors[0], 'field1 does not equal value2');
 
 		// Success
-		var req = {
+		req = {
 			body: {
 				field1: 'value',
 				field2: 'value'
@@ -494,7 +494,7 @@ module.exports = {
 		assert.equal(req.form.errors.length, 0);
 
 		// Failure with nested values
-		var req = {
+		req = {
 			body: {
 				field1: {
 					deep: 'value1'
@@ -509,7 +509,7 @@ module.exports = {
 		assert.equal(req.form.errors[0], 'field1.deep does not equal value2');
 
 		// Success with nested values
-		var req = {
+		req = {
 			body: {
 				field1: {
 					deep: 'value'
@@ -535,7 +535,7 @@ module.exports = {
 		assert.equal(req.form.errors[0], 'field does not contain required characters');
 
 		// Failure w/ custom message.
-		var req = {
+		req = {
 			body: {
 				field: 'value'
 			}
@@ -545,7 +545,7 @@ module.exports = {
 		assert.equal(req.form.errors[0], '!!! field !!!');
 
 		// Success
-		var req = {
+		req = {
 			body: {
 				field: 'value'
 			}
@@ -566,7 +566,7 @@ module.exports = {
 		assert.equal(req.form.errors[0], 'field contains invalid characters');
 
 		// Failure w/ custom message.
-		var req = {
+		req = {
 			body: {
 				field: 'value'
 			}
@@ -576,7 +576,7 @@ module.exports = {
 		assert.equal(req.form.errors[0], '!!! field !!!');
 
 		// Success
-		var req = {
+		req = {
 			body: {
 				field: 'value'
 			}
@@ -604,7 +604,7 @@ module.exports = {
 		assert.equal(req.form.errors[0], 'field has invalid characters');
 
 		// Failure: RegExp with custom message.
-		var req = {
+		req = {
 			body: {
 				field: 'value'
 			}
@@ -614,17 +614,17 @@ module.exports = {
 		assert.equal(req.form.errors[0], '!!! field !!!');
 
 		// Failure: String with default args.
-		var req = {
+		req = {
 			body: {
 				field: 'value'
 			}
 		};
-		form(field('field').is('^\d+$'))(req, {});
+		form(field('field').is('^\d+$'))(req, {}); //eslint-disable-line no-useless-escape
 		assert.equal(req.form.errors.length, 1);
 		assert.equal(req.form.errors[0], 'field has invalid characters');
 
 		// Success: String with modifiers
-		var req = {
+		req = {
 			body: {
 				field: 'value'
 			}
@@ -633,28 +633,28 @@ module.exports = {
 		assert.equal(req.form.errors.length, 0);
 
 		// Failure: String with custom message
-		var req = {
+		req = {
 			body: {
 				field: 'value'
 			}
 		};
-		form(field('field').is('^\d+$', '!!! %s !!!'))(req, {});
+		form(field('field').is('^\d+$', '!!! %s !!!'))(req, {}); //eslint-disable-line no-useless-escape
 		assert.equal(req.form.errors.length, 1);
 		assert.equal(req.form.errors[0], '!!! field !!!');
 
 		// Failure: String with modifiers and custom message
-		var req = {
+		req = {
 			body: {
 				field: 'value'
 			}
 		};
-		form(field('field').is('^\d+$', 'i', '!!! %s !!!'))(req, {});
+		form(field('field').is('^\d+$', 'i', '!!! %s !!!'))(req, {}); //eslint-disable-line no-useless-escape
 		assert.equal(req.form.errors.length, 1);
 		assert.equal(req.form.errors[0], '!!! field !!!');
 
 
 		// Success
-		var req = {
+		req = {
 			body: {
 				field: 'value'
 			}
@@ -682,7 +682,7 @@ module.exports = {
 		assert.equal(req.form.errors[0], 'field has invalid characters');
 
 		// Failure: RegExp with custom message.
-		var req = {
+		req = {
 			body: {
 				field: 'value'
 			}
@@ -692,7 +692,7 @@ module.exports = {
 		assert.equal(req.form.errors[0], '!!! field !!!');
 
 		// Failure: String with default args.
-		var req = {
+		req = {
 			body: {
 				field: 'value'
 			}
@@ -702,7 +702,7 @@ module.exports = {
 		assert.equal(req.form.errors[0], 'field has invalid characters');
 
 		// Success: String with modifiers
-		var req = {
+		req = {
 			body: {
 				field: 'value'
 			}
@@ -711,7 +711,7 @@ module.exports = {
 		assert.equal(req.form.errors.length, 0);
 
 		// Failure: String with custom message
-		var req = {
+		req = {
 			body: {
 				field: 'value'
 			}
@@ -721,7 +721,7 @@ module.exports = {
 		assert.equal(req.form.errors[0], '!!! field !!!');
 
 		// Failure: String with modifiers and custom message
-		var req = {
+		req = {
 			body: {
 				field: 'value'
 			}
@@ -731,7 +731,7 @@ module.exports = {
 		assert.equal(req.form.errors[0], '!!! field !!!');
 
 		// Success
-		var req = {
+		req = {
 			body: {
 				field: 'value'
 			}
@@ -752,7 +752,7 @@ module.exports = {
 		assert.equal(req.form.errors[0], 'field is too short');
 
 		// Failure w/ custom message.
-		var req = {
+		req = {
 			body: {
 				field: 'value'
 			}
@@ -762,7 +762,7 @@ module.exports = {
 		assert.equal(req.form.errors[0], '!!! field !!!');
 
 		// Success
-		var req = {
+		req = {
 			body: {
 				field: 'value'
 			}
@@ -822,7 +822,7 @@ module.exports = {
 		assert.equal(req.form.errors[0], 'field is required');
 
 		// Failure w/ placeholder value and custom message.
-		var req = {
+		req = {
 			body: {
 				field: 'value'
 			}
@@ -832,7 +832,7 @@ module.exports = {
 		assert.equal(req.form.errors[0], '!!! field !!!');
 
 		// Success
-		var req = {
+		req = {
 			body: {
 				field: '5000.00'
 			}
@@ -842,7 +842,7 @@ module.exports = {
 
 		// Non-required fields with no value should not trigger errors
 		// Success
-		var req = {
+		req = {
 			body: {
 				fieldEmpty: '',
 				fieldUndefined: undefined,
@@ -867,7 +867,7 @@ module.exports = {
 				field: 'value'
 			}
 		};
-		form(field('field').custom(function (value) {
+		form(field('field').custom(function () {
 			throw new Error();
 		}))(req, {});
 		assert.equal(req.form.errors.length, 1);
@@ -879,7 +879,7 @@ module.exports = {
 				field: 'value'
 			}
 		};
-		form(field('field').custom(function (value) {
+		form(field('field').custom(function () {
 			throw new Error();
 		}, '!!! %s !!!'))(req, {});
 		assert.equal(req.form.errors.length, 1);
@@ -891,7 +891,7 @@ module.exports = {
 				field: 'value'
 			}
 		};
-		form(field('field').custom(function (value) {
+		form(field('field').custom(function () {
 			throw new Error('Radical %s');
 		}))(req, {});
 		assert.equal(req.form.errors.length, 1);
@@ -903,7 +903,7 @@ module.exports = {
 				field: 'value'
 			}
 		};
-		form(field('field').custom(function (value) {}))(req, {});
+		form(field('field').custom(function () {}))(req, {});
 		assert.equal(req.form.errors.length, 0);
 
 		// Pass form data as 2nd argument to custom validators
@@ -998,7 +998,7 @@ module.exports = {
 					callback(new Error('Fail! %s'));
 				});
 			})
-			.custom(function (value, source) {
+			.custom(function () {
 				throw new Error('yes sync custom funcs still work !! %s');
 			})
 		)(req, {}, next);
@@ -1024,7 +1024,7 @@ module.exports = {
 			field('field1').custom(function (value, source, locals, callback) {
 				process.nextTick(function () {
 					++callbackCalled;
-					assert.strictEqual(value, 'value1')
+					assert.strictEqual(value, 'value1');
 					callback(new Error('%s error'));
 				});
 			}),
