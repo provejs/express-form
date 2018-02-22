@@ -4,8 +4,8 @@ var assert = require('assert');
 var form = require('../index');
 var field = form.field;
 
-module.exports = {
-	'validate : isDate': function () {
+describe('validate', function () {
+	it('isDate', function () {
 		// Skip validating empty values
 		var req = {
 			body: {}
@@ -41,9 +41,8 @@ module.exports = {
 		};
 		form(field('field').isDate())(req, {});
 		assert.equal(req.form.errors.length, 0);
-	},
-
-	'validate : isEmail': function () {
+	});
+	it('isEmail', function () {
 		// Skip validating empty values
 		var req = {
 			body: {}
@@ -119,9 +118,8 @@ module.exports = {
 			assert.equal(req.form.errors.length, 1, 'should not validate email: ' + badEmails[i1]);
 		}
 
-	},
-
-	'validate : isUrl': function () {
+	});
+	it('isUrl', function () {
 		// Failure.
 		var req = {
 			body: {
@@ -150,9 +148,8 @@ module.exports = {
 		};
 		form(field('field').isURL())(req, {});
 		assert.equal(req.form.errors.length, 0);
-	},
-
-	'validate : isIP': function () {
+	});
+	it('isIP', function () {
 		// Failure.
 		var req = {
 			body: {
@@ -181,9 +178,8 @@ module.exports = {
 		};
 		form(field('field').isIP())(req, {});
 		assert.equal(req.form.errors.length, 0);
-	},
-
-	'validate : isAlpha': function () {
+	});
+	it('isAlpha', function () {
 		// Failure.
 		var req = {
 			body: {
@@ -212,9 +208,8 @@ module.exports = {
 		};
 		form(field('field').isAlpha())(req, {});
 		assert.equal(req.form.errors.length, 0);
-	},
-
-	'validate : isAlphanumeric': function () {
+	});
+	it('isAlphanumeric', function () {
 		// Failure.
 		var req = {
 			body: {
@@ -243,9 +238,8 @@ module.exports = {
 		};
 		form(field('field').isAlphanumeric())(req, {});
 		assert.equal(req.form.errors.length, 0);
-	},
-
-	'validate : isNumeric': function () {
+	});
+	it('isNumeric', function () {
 		// Failure.
 		var req = {
 			body: {
@@ -284,9 +278,8 @@ module.exports = {
 			//field('padded').isNumeric()
 		)(req, {});
 		assert.equal(req.form.errors.length, 0);
-	},
-
-	'validate : isInt': function () {
+	});
+	it('isInt', function () {
 		// Failure.
 		var req = {
 			body: {
@@ -315,9 +308,8 @@ module.exports = {
 		};
 		form(field('field').isInt())(req, {});
 		assert.equal(req.form.errors.length, 0);
-	},
-
-	'validate : isLowercase': function () {
+	});
+	it('isLowercase', function () {
 		// Failure.
 		var req = {
 			body: {
@@ -346,9 +338,8 @@ module.exports = {
 		};
 		form(field('field').isLowercase())(req, {});
 		assert.equal(req.form.errors.length, 0);
-	},
-
-	'validate : isUppercase': function () {
+	});
+	it('isUppercase', function () {
 		// Failure.
 		var req = {
 			body: {
@@ -377,9 +368,8 @@ module.exports = {
 		};
 		form(field('field').isUppercase())(req, {});
 		assert.equal(req.form.errors.length, 0);
-	},
-
-	'validate : isFloat': function () {
+	});
+	it('isFloat', function () {
 		// Failure.
 		var req = {
 			body: {
@@ -408,9 +398,8 @@ module.exports = {
 		};
 		form(field('field').isFloat())(req, {});
 		assert.equal(req.form.errors.length, 0);
-	},
-
-	'validate : isNotEmpty': function () {
+	});
+	it('isNotEmpty', function () {
 		// Failure.
 		var req = {
 			body: {
@@ -439,9 +428,8 @@ module.exports = {
 		};
 		form(field('field').isNotEmpty())(req, {});
 		assert.equal(req.form.errors.length, 0);
-	},
-
-	'validate : isEquals': function () {
+	});
+	it('isEquals', function () {
 		// Failure.
 		var req = {
 			body: {
@@ -521,9 +509,8 @@ module.exports = {
 		};
 		form(field('field1[deep]').isEquals('field::field2.deeper'))(req, {});
 		assert.equal(req.form.errors.length, 0);
-	},
-
-	'validate : isContains': function () {
+	});
+	it('isContains', function () {
 		// Failure.
 		var req = {
 			body: {
@@ -552,9 +539,8 @@ module.exports = {
 		};
 		form(field('field').isContains('alu'))(req, {});
 		assert.equal(req.form.errors.length, 0);
-	},
-
-	'validate : isNotContains': function () {
+	});
+	it('isNotContains', function () {
 		// Failure.
 		var req = {
 			body: {
@@ -583,9 +569,8 @@ module.exports = {
 		};
 		form(field('field').isNotContains('win'))(req, {});
 		assert.equal(req.form.errors.length, 0);
-	},
-
-	'validate : is': function () {
+	});
+	it('is', function () {
 		// is(/pattern/)
 		// is(/pattern/, 'message')
 		// is('pattern')
@@ -661,9 +646,8 @@ module.exports = {
 		};
 		form(field('field').is(/^value$/))(req, {});
 		assert.equal(req.form.errors.length, 0);
-	},
-
-	'validate : isNot': function () {
+	});
+	it('isNot', function () {
 		// notRegex(/pattern/)
 		// notRegex(/pattern/, 'message')
 		// notRegex('pattern')
@@ -738,9 +722,8 @@ module.exports = {
 		};
 		form(field('field').isNot(/^win$/))(req, {});
 		assert.equal(req.form.errors.length, 0);
-	},
-
-	'validation : isMinLength': function () {
+	});
+	it('isMinLength', function () {
 		// Failure.
 		var req = {
 			body: {
@@ -769,9 +752,8 @@ module.exports = {
 		};
 		form(field('field').isMinLength(1))(req, {});
 		assert.equal(req.form.errors.length, 0);
-	},
-
-	'validation : isString()': function () {
+	});
+	it('isString()', function () {
 		var req = {
 			body: {
 				username: 'adasds@example.com',
@@ -787,9 +769,8 @@ module.exports = {
 			.isMaxLength(256, '%s must be a maximum of 256 characters'))(req, {});
 		assert.ok(!req.form.isValid);
 		assert.strictEqual(req.form.errors[0], 'Password is not a string');
-	},
-
-	'validation : isMaxLength': function () {
+	});
+	it('isMaxLength', function () {
 		// Failure.
 		var req = {
 			body: {
@@ -810,9 +791,8 @@ module.exports = {
 		// var req = { body: { field: 'value' }};
 		// form(field('field').isMaxLength(5))(req, {});
 		// assert.equal(req.form.errors.length, 0);
-	},
-
-	'validation : isRequired': function () {
+	});
+	it('isRequired', function () {
 		// Failure.
 		var req = {
 			body: {}
@@ -856,9 +836,8 @@ module.exports = {
 			field('fieldMissing').is(/whatever/)
 		)(req, {});
 		assert.equal(req.form.errors.length, 0);
-	},
-
-	'validation : custom': function () {
+	});
+	it('custom', function () {
 		var req;
 
 		// Failure.
@@ -921,9 +900,8 @@ module.exports = {
 			throw new Error('This is a custom error thrown for %s.');
 		}))(req, {});
 		assert.equal(req.form.errors.length, 1);
-	},
-
-	'validation: custom : async': function (done) {
+	});
+	it('custom : async', function (done) {
 		var req = {
 			body: {
 				field1: 'value1',
@@ -943,9 +921,8 @@ module.exports = {
 				callback(new Error('Invalid %s'));
 			});
 		}))(req, {}, next);
-	},
-
-	'validation : custom : async : success': function (done) {
+	});
+	it('custom : async : success', function (done) {
 		var req = {
 			body: {
 				field1: 'value1',
@@ -966,9 +943,8 @@ module.exports = {
 				callback(null);
 			});
 		}))(req, {}, next);
-	},
-
-	'validation : custom : async : chaining': function (done) {
+	});
+	it('custom : async : chaining', function (done) {
 		var req = {
 			body: {
 				field1: 'value1',
@@ -1002,9 +978,8 @@ module.exports = {
 				throw new Error('yes sync custom funcs still work !! %s');
 			})
 		)(req, {}, next);
-	},
-
-	'validation : custom : async : multiple fields': function (done) {
+	});
+	it('custom : async : multiple fields', function (done) {
 		var req = {
 			body: {
 				field1: 'value1',
@@ -1036,18 +1011,16 @@ module.exports = {
 				});
 			})
 		)(req, {}, next);
-	},
-
-	'validation : req.form property-pollution': function () {
+	});
+	it('req.form property-pollution', function () {
 		var req = {
 			body: {}
 		};
 		form()(req, {});
 		assert.equal(req.form.errors.length, 0);
 		assert.equal('{}', JSON.stringify(req.form));
-	},
-
-	'validation : complex properties': function () {
+	});
+	it('complex properties', function () {
 		var req = {
 			body: {
 				field: {
@@ -1067,5 +1040,5 @@ module.exports = {
 			field('field[even][more][inner]').isRequired().isEquals('fail')
 		)(req, {});
 		assert.equal(req.form.errors.length, 2);
-	}
-};
+	});
+});
