@@ -855,7 +855,7 @@ describe('validate', function () {
 			}
 		};
 		form(field('field').toArray().isRequired())(req, {});
-		// assert.deepEqual(req.form.field, ['']);
+		assert.deepEqual(req.form.field, []);
 		assert.equal(req.form.errors.length, 1);
 		assert.equal(req.form.isValid, false);
 	});
@@ -866,12 +866,10 @@ describe('validate', function () {
 			}
 		};
 		form(field('field').isRequired().toArray())(req, {});
-		// assert.deepEqual(req.form.field, ['']);
+		assert.deepEqual(req.form.field, []);
 		assert.equal(req.form.errors.length, 1);
 		assert.equal(req.form.isValid, false);
 	});
-
-
 
 	it('custom', function () {
 		var req;
