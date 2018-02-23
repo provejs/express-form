@@ -869,6 +869,17 @@ describe('validate', function () {
 		assert.equal(req.form.errors.length, 1);
 		assert.equal(req.form.isValid, false);
 	});
+	it('isRequired : toArray : failure', function() {
+		var req = {
+			body: {
+				field: []
+			}
+		};
+		form(field('field').isRequired().toArray())(req, {});
+		assert.deepEqual(req.form.field, []);
+		assert.equal(req.form.errors.length, 1);
+		assert.equal(req.form.isValid, false);
+	});
 	it('custom', function () {
 		var req;
 
