@@ -383,7 +383,7 @@ describe('validate', function () {
 		// Success
 		req = {
 			body: {
-				field: '{ \"field\": \"win\" }'
+				field: '{ \"field\": \"win\" }' //eslint-disable-line no-useless-escape
 			}
 		};
 		form(field('field').isJSON())(req, {});
