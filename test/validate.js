@@ -847,7 +847,6 @@ describe('validate', function () {
 		assert.equal(req.form.errors.length, 0);
 		assert.equal(req.form.isValid, true);
 	});
-	
 	it('toArray : isRequired : failure', function() {
 		var req = {
 			body: {
@@ -870,7 +869,6 @@ describe('validate', function () {
 		assert.equal(req.form.errors.length, 1);
 		assert.equal(req.form.isValid, false);
 	});
-
 	it('custom', function () {
 		var req;
 

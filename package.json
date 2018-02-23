@@ -17,7 +17,6 @@
   ],
   "dependencies": {
     "async": "^2.6.0",
-    "colors": "^1.1.2",
     "lodash.isboolean": "^3.0.3",
     "lodash.isfunction": "^3.0.8",
     "lodash.isnan": "^3.0.2",
