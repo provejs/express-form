@@ -792,17 +792,16 @@ describe('validate', function () {
 		// form(field('field').isMaxLength(5))(req, {});
 		// assert.equal(req.form.errors.length, 0);
 	});
-	it('isRequired', function () {
-		// Failure.
+	it('isRequired : failure', function() {
 		var req = {
 			body: {}
 		};
 		form(field('field').isRequired())(req, {});
 		assert.equal(req.form.errors.length, 1);
 		assert.equal(req.form.errors[0], 'field is required');
-
-		// Failure w/ placeholder value and custom message.
-		req = {
+	});
+	it('isRequired : failure : message', function() {
+		var req = {
 			body: {
 				field: 'value'
 			}
@@ -810,9 +809,9 @@ describe('validate', function () {
 		form(field('field').isRequired('value', '!!! %s !!!'))(req, {});
 		assert.equal(req.form.errors.length, 1);
 		assert.equal(req.form.errors[0], '!!! field !!!');
-
-		// Success
-		req = {
+	});
+	it('isRequired : success', function () {
+		var req = {
 			body: {
 				field: '5000.00'
 			}
@@ -837,6 +836,43 @@ describe('validate', function () {
 		)(req, {});
 		assert.equal(req.form.errors.length, 0);
 	});
+	it('isRequired : toArray : success', function() {
+		var req = {
+			body: {
+				field: 'xxx'
+			}
+		};
+		form(field('field').toArray().isRequired())(req, {});
+		assert.deepEqual(req.form.field, ['xxx']);
+		assert.equal(req.form.errors.length, 0);
+		assert.equal(req.form.isValid, true);
+	});
+	
+	it('toArray : isRequired : failure', function() {
+		var req = {
+			body: {
+				field: ''
+			}
+		};
+		form(field('field').toArray().isRequired())(req, {});
+		// assert.deepEqual(req.form.field, ['']);
+		assert.equal(req.form.errors.length, 1);
+		assert.equal(req.form.isValid, false);
+	});
+	it('isRequired : toArray : failure', function() {
+		var req = {
+			body: {
+				field: ''
+			}
+		};
+		form(field('field').isRequired().toArray())(req, {});
+		// assert.deepEqual(req.form.field, ['']);
+		assert.equal(req.form.errors.length, 1);
+		assert.equal(req.form.isValid, false);
+	});
+
+
+
 	it('custom', function () {
 		var req;
 

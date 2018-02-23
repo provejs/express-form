@@ -30,18 +30,18 @@ describe('field: array', function () {
 		assert.strictEqual(req.form.field3[2], 'Vicunas!');
 		assert.strictEqual(req.form.field3[3], 'Guanacos!!!');
 		assert.strictEqual(req.form.field3.length, 4);
-
-		// No array flag!
-		req = {
+	});
+	it('No array flag!', function () {
+		var req = {
 			body: {
 				field: ['red', 'blue']
 			}
 		};
 		form(field('field'))(req, {});
 		assert.strictEqual(req.form.field, 'red');
-
-		// Iterate and filter array.
-		req = {
+	});
+	it('Iterate and filter array', function () {
+		var req = {
 			body: {
 				field: ['david', 'stephen', 'greg']
 			}
@@ -52,8 +52,9 @@ describe('field: array', function () {
 		assert.strictEqual(req.form.field[2], 'GREG');
 		assert.strictEqual(req.form.field.length, 3);
 
-		// Iterate and validate array
-		req = {
+	});
+	it('Iterate and validate array', function () {
+		var req = {
 			body: {
 				field: [1, 2, 'f']
 			}
