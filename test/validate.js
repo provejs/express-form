@@ -369,6 +369,26 @@ describe('validate', function () {
 		form(field('field').isUppercase())(req, {});
 		assert.equal(req.form.errors.length, 0);
 	});
+	it('isJSON', function () {
+		// Failure.
+		var req = {
+			body: {
+				field: 'not a JSON object'
+			}
+		};
+		form(field('field').isJSON())(req, {});
+		assert.equal(req.form.errors.length, 1);
+		assert.equal(req.form.errors[0], 'field is invalid');
+
+		// Success
+		req = {
+			body: {
+				field: '{ \"field\": \"win\" }'
+			}
+		};
+		form(field('field').isJSON())(req, {});
+		assert.equal(req.form.errors.length, 0);
+	});
 	it('isFloat', function () {
 		// Failure.
 		var req = {
