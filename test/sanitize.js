@@ -5,6 +5,17 @@ var form = require('../index');
 var field = form.field;
 
 describe('sanitize', function () {
+	it('toCss', function () {
+		var req = {
+			body: {
+				field: '\np\r\n\n{}\t'
+			}
+		};
+		form(field('field').toCss())(req, {});
+		assert.equal(req.form.field, 'p {}');
+	});
+	it('toHtml');
+
 	it('toTrim', function () {
 		var req = {
 			body: {

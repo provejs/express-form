@@ -181,6 +181,14 @@ form(field('option').toDefault(null));
 
 See `isRequired(default)`.
 
+## toCss(options)
+Beautify the input css.
+
+- options (object): is an object with the following keys and default values.
+
+See [js-beautify](https://www.npmjs.com/package/js-beautify).
+
+
 ## toEmail(options)
 Canonicalizes an email address. (This doesn't validate that the input is an email, if you want to validate the email use isEmail beforehand).
 
