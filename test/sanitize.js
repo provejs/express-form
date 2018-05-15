@@ -421,15 +421,13 @@ describe('sanitize', function () {
 		assert.equal(req.form.field.min.format(), '1900-01-01T00:00:00Z');
 		assert.equal(req.form.field.max.format(), '2000-01-01T23:59:59Z');
 	});
-	it('custom', function () {
+	it('toSplit', function () {
 		var req = {
 			body: {
-				field: 'value!'
+				field: 'a,b,c'
 			}
 		};
-		form(field('field').custom(function () {
-			return '!!!';
-		}))(req, {});
-		assert.equal(req.form.field, '!!!');
+		form(field('field').toSplit())(req, {});
+		assert.equal(req.form.field.length, 3);
 	});
 });

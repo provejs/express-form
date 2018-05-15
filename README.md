@@ -25,7 +25,7 @@ var validation = form(
 
 var controller = function(req, res){
 
-    // Use req.form as this contains your validated and sanitized data. 
+    // Use req.form as this contains your validated and sanitized data.
     // Don't use req.body because that is unsanitized and unvalidated data.
     var isValid = req.form.isValid;
     var errors = req.form.getErrors();
@@ -114,9 +114,9 @@ All sanitizers methods begin with the `to` prefix in the method name.
 
 ## toArray()
 
-Converts the field input into an array. 
+Converts the field input into an array.
 
-By design if the input not intended to be an array (and you don't use `array()`), but the user submits an array value only the first value will be used.  This means that you don't have to worry about unexpected post data that might break your code. Eg/ when you call an array method on what is actually a string.
+By design if the input not intended to be an array (and you don't use `toArray()`), but the user submits an array value only the first value will be used.  This means that you don't have to worry about unexpected post data that might break your code. Eg/ when you call an array method on what is actually a string.
 
 Example: we want 'project.users' to be an array.
 ```javascript
@@ -139,7 +139,7 @@ field('post.users').toArray().toUpper()
 
 ## toBlacklist(blacklist)
 
-Remove characters that appear in the blacklist. 
+Remove characters that appear in the blacklist.
 
 - blacklist (String): String of characters to remove. The characters are used in a RegExp and so you will need to escape some chars.
 
@@ -240,8 +240,8 @@ form(field('timestamp').toMoment());
 
 Example of defining the user and server timezones:
 ```javascript
-var tzFrom = function(locals){ 
-    return locals.user.timezone || 'US/Central'; 
+var tzFrom = function(locals){
+    return locals.user.timezone || 'US/Central';
 };
 form(field('timestamp').toMoment(tzFrom, 'UTC'));
 ```
@@ -288,6 +288,10 @@ Remove characters that do not appear in the whitelist.
 
 See [Validator.js](https://github.com/chriso/validator.js#sanitizers).
 
+## toSplit([delim])
+
+Converts deliminated string to array.
+
 ## custom(func)
 
 You can define your own sanitizers.
@@ -305,7 +309,7 @@ Async sanitizers should:
 - If your sanitizer returns undefined (eg `next()`) then the in put is not changed.
 
 ```js
-var toFoobar = function(value, source, locals) { 
+var toFoobar = function(value, source, locals) {
     return new Foobar(value);
 };
 form(field('silly'.custom(toFoobar));
@@ -349,7 +353,7 @@ Checks that the value matches the given regular expression.
 - modifiers (String): Optional, and only if `pattern` is a String.
 - message (String): Optional validation message.
 
-        
+
 ```javascript
 validate('username').is('[a-z]', 'i', 'Only letters are valid in %s')
 validate('username').is(/[a-z]/i, 'Only letters are valid in %s')
@@ -430,7 +434,7 @@ See [Validator.js](https://github.com/chriso/validator.js#validators).
 ## isContains(value [,message])
 Checks if the field contains `value`.
 
-- value (String): The value to test for.     
+- value (String): The value to test for.
 - message (String): Optional validation message.
 
 See [Validator.js](https://github.com/chriso/validator.js#validators).
@@ -489,9 +493,9 @@ Checks the field value max length.
 ## isMimeType([message])
 ## isMinLength(length [,message])
 Checks the field value min length.
-    
+
 - length (integer): The min character to test for.
-        
+
 
 ## isMobilePhone([message])
 ## isMongoId([message])

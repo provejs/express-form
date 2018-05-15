@@ -63,7 +63,6 @@ describe('field: array', function () {
 		assert.equal(req.form.errors.length, 1);
 		assert.equal(req.form.errors[0], 'field is not an integer');
 	});
-
 	it('field : nesting', function () {
 		// Nesting with dot notation
 		var req = {
