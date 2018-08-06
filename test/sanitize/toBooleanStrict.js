@@ -5,8 +5,7 @@ var form = require('../../index');
 var field = form.field;
 
 describe('sanitize.toBooleanStrict()', function () {
-	it('should handle boolean inputs', function () {
-		// Truthy values
+	it('should handle truthy inputs', function () {
 		var req = {
 			body: {
 				field1: true,
@@ -21,14 +20,16 @@ describe('sanitize.toBooleanStrict()', function () {
 			field('field3').toBooleanStrict(),
 			field('field4').toBooleanStrict()
 		)(req, {});
+
+		// loop inputs
 		'1234'.split('').forEach(function (i) {
 			var name = 'field' + i;
 			assert.strictEqual(typeof req.form[name], 'boolean');
 			assert.strictEqual(req.form[name], true);
 		});
-
-		// Falsy values
-		req = {
+	});
+	it('should handle falsy inputs', function () {
+		var req = {
 			body: {
 				field1: false,
 				field2: 'false',
@@ -56,6 +57,8 @@ describe('sanitize.toBooleanStrict()', function () {
 			field('field0').toBooleanStrict(),
 			field('fielda').toBooleanStrict()
 		)(req, {});
+
+		// loop inputs
 		'1234567890a'.split('').forEach(function (i) {
 			var name = 'field' + i;
 			assert.strictEqual(typeof req.form[name], 'boolean');

@@ -14,8 +14,9 @@ describe('sanitize.toInt()', function () {
 		form(field('field').toInt())(req, {});
 		assert.ok(typeof req.form.field == 'number');
 		assert.equal(req.form.field, 50);
-
-		req = {
+	});
+	it('should handle non-float string inputs', function () {
+		var req = {
 			body: {
 				field: 'fail'
 			}

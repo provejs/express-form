@@ -6,7 +6,6 @@ var field = form.field;
 
 describe('sanitize.toBoolean()', function () {
 	it('should handle truthy values', function () {
-		// Truthy values
 		var req = {
 			body: {
 				field1: true,
@@ -27,14 +26,16 @@ describe('sanitize.toBoolean()', function () {
 			field('field6').toBoolean(),
 			field('field7').toBoolean()
 		)(req, {});
+
+		// loop inputs
 		'1234567'.split('').forEach(function (i) {
 			var name = 'field' + i;
 			assert.strictEqual(typeof req.form[name], 'boolean');
 			assert.strictEqual(req.form[name], true);
 		});
-
-		// Falsy values
-		req = {
+	});
+	it('should handle falsy values', function () {
+		var req = {
 			body: {
 				field1: false,
 				field2: 'false',
@@ -54,6 +55,8 @@ describe('sanitize.toBoolean()', function () {
 			field('field6').toBoolean(),
 			field('field7').toBoolean()
 		)(req, {});
+
+		// loop inputs
 		'1234567'.split('').forEach(function (i) {
 			var name = 'field' + i;
 			assert.strictEqual(typeof req.form[name], 'boolean');

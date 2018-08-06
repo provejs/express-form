@@ -14,8 +14,9 @@ describe('sanitize.toFloat()', function () {
 		form(field('field').toFloat())(req, {});
 		assert.ok(typeof req.form.field == 'number');
 		assert.equal(req.form.field, 50.01);
-
-		req = {
+	});
+	it('should handle non-float string inputs', function () {
+		var req = {
 			body: {
 				field: 'fail'
 			}
