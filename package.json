@@ -47,7 +47,7 @@
     "url": "https://github.com/freewil/express-form/issues"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "mocha --recursive"
   },
   "engines": {
     "node": ">=0.10.0"

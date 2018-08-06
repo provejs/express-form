@@ -1,7 +1,7 @@
 'use strict';
 
 var assert = require('assert');
-var form = require('../index');
+var form = require('../../index');
 var field = form.field;
 
 describe('sanitize', function () {
@@ -42,68 +42,6 @@ describe('sanitize', function () {
 		};
 		form(field('field').toTrimRight())(req, {});
 		assert.equal(req.form.field, '\r\n  value');
-	});
-	it('toDefault', function () {
-		// Replace missing value with 'value'
-		var req = {
-			body: {}
-		};
-		form(field('field').toDefault('value'))(req, {});
-		assert.equal(req.form.field, 'value');
-
-		// Replace empty string with value
-		req = {
-			body: {
-				field: ''
-			}
-		};
-		form(field('field').toDefault('value'))(req, {});
-		assert.equal(req.form.field, 'value');
-
-		// Replace NULL with value
-		req = {
-			body: {
-				field: null
-			}
-		};
-		form(field('field').toDefault('value'))(req, {});
-		assert.equal(req.form.field, 'value');
-
-		// Replace undefined with value
-		req = {
-			body: {
-				field: undefined
-			}
-		};
-		form(field('field').toDefault('value'))(req, {});
-		assert.equal(req.form.field, 'value');
-
-		// Replace NaN with value
-		req = {
-			body: {
-				field: NaN
-			}
-		};
-		form(field('field').toDefault('value'))(req, {});
-		assert.equal(req.form.field, 'value');
-
-		// DO NOT replace false
-		req = {
-			body: {
-				field: false
-			}
-		};
-		form(field('field').toDefault('value'))(req, {});
-		assert.equal(req.form.field, false);
-
-		// DO NOT replace zero
-		req = {
-			body: {
-				field: 0
-			}
-		};
-		form(field('field').toDefault('value'))(req, {});
-		assert.equal(req.form.field, 0);
 	});
 	it('toFloat', function () {
 		var req = {
