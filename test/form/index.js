@@ -1,9 +1,9 @@
 'use strict';
 
 var assert = require('assert');
-var form = require('../index');
+var form = require('../../index');
 var field = form.field;
-var utils = require('../lib/utils');
+var utils = require('../../lib/utils');
 
 describe('form : isValid', function () {
 	it('should fail', function () {
@@ -126,5 +126,27 @@ describe('form : configure : autoTrim', function () {
 			autoTrim: false
 		});
 		assert.strictEqual(form._options.autoTrim, false);
+	});
+	it('form : getErrors() gives full map', function() {
+		var req = {
+			body: {
+				field0: 'win',
+				field1: 'fail',
+				field2: 'fail',
+				field3: 'fail'
+			}
+		};
+		form(
+			field('field0').isEquals('win'),
+			field('field1').isEmail(),
+			field('field2').isEmail().isURL(),
+			field('field3').isEmail().isURL().isIP()
+		)(req, {});
+		assert.equal(req.form.isValid, false);
+		assert.equal(req.form.errors.length, 6);
+		assert.equal(typeof req.form.getErrors().field0, 'undefined');
+		assert.equal(req.form.getErrors().field1.length, 1);
+		assert.equal(req.form.getErrors().field2.length, 2);
+		assert.equal(req.form.getErrors().field3.length, 3);
 	});
 });

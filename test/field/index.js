@@ -1,11 +1,11 @@
 'use strict';
 
 var assert = require('assert');
-var form = require('../index');
+var form = require('../../index');
 var field = form.field;
 
-describe('field: array', function () {
-	it('array transformations', function () {
+describe('field(): array', function () {
+	it('should accept array inputs, and convert non-array inputs to arrays', function () {
 		var req = {
 			body: {
 				field1: '',
@@ -31,7 +31,7 @@ describe('field: array', function () {
 		assert.strictEqual(req.form.field3[3], 'Guanacos!!!');
 		assert.strictEqual(req.form.field3.length, 4);
 	});
-	it('No array flag!', function () {
+	it('should convert array input to first array element when not expecting array input', function () {
 		var req = {
 			body: {
 				field: ['red', 'blue']
@@ -40,7 +40,7 @@ describe('field: array', function () {
 		form(field('field'))(req, {});
 		assert.strictEqual(req.form.field, 'red');
 	});
-	it('Iterate and filter array', function () {
+	it('should pass array input to sanitize methods', function () {
 		var req = {
 			body: {
 				field: ['david', 'stephen', 'greg']
@@ -53,7 +53,7 @@ describe('field: array', function () {
 		assert.strictEqual(req.form.field.length, 3);
 
 	});
-	it('Iterate and validate array', function () {
+	it('should pass pass array input  to validate method', function () {
 		var req = {
 			body: {
 				field: [1, 2, 'f']
@@ -63,7 +63,7 @@ describe('field: array', function () {
 		assert.equal(req.form.errors.length, 1);
 		assert.equal(req.form.errors[0], 'field is not an integer');
 	});
-	it('field : nesting', function () {
+	it('should handle deeply nested inputs using dot notation', function () {
 		// Nesting with dot notation
 		var req = {
 			body: {
@@ -98,9 +98,9 @@ describe('field: array', function () {
 		assert.strictEqual(req.form.field.gb.b, 'AAAA');
 		assert.strictEqual(req.form.field.gb.c.fruit, 'DEEPER');
 		assert.strictEqual(req.form.field.gb.c.must.go, 'DEEPERRRR');
-
-		// Nesting with square-bracket notation
-		req = {
+	});
+	it('should handle deeply nested inputs using square-bracket notation', function () {
+		var req = {
 			body: {
 				field: {
 					nest: 'wow',
@@ -135,8 +135,7 @@ describe('field: array', function () {
 		assert.strictEqual(req.form.field.gb.c.must.go, 'DEEPERRRR');
 	});
 
-	it('field : filter/validate combo ordering', function() {
-		// Can arrange filter and validate procs in any order.
+	it('should chain sanitizers and pass to validator', function() {
 		var req = {
 			body: {
 				field1: '    whatever    ',
@@ -153,7 +152,7 @@ describe('field: array', function () {
 		assert.equal(req.form.errors[0], 'field1 is too long');
 	});
 
-	it('field : autoTrim', function() {
+	it('should autoTrim inputs', function() {
 		// Auto-trim declared fields.
 		form.configure({
 			autoTrim: true
@@ -168,28 +167,5 @@ describe('field: array', function () {
 		form.configure({
 			autoTrim: false
 		});
-	});
-
-	it('form : getErrors() gives full map', function() {
-		var req = {
-			body: {
-				field0: 'win',
-				field1: 'fail',
-				field2: 'fail',
-				field3: 'fail'
-			}
-		};
-		form(
-			field('field0').isEquals('win'),
-			field('field1').isEmail(),
-			field('field2').isEmail().isURL(),
-			field('field3').isEmail().isURL().isIP()
-		)(req, {});
-		assert.equal(req.form.isValid, false);
-		assert.equal(req.form.errors.length, 6);
-		assert.equal(typeof req.form.getErrors().field0, 'undefined');
-		assert.equal(req.form.getErrors().field1.length, 1);
-		assert.equal(req.form.getErrors().field2.length, 2);
-		assert.equal(req.form.getErrors().field3.length, 3);
 	});
 });

@@ -1,7 +1,7 @@
 'use strict';
 
 var assert = require('assert');
-var form = require('../index');
+var form = require('../../index');
 var field = form.field;
 var express = require('express');
 var http = require('http');
