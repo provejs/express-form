@@ -25,4 +25,21 @@ describe('sanitize.toInt()', function () {
 		assert.ok(typeof req.form.field == 'number');
 		assert.ok(isNaN(req.form.field));
 	});
+	it('should handle empty string inputs', function () {
+		var req = {
+			body: {
+				field: ''
+			}
+		};
+		form(field('field').toInt())(req, {});
+		assert.ok(isNaN(req.form.field));
+	});
+	it('should handle undefined inputs', function () {
+		var req = {
+			body: {
+			}
+		};
+		form(field('field').toInt())(req, {});
+		assert.ok(isNaN(req.form.field));
+	});
 });
