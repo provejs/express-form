@@ -14,7 +14,7 @@ describe('sanitize.toSplit()', function () {
 		form(field('field').toSplit())(req, {});
 		assert.equal(req.form.field.length, 3);
 	});
-	it('should split in query', function () {
+	it('should split string in query', function () {
 		var req = {
 			query: {
 				field: 'a,b,c'
