@@ -37,7 +37,7 @@
     "errorhandler": "^1.5.0",
     "eslint": "^6.5.1",
     "express": "4.x",
-    "mocha": "^5.0.0",
+    "mocha": "^6.2.1",
     "request": "^2.48.0"
   },
   "main": "index",
@@ -46,7 +46,7 @@
   },
   "scripts": {
     "lint": "eslint --rulesdir node_modules/@ravdocs/eslint/rules .",
-    "test": "mocha --recursive --trace-warnings"
+    "test": "mocha --recursive"
   },
   "engines": {
     "node": ">=0.10.0"
