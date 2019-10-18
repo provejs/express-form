@@ -12,7 +12,7 @@ describe('sanitize.toFloat()', function () {
 			}
 		};
 		form(field('field').toFloat())(req, {});
-		assert.ok(typeof req.form.field == 'number');
+		assert.ok(typeof req.form.field === 'number');
 		assert.equal(req.form.field, 50.01);
 	});
 	it('should handle non-float string inputs', function () {
@@ -22,7 +22,7 @@ describe('sanitize.toFloat()', function () {
 			}
 		};
 		form(field('field').toFloat())(req, {});
-		assert.ok(typeof req.form.field == 'number');
+		assert.ok(typeof req.form.field === 'number');
 		assert.ok(isNaN(req.form.field));
 	});
 });

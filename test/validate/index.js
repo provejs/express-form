@@ -778,7 +778,7 @@ describe('validate', function () {
 			body: {
 				username: 'adasds@example.com',
 				password: {
-					'somevalue': '1'
+					somevalue: '1'
 				}
 			}
 		};
@@ -945,7 +945,9 @@ describe('validate', function () {
 				field: 'value'
 			}
 		};
-		form(field('field').custom(function () {}))(req, {});
+		form(field('field').custom(function () {
+			// do nothing
+		}))(req, {});
 		assert.equal(req.form.errors.length, 0);
 
 		// Pass form data as 2nd argument to custom validators
@@ -1040,7 +1042,7 @@ describe('validate', function () {
 			.custom(function () {
 				throw new Error('yes sync custom funcs still work !! %s');
 			})
-		)(req, {}, next);
+		)(req, {}, next); // eslint-disable-line function-paren-newline
 	});
 	it('custom : async : multiple fields', function (done) {
 		var req = {

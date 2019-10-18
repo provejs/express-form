@@ -33,12 +33,11 @@
   },
   "devDependencies": {
     "@esscorp/eslint": "^2.1.0",
+    "@ravdocs/eslint": "^1.0.11",
     "body-parser": "1.x",
     "errorhandler": "^1.5.0",
-    "eslint": "^3.18.0",
+    "eslint": "6.5.1",
     "express": "4.x",
-    "grunt": "^1.0.2",
-    "grunt-eslint": "^20.1.0",
     "mocha": "^5.0.0",
     "request": "^2.48.0"
   },
@@ -47,7 +46,8 @@
     "url": "https://github.com/freewil/express-form/issues"
   },
   "scripts": {
-    "test": "mocha --recursive"
+    "lint": "eslint --rulesdir node_modules/@ravdocs/eslint/rules .",
+    "test": "mocha --recursive --trace-warnings"
   },
   "engines": {
     "node": ">=0.10.0"
