@@ -19,7 +19,7 @@
     "async": "^3.1.0",
     "js-beautify": "^1.7.5",
     "lodash.isboolean": "^3.0.3",
-    "lodash.isfunction": "^3.0.8",
+    "lodash.isfunction": "^3.0.9",
     "lodash.isnan": "^3.0.2",
     "lodash.isnumber": "^3.0.3",
     "lodash.isstring": "^4.0.1",
@@ -32,11 +32,10 @@
     "express": ">=3.0.0"
   },
   "devDependencies": {
-    "@esscorp/eslint": "^2.1.0",
     "@ravdocs/eslint": "^1.0.11",
     "body-parser": "1.x",
     "errorhandler": "^1.5.0",
-    "eslint": "6.5.1",
+    "eslint": "^6.5.1",
     "express": "4.x",
     "mocha": "^5.0.0",
     "request": "^2.48.0"
