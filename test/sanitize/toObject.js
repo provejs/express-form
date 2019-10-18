@@ -17,6 +17,17 @@ describe('sanitize.toObject()', function () {
 		// console.log('req.form', req.form);
 		assert.deepEqual(req.form.overrides, overrides);
 	});
+	it('should support invalid object params to object', function () {
+		var req = {
+			query: {
+				overrides: '{{{'
+			}
+		};
+
+		form(field('overrides').toObject())(req, {});
+		// console.log('req.form', req);
+		assert.deepEqual(req.form.overrides, '{{{');
+	});
 	it('should support converting body params to object', function () {
 		var overrides = {f100: 'a', f101: 'b', f102: 'c'};
 		var req = {
