@@ -5,6 +5,16 @@ var form = require('../../index');
 var field = form.field;
 
 describe('sanitize.toInt()', function () {
+	it('should handle string integer inputs', function () {
+		var req = {
+			body: {
+				field: '50'
+			}
+		};
+		form(field('field').toInt())(req, {});
+		assert.ok(typeof req.form.field === 'number');
+		assert.strictEqual(req.form.field, 50);
+	});
 	it('should handle string float inputs', function () {
 		var req = {
 			body: {
@@ -13,7 +23,27 @@ describe('sanitize.toInt()', function () {
 		};
 		form(field('field').toInt())(req, {});
 		assert.ok(typeof req.form.field === 'number');
-		assert.equal(req.form.field, 50);
+		assert.strictEqual(req.form.field, 50);
+	});
+	it('should handle number inputs', function () {
+		var req = {
+			body: {
+				field: 123
+			}
+		};
+		form(field('field').toInt())(req, {});
+		assert.ok(typeof req.form.field === 'number');
+		assert.strictEqual(req.form.field, 123);
+	});
+	it('should handle number 0 inputs', function () {
+		var req = {
+			body: {
+				field: 0
+			}
+		};
+		form(field('field').toInt())(req, {});
+		assert.ok(typeof req.form.field === 'number');
+		assert.strictEqual(req.form.field, 0);
 	});
 	it('should handle non-float string inputs', function () {
 		var req = {
@@ -37,6 +67,33 @@ describe('sanitize.toInt()', function () {
 	it('should handle undefined inputs', function () {
 		var req = {
 			body: {
+			}
+		};
+		form(field('field').toInt())(req, {});
+		assert.ok(isNaN(req.form.field));
+	});
+	it('should handle null inputs', function () {
+		var req = {
+			body: {
+				field: null
+			}
+		};
+		form(field('field').toInt())(req, {});
+		assert.ok(isNaN(req.form.field));
+	});
+	it('should handle true inputs', function () {
+		var req = {
+			body: {
+				field: true
+			}
+		};
+		form(field('field').toInt())(req, {});
+		assert.ok(isNaN(req.form.field));
+	});
+	it('should handle false inputs', function () {
+		var req = {
+			body: {
+				field: false
 			}
 		};
 		form(field('field').toInt())(req, {});
