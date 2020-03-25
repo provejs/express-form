@@ -1,20 +1,28 @@
 {
-  "author": "Dan Hollenbeck (dan@hollenbecks.com)",
   "name": "provejs-express",
-  "description": "Form validation and data filtering for Express",
   "version": "0.0.19",
-  "homepage": "https://github.com/provejs/provejs-express",
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/provejs/provejs-express.git"
-  },
-  "contributors": [],
+  "description": "Form validation and data filtering for Express",
   "keywords": [
     "form",
     "validator",
     "validation",
     "express"
   ],
+  "homepage": "https://github.com/provejs/provejs-express",
+  "bugs": {
+    "url": "https://github.com/freewil/express-form/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/provejs/provejs-express.git"
+  },
+  "author": "Dan Hollenbeck (dan@hollenbecks.com)",
+  "contributors": [],
+  "main": "index",
+  "scripts": {
+    "lint": "eslint --rulesdir node_modules/@ravdocs/eslint/rules .",
+    "test": "mocha --recursive"
+  },
   "dependencies": {
     "async": "^3.1.0",
     "js-beautify": "^1.7.5",
@@ -28,9 +36,6 @@
     "sanitize-html": "^1.17.0",
     "validator": "^11.1.0"
   },
-  "peerDependencies": {
-    "express": ">=3.0.0"
-  },
   "devDependencies": {
     "@ravdocs/eslint": "^1.0.11",
     "body-parser": "1.x",
@@ -40,13 +45,8 @@
     "mocha": "^6.2.1",
     "request": "^2.48.0"
   },
-  "main": "index",
-  "bugs": {
-    "url": "https://github.com/freewil/express-form/issues"
-  },
-  "scripts": {
-    "lint": "eslint --rulesdir node_modules/@ravdocs/eslint/rules .",
-    "test": "mocha --recursive"
+  "peerDependencies": {
+    "express": ">=3.0.0"
   },
   "engines": {
     "node": ">=0.10.0"
