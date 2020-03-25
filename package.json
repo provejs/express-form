@@ -24,7 +24,7 @@
     "test": "mocha --recursive"
   },
   "dependencies": {
-    "async": "^3.1.0",
+    "async": "^3.2.0",
     "js-beautify": "^1.7.5",
     "lodash.isboolean": "^3.0.3",
     "lodash.isfunction": "^3.0.9",
