@@ -35,7 +35,7 @@
     "lodash.isundefined": "^3.0.1",
     "moment-timezone": "^0.5.33",
     "sanitize-html": "^2.4.0",
-    "validator": "^11.1.0"
+    "validator": "^13.6.0"
   },
   "devDependencies": {
     "@ravdocs/eslint": "^1.0.18",
