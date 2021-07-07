@@ -16,6 +16,7 @@
     "type": "git",
     "url": "git://github.com/provejs/provejs-express.git"
   },
+  "license": "SEE LICENSE IN LICENSE",
   "author": "Dan Hollenbeck (dan@hollenbecks.com)",
   "contributors": [],
   "main": "index",
@@ -50,6 +51,5 @@
   },
   "engines": {
     "node": ">=0.10.0"
-  },
-  "license": "SEE LICENSE IN LICENSE"
+  }
 }
