@@ -5,7 +5,9 @@ var form = require('../../index');
 var field = form.field;
 var express = require('express');
 var http = require('http');
-var request = require('request');
+var Util = require('util');
+var Got = require('got');
+var GotCb = Util.callbackify(Got);
 var bodyParser = require('body-parser');
 var app = express();
 var server;
@@ -39,8 +41,7 @@ describe('express', function () {
 				}
 			);
 
-			request.get({
-				url: 'http://localhost:3000/user?username= dan',
+			GotCb('http://localhost:3000/user?username= dan', {
 				method: 'GET'
 			}, function (err, res) {
 				// reqeust callback
