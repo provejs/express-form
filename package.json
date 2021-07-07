@@ -41,7 +41,7 @@
     "@ravdocs/eslint": "^1.0.18",
     "body-parser": "1.x",
     "errorhandler": "^1.5.0",
-    "eslint": "^6.8.0",
+    "eslint": "^7.30.0",
     "express": "4.x",
     "mocha": "^7.1.1",
     "request": "^2.88.2"
