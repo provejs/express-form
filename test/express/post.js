@@ -5,7 +5,9 @@ var form = require('../../index');
 var field = form.field;
 var express = require('express');
 var http = require('http');
-var request = require('request');
+var Util = require('util');
+var Got = require('got');
+var GotCb = Util.callbackify(Got);
 var bodyParser = require('body-parser');
 var app = express();
 var server;
@@ -41,15 +43,11 @@ describe('express', function () {
 				}
 			);
 
-			request.post({
-				url: 'http://localhost:3000/user',
+			GotCb('http://localhost:3000/user', {
 				method: 'POST',
-				body: JSON.stringify({
+				json: {
 					username: '   dandean   \n\n\t',
 					password: ' 12345 '
-				}),
-				headers: {
-					'Content-Type': 'application/json'
 				}
 			}, function (err, res) {
 				assert.ifError(err);
@@ -83,16 +81,12 @@ describe('express', function () {
 				}
 			);
 
-			request({
-				url: 'http://localhost:3000/user/5?stuff=things&id=overridden',
+			GotCb('http://localhost:3000/user/5?stuff=things&id=overridden', {
 				method: 'POST',
-				body: JSON.stringify({
+				json: {
 					id: 'overridden by url param',
 					stuff: 'overridden by query param',
 					rad: 'cool'
-				}),
-				headers: {
-					'Content-Type': 'application/json'
 				}
 			}, function (err, res) {
 				assert.ifError(err);

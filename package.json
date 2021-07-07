@@ -1,6 +1,6 @@
 {
   "name": "provejs-express",
-  "version": "0.0.21",
+  "version": "1.0.0",
   "description": "Form validation and data filtering for Express",
   "keywords": [
     "form",
@@ -16,6 +16,7 @@
     "type": "git",
     "url": "git://github.com/provejs/provejs-express.git"
   },
+  "license": "SEE LICENSE IN LICENSE",
   "author": "Dan Hollenbeck (dan@hollenbecks.com)",
   "contributors": [],
   "main": "index",
@@ -25,31 +26,30 @@
   },
   "dependencies": {
     "async": "^3.2.0",
-    "js-beautify": "^1.10.3",
+    "js-beautify": "^1.14.0",
     "lodash.isboolean": "^3.0.3",
     "lodash.isfunction": "^3.0.9",
     "lodash.isnan": "^3.0.2",
     "lodash.isnumber": "^3.0.3",
     "lodash.isstring": "^4.0.1",
     "lodash.isundefined": "^3.0.1",
-    "moment-timezone": "^0.5.28",
-    "sanitize-html": "^1.17.0",
-    "validator": "^11.1.0"
+    "moment-timezone": "^0.5.33",
+    "sanitize-html": "^2.4.0",
+    "validator": "^13.6.0"
   },
   "devDependencies": {
-    "@ravdocs/eslint": "^1.0.11",
+    "@ravdocs/eslint": "^1.0.18",
     "body-parser": "1.x",
     "errorhandler": "^1.5.0",
-    "eslint": "^6.8.0",
+    "eslint": "^7.30.0",
     "express": "4.x",
-    "mocha": "^7.1.1",
-    "request": "^2.88.2"
+    "got": "^11.8.2",
+    "mocha": "^9.0.2"
   },
   "peerDependencies": {
     "express": ">=3.0.0"
   },
   "engines": {
     "node": ">=0.10.0"
-  },
-  "license": "SEE LICENSE IN LICENSE"
+  }
 }
