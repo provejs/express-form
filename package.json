@@ -33,7 +33,7 @@
     "lodash.isnumber": "^3.0.3",
     "lodash.isstring": "^4.0.1",
     "lodash.isundefined": "^3.0.1",
-    "moment-timezone": "^0.5.28",
+    "moment-timezone": "^0.5.33",
     "sanitize-html": "^1.17.0",
     "validator": "^11.1.0"
   },
